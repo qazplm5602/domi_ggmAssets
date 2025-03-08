@@ -38,6 +38,7 @@ public class SecurityConfig {
                 oauth.userInfoEndpoint(v ->
                         v.userService(oauth2UserService)
                 )
+                .redirectionEndpoint(v -> v.baseUri("/oauth2/callback/*"))
 //                .successHandler() // 이건 나중에
         );
 
