@@ -1,13 +1,13 @@
-FROM ubuntu
+FROM openjdk:21-slim
 
-VOLUME [ "/domi/static" ]
 WORKDIR /domi
 
 ARG SSH_PASSWORD
 ENV SSH_PASSWORD=${SSH_PASSWORD}
 
-COPY dist ./static
+COPY build/libs .
 COPY start.sh .
+COPY live.application.properties .
 
 # SSH 설치 ㄱㄱ
 RUN apt-get update && apt-get install -y openssh-server
