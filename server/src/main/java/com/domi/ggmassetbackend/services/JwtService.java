@@ -1,5 +1,7 @@
 package com.domi.ggmassetbackend.services;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
@@ -36,5 +38,13 @@ public class JwtService {
                 .expiration(new Date(System.currentTimeMillis() + (refresh ? refreshExpire : accessExpire) * 1000))
                 .signWith(secretKey, Jwts.SIG.HS512)
                 .compact();
+    }
+
+    public Claims parseToken(String token) {
+         return Jwts.parser()
+                 .verifyWith(secretKey)
+                 .build()
+                 .parseSignedClaims(token)
+                 .getPayload();
     }
 }
