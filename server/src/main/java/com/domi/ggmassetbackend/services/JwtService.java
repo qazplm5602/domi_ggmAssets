@@ -1,9 +1,12 @@
 package com.domi.ggmassetbackend.services;
 
+import com.domi.ggmassetbackend.exceptions.TokenException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -41,10 +44,20 @@ public class JwtService {
     }
 
     public Claims parseToken(String token) {
-         return Jwts.parser()
-                 .verifyWith(secretKey)
-                 .build()
-                 .parseSignedClaims(token)
-                 .getPayload();
+        Claims result;
+
+        try {
+            result = Jwts.parser()
+                    .verifyWith(secretKey)
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload();
+        } catch (MalformedJwtException e) {
+            throw new TokenException(TokenException.Type.INVALID_TOKEN);
+        } catch (SignatureException e) {
+            throw new TokenException(TokenException.Type.INVALID_JWT_SIGNATURE);
+        }
+
+         return result;
     }
 }
