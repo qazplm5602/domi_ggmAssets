@@ -2,6 +2,7 @@ package com.domi.ggmassetbackend.filters;
 
 import com.domi.ggmassetbackend.data.entity.PrincipalDetails;
 import com.domi.ggmassetbackend.data.entity.User;
+import com.domi.ggmassetbackend.exceptions.TokenException;
 import com.domi.ggmassetbackend.services.JwtService;
 import com.domi.ggmassetbackend.services.UserService;
 import io.jsonwebtoken.Claims;
@@ -41,6 +42,13 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
         String token = authorization.substring(7);
         Claims claims = jwtService.parseToken(token);
+
+        // 리프레시 토큰은 재발급 하셔야지ㅣㅣㅣ
+        Boolean isRefresh = (Boolean) claims.get("refresh");
+
+        if (isRefresh) {
+            throw new TokenException(TokenException.Type.NOT_ACCESS_TOKEN);
+        }
 
         String email = claims.getId();
         User user = userService.getUserByEmail(email);

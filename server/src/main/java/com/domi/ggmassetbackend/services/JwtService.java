@@ -1,10 +1,7 @@
 package com.domi.ggmassetbackend.services;
 
 import com.domi.ggmassetbackend.exceptions.TokenException;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import jakarta.annotation.PostConstruct;
@@ -56,6 +53,8 @@ public class JwtService {
             throw new TokenException(TokenException.Type.INVALID_TOKEN);
         } catch (SignatureException e) {
             throw new TokenException(TokenException.Type.INVALID_JWT_SIGNATURE);
+        } catch (ExpiredJwtException e) {
+            throw new TokenException(TokenException.Type.EXPIRED_TOKEN);
         }
 
          return result;
