@@ -53,3 +53,9 @@
         }
     }
 }
+
+.right {
+    & > .exit {
+        padding: 5px;
+    }
+}
