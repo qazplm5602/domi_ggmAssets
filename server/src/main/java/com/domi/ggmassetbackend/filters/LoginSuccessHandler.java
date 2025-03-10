@@ -6,9 +6,11 @@ import com.domi.ggmassetbackend.exceptions.DomiException;
 import com.domi.ggmassetbackend.services.JwtService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -19,6 +21,12 @@ import java.io.IOException;
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     private final JwtService jwtService;
     private final ObjectMapper objectMapper = new ObjectMapper();
+
+    @Value("${domi.jwt.access.expire}")
+    private Long accessExpire;
+
+    @Value("${domi.jwt.refresh.expire}")
+    private Long refreshExpire;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -35,9 +43,26 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         String accessToken = jwtService.generateToken(email, false);
         String refreshToken = jwtService.generateToken(email, true);
 
-        LoginTokenDTO tokenData = new LoginTokenDTO(accessToken, refreshToken);
-        String result = objectMapper.writeValueAsString(tokenData);
+        Cookie accessCookie = new Cookie("accessToken", accessToken);
+        accessCookie.setMaxAge(Math.toIntExact(accessExpire));
+        accessCookie.setPath("/");
+//        accessCookie.setHttpOnly(true);
+//        accessCookie.setSecure(true);
 
-        response.getWriter().write(result);
+        Cookie refreshCookie = new Cookie("refreshToken", refreshToken);
+        refreshCookie.setMaxAge(Math.toIntExact(refreshExpire));
+        refreshCookie.setPath("/");
+//        refreshCookie.setHttpOnly(true);
+//        refreshCookie.setSecure(true);
+
+        response.addCookie(accessCookie);
+        response.addCookie(refreshCookie);
+
+        response.sendRedirect("/login/process");
+
+//        LoginTokenDTO tokenData = new LoginTokenDTO(accessToken, refreshToken);
+//        String result = objectMapper.writeValueAsString(tokenData);
+
+//        response.getWriter().write(result);
     }
 }
