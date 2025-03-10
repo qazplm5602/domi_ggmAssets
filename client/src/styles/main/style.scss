@@ -1,0 +1,26 @@
+@use '@styles/declare/_declare.scss' as *;
+
+html, body {
+    margin: 0;
+    padding: 0;
+
+    min-height: 100dvh;
+
+    background-color: $color-background;
+}
+
+#root {
+    min-height: 100dvh;
+}
+
+h1, h2, h3, h4, h5 {
+    margin: 0;
+}
+
+div, section, article {
+    box-sizing: border-box;
+}
+
+button {
+    cursor: pointer;
+}
