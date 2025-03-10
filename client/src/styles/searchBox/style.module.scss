@@ -1,0 +1,42 @@
+@use '@styles/declare/_declare.scss' as *;
+
+.box {
+    width: 500px;
+    height: 40px;
+
+    background-color: $color-misExtra;
+    border-radius: 5px;
+    
+    display: flex;
+    align-items: center;
+
+    padding: 5px 8px;
+
+    gap: 0 4px;
+
+    & > img {
+        width: 25px;
+        height: 25px;
+    }
+    
+    & > input {
+        flex-grow: 1;
+        background-color: transparent;
+        border: none;
+        height: 100%;
+
+        font-size: 15px;
+        color: $color-white;
+        outline: none;
+    }
+
+    & > .clear {
+        background-color: transparent;
+        border: none;
+        padding: 0;
+
+        & > img {
+            display: block;
+        }
+    }
+}
