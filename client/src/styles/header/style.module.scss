@@ -7,9 +7,11 @@
     left: 0;
 
     width: 100%;
-    height: 70px;
+    height: 60px;
 
-    background-color: $color-mist;
+    background-color: rgba($color: $color-mist, $alpha: 0.5);
+    backdrop-filter: blur(10px);
+
     border-bottom: 1px solid rgba($color: #fff, $alpha: 0.1);
 
     display: flex;
@@ -26,7 +28,7 @@
 
 .left {
     .logo {
-        height: 40px;
+        height: 38px;
     }
 
     & > .menus {
@@ -35,7 +37,7 @@
         & > a {
             color: #606260;
 
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 500;
 
             &:not(:first-child) {
@@ -56,6 +58,22 @@
 
 .right {
     & > .exit {
-        padding: 5px;
+        padding: 8px;
+        background-color: #343434;
+        border-radius: 6px;
+
+        & > img {
+            $icon-size: 18px;
+            width: $icon-size;
+            height: $icon-size;
+
+            display: block;
+        }
+
+        &:hover {
+            background-color: $color-alert;
+        }
+
+        transition: background-color 250ms;
     }
 }
