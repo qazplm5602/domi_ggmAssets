@@ -28,6 +28,10 @@ public class PrincipalDetails implements OAuth2User, UserDetails {
         return getUsername();
     }
 
+    public User getUser() {
+        return user;
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;

@@ -3,6 +3,7 @@ package com.domi.ggmassetbackend.filters;
 import com.domi.ggmassetbackend.data.dto.LoginTokenDTO;
 import com.domi.ggmassetbackend.data.entity.PrincipalDetails;
 import com.domi.ggmassetbackend.exceptions.DomiException;
+import com.domi.ggmassetbackend.services.AuthService;
 import com.domi.ggmassetbackend.services.JwtService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
@@ -15,12 +16,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+@Component
 @RequiredArgsConstructor
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     private final JwtService jwtService;
+    private final AuthService authService;
 //    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Value("${domi.jwt.access.expire}")
@@ -35,12 +39,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         response.setCharacterEncoding("UTF-8");
 
         // 토큰 만들기
-        Object principalBoxing = authentication.getPrincipal();
-        if (!(principalBoxing instanceof PrincipalDetails principalDetails)) {
-            throw new DomiException("LOGIN0", "인증 서버 로그인 오류.", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-        String email = principalDetails.getUsername();
+        String email = authService.getUserByAuthentication(authentication).getEmail();
         String accessToken = jwtService.generateToken(email, false);
         String refreshToken = jwtService.generateToken(email, true);
 
