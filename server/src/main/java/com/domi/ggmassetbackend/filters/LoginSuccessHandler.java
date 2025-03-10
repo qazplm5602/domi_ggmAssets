@@ -10,6 +10,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -17,10 +18,10 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 
 import java.io.IOException;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     private final JwtService jwtService;
-    private final ObjectMapper objectMapper = new ObjectMapper();
+//    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Value("${domi.jwt.access.expire}")
     private Long accessExpire;
