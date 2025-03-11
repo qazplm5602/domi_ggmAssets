@@ -30,3 +30,27 @@
     }
 }
 
+.category {
+    display: flex;
+    align-items: center;
+    
+    width: 100%;
+
+    & > .check {
+        width: 20px;
+        height: 20px;
+    }
+
+    & > label {
+        flex-grow: 1;
+        
+        color: $color-white;
+        font-size: 14px;
+    
+        margin-left: 6px;
+    }
+    
+    &:not(:first-child) {
+        margin-top: 8px;
+    }
+}
