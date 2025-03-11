@@ -1,7 +1,29 @@
 @use '@styles/declare/_declare.scss' as *;
 
+$content-width: 1000px;
+$side-width: 210px;
+$size-padding: 20px;
+
 .main {
-    @include screen_container;
+    @include screen_container($content-width + $side-width, $size-padding);
+
+    display: flex;
+    transform: translateX(-($side-width / 2));
+
+    .content {
+        flex-grow: 1;
+
+        border: 1px solid blue;
+    }
+}
+
+.side {
+    width: $side-width;
+    height: 100px;
+
+    flex-shrink: 0;
+
+    border: 1px solid red;
 }
 
 .pagination {
@@ -43,4 +65,8 @@
             }
         }
     }
+}
+
+.itemContainer {
+    margin-bottom: 40px;
 }
