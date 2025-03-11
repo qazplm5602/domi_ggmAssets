@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import style from '@styles/login/style.module.scss';
 
 import googleLogo from '@assets/google-logo.webp';

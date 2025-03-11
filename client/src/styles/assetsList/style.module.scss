@@ -1,0 +1,46 @@
+@use '@styles/declare/_declare.scss' as *;
+
+.main {
+    @include screen_container;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+
+    gap: 0 10px;
+    
+    & > button {
+        padding: 0 12px;
+        
+        // width: ;
+        height: 32px;
+        
+        border: none;
+        
+        color: $color-white;
+        font-size: 16px;
+        font-weight: 400;
+
+        background-color: $color-misExtra;
+        border-radius: 5px;
+
+        transition: background-color 200ms;
+
+        &:hover {
+            background-color: $color-textShy;
+        }
+        
+        &.active {
+            background-color: $color-primary;
+        }
+
+        & > img {
+            height: 13px;
+            
+            &.reverseD {
+                transform: rotateZ(180deg);
+            }
+        }
+    }
+}
