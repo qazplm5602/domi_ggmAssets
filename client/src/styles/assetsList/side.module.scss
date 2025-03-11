@@ -1,0 +1,32 @@
+@use '@styles/declare/_declare.scss' as *;
+
+.select {
+    &:not(:first-child) {
+        margin-top: 8px;
+    }
+
+    & > h2 {
+        font-weight: 500;
+        font-size: 15px;
+        color: $color-textSupporting;
+    
+        margin-bottom: 4px;
+    }
+
+    & > select {
+        border-radius: 4px;
+        background-color: $color-misExtra;
+        
+        height: 30px;
+        width: 100%;
+
+        padding: 0 10px;
+
+        color: #D4D4D4;
+        border: none;
+
+        font-size: 13px;
+        border-right: 10px solid transparent;
+    }
+}
+
