@@ -1,8 +1,8 @@
 import style from '@styles/assetDetail/style.module.scss';
-import AssetDetailMoreSection from './MoreSection';
+import AssetDetailMoreSimpleDesc from './SimpleDesc';
 
 export default function AssetDetailMore() {
     return <article className={style.more}>
-        <AssetDetailMoreSection title="간단한 설명" />
+        <AssetDetailMoreSimpleDesc />
     </article>;
 }

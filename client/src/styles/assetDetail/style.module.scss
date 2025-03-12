@@ -197,13 +197,25 @@
 }
 
 .more {
-    margin-top: 40px;
+    margin: 40px 0;
 
     & > section {
         // 제목
         & > h2 {
-            font-size: 28px;
+            font-size: 25px;
             color: $color-white;
         }
+
+        &:not(:first-child) {
+            margin-top: 40px;
+        }
+    }
+
+    & .default_words {
+        font-size: 16px;
+        font-weight: 300;
+        color: $color-text;
+        
+        margin-top: 5px;
     }
 }
