@@ -76,6 +76,11 @@ $size-padding: 20px;
 
 .itemContainer {
     margin-bottom: 40px;
+
+    gap: 15px;
+
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .side_box {
