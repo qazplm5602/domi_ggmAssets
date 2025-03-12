@@ -195,3 +195,15 @@
         }
     }
 }
+
+.more {
+    margin-top: 40px;
+
+    & > section {
+        // 제목
+        & > h2 {
+            font-size: 28px;
+            color: $color-white;
+        }
+    }
+}
