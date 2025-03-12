@@ -1,5 +1,8 @@
 package com.domi.ggmassetbackend.configs;
 
+import com.domi.ggmassetbackend.filters.LoginSuccessHandler;
+import com.domi.ggmassetbackend.services.AuthService;
+import com.domi.ggmassetbackend.services.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +19,7 @@ import com.domi.ggmassetbackend.services.DomiOauth2UserService;
 @Configuration
 public class SecurityConfig {
     private final DomiOauth2UserService oauth2UserService;
+    private final LoginSuccessHandler loginSuccessHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -39,7 +43,7 @@ public class SecurityConfig {
                         v.userService(oauth2UserService)
                 )
                 .redirectionEndpoint(v -> v.baseUri("/oauth2/callback/*"))
-//                .successHandler() // 이건 나중에
+                .successHandler(loginSuccessHandler) // 이건 나중에
         );
 
         return http.build();

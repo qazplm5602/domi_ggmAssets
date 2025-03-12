@@ -1,0 +1,6 @@
+@mixin screen_container($width: 1000px, $wide-padding: 20px) {
+    margin: 0 auto;
+    padding: 0 $wide-padding;
+
+    max-width: $width;
+}

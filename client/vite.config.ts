@@ -10,6 +10,10 @@ export default defineConfig({
       "/api": {
         target: 'http://localhost:8080',
         changeOrigin: true,
+      },
+      "/oauth2": {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
       }
     }
   },
@@ -17,7 +21,8 @@ export default defineConfig({
     alias: [
       { find: '@styles', replacement: path.resolve(__dirname, 'src/styles') },
       { find: '@components', replacement: path.resolve(__dirname, 'src/components') },
-      { find: '@pages', replacement: path.resolve(__dirname, 'src/pages') }
+      { find: '@pages', replacement: path.resolve(__dirname, 'src/pages') },
+      { find: '@assets', replacement: path.resolve(__dirname, 'src/assets') },
     ]
   }
 })

@@ -1,0 +1,48 @@
+@use '@styles/declare/_declare.scss' as *;
+
+.main {
+    @include screen_container;
+
+    position: relative;
+    z-index: 1;
+}
+
+.bg_blur {
+    $blur-height: 500px;
+
+    width: 100%;
+    height: $blur-height;
+    margin-bottom: -$blur-height;
+    
+    display: block;
+    
+    position: relative;
+    object-fit: cover;
+
+    z-index: 0;
+    
+    filter: blur(100px);
+}
+
+.head {
+    & > h1 {
+        color: $color-white;
+        font-size: 28px;
+        margin-bottom: 2px;
+    }
+
+    & > .category {
+        display: flex;
+        align-items: center;
+
+        gap: 0 8px;
+        color: $color-text;
+        font-size: 15px;
+
+        & > .line {
+            background-color: $color-textSupporting;
+            width: 1px;
+            height: 13px;
+        }
+    }
+}

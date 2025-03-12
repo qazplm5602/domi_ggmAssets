@@ -7,6 +7,8 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -17,6 +19,7 @@ public class UserService {
     @Value("${domi.allow.email.domain}")
     private String allowEmailDomain;
     private final UserRepository userRepository;
+    private final AuthService authService;
 
     public User getUserByEmailOrRegister(@Email @Valid String email, String name) {
         String domain = email.substring(email.indexOf("@") + 1);
@@ -38,5 +41,18 @@ public class UserService {
         }
 
         return user;
+    }
+
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() -> new UserException(UserException.Type.NOT_FOUND_USER));
+    }
+
+    public User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) { // 로그인 안되어있음
+            throw new UserException(UserException.Type.NEED_LOGIN);
+        }
+
+         return authService.getUserByAuthentication(authentication);
     }
 }
