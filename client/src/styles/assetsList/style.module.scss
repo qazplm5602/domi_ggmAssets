@@ -142,12 +142,14 @@ $size-padding: 20px;
             transform: translateY(-50%);
             border: none;
 
-            background-color: rgba($color: #000000, $alpha: 0.8);
+            background-color: rgba($color: #000000, $alpha: 0.7);
             
             padding: 10px 6px;
 
             border-top-right-radius: 3px;
             border-bottom-right-radius: 3px;
+            
+            transition: transform 200ms;
             
             & > img {
                 height: 16px;
@@ -159,12 +161,25 @@ $size-padding: 20px;
                 right: 0;
                 
                 border-radius: none;
+                
+                border-top-right-radius: 0px;
+                border-bottom-right-radius: 0px;
                 border-top-left-radius: 3px;
                 border-bottom-left-radius: 3px;
+
+                backdrop-filter: blur(10px);
 
                 & > img {
                     transform: rotateZ(180deg);
                 }
+            }
+        }
+
+        &:not(:hover) > .btn {
+            transform: translate(-100%, -50%);
+            
+            &.right {
+                transform: translate(100%, -50%);
             }
         }
     }
