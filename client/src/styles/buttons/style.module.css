@@ -1,0 +1,10 @@
+.onlyIco {
+  position: relative;
+  border: none;
+  background-color: transparent;
+  padding: 0;
+}
+.onlyIco > img {
+  display: block;
+}
+/*# sourceMappingURL=style.module.css.map */

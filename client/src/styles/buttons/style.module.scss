@@ -1,0 +1,12 @@
+.onlyIco {
+    position: relative;
+
+    border: none;
+    background-color: transparent;
+
+    padding: 0;
+
+    & > img {
+        display: block;
+    }
+}
