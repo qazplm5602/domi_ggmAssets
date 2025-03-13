@@ -1,6 +1,7 @@
 import style from '@styles/searchBox/style.module.scss';
 import SearchPreviewBox from './Box';
 import { AnimatePresence, motion } from 'framer-motion';
+import Spinner from '@components/Spinner/Spinner';
 
 
 type Props = {
@@ -23,5 +24,6 @@ function Box({ className }: { className?: string }) {
         <SearchPreviewBox />
         <SearchPreviewBox />
         <SearchPreviewBox />
+        <Spinner className={style.spinner} />
     </motion.div>;
 }
