@@ -1,0 +1,49 @@
+@use '@styles/declare/_declare.scss' as *;
+
+.contentHead {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    margin-bottom: 15px;
+
+    & > article {
+        display: flex;
+        align-items: center;
+        
+        gap: 0 10px;
+
+        & > h1 {
+            color: $color-white;
+            font-size: 22px;
+            font-weight: 500;
+        }
+
+        & > img {
+            width: 25px;
+            height: 25px;
+        }
+    }
+}
+
+.selectHead {
+    display: flex;
+    justify-content: space-between;
+    
+    padding: 8px 10px;
+    background-color: $color-mist;
+
+    border-radius: 5px;
+
+    margin-bottom: 15px;
+    
+    & > .right {
+        display: flex;
+        gap: 0 6px;
+    }
+
+    & .amount {
+        color: $color-white;
+        font-size: 14px;
+    }
+}
