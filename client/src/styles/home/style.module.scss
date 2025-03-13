@@ -112,3 +112,12 @@
         }
     }
 }
+
+.all_btn {
+    @include base_button;
+    
+    display: block;
+    width: max-content;
+    
+    margin: 50px auto;
+}

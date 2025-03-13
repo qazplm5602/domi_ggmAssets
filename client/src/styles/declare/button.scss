@@ -1,0 +1,13 @@
+@use 'color.scss' as *;
+
+@mixin base_button {
+    font-size: 12px;
+    color: $color-white;
+    background-color: $color-misExtra;
+    
+    
+    padding: 7px 15px;
+
+    border: none;
+    border-radius: 3px;
+}
