@@ -1,0 +1,18 @@
+@use '@styles/declare/_declare.scss' as *;
+
+.onlyIco {
+    position: relative;
+
+    border: none;
+    background-color: transparent;
+
+    padding: 0;
+
+    & > img {
+        display: block;
+    }
+}
+
+.base {
+    @include base_button;
+}

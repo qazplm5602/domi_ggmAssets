@@ -1,0 +1,8 @@
+.compatibility > .fill {
+  width: 100%;
+  display: flex;
+}
+.compatibility > .fill > div {
+  width: 100%;
+}
+/*# sourceMappingURL=more.module.css.map */

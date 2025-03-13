@@ -1,0 +1,123 @@
+@use '@styles/declare/_declare.scss' as *;
+
+.main {
+    position: relative;
+
+    // & > *:not(img) {
+    //     position: relative;
+    //     z-index: 1;
+    // }
+
+    z-index: 1;
+}
+
+.bg_blur {
+    $size: 500px;
+
+    width: 100%;
+    height: $size;
+    margin-bottom: -$size;
+
+    transform: translateY(calc($size / -2));
+    filter: blur(245px);
+    opacity: 0.3;
+
+    pointer-events: none;
+
+    position: relative;
+    z-index: -1;
+
+    display: block;
+}
+
+.head {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 60px;
+
+    & > h1 {
+        color: $color-white;
+        font-size: 40px;
+    }
+
+    & > h3 {
+        font-size: 20px;
+        font-weight: 400;
+
+        color: $color-textSupporting;
+    }
+}
+
+.assets {
+    display: flex;
+    justify-content: space-around;
+
+    flex-wrap: wrap;
+    gap: 50px 0;
+
+    @include screen_container(1500px);
+
+    & > .box {
+        display: flex;
+        flex-direction: column;
+
+        width: 435px;
+        height: 530px;
+        padding: 20px 25px;
+
+        border-radius: 10px;
+
+        background-color: $color-foreground;
+        border: 1px solid rgba($color: #fff, $alpha: 0.1);
+        box-shadow: 0 0 30px rgba($color: #000000, $alpha: 0.3);
+
+        & > .box_head {
+            display: flex;
+            justify-content: space-between;
+
+            margin-bottom: 10px;
+
+            & > h2 {
+                color: $color-white;
+                font-size: 24px;
+                font-weight: 500;
+            }
+        }
+
+        & > .list {
+            display: flex;
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            width: 100%;
+            height: 0;
+            flex-grow: 1;
+            
+            overflow: auto;
+
+            & > a {
+                display: block;
+                flex-basis: calc(50% - 10px);
+
+                & > .item {
+                    width: 100%;
+
+                    // 썸네일 크기 수정
+                    & > section:nth-child(1) {
+                        height: 120px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.all_btn {
+    @include base_button;
+    
+    display: block;
+    width: max-content;
+    
+    margin: 50px auto;
+}

@@ -3,8 +3,8 @@ import logoImg from '@assets/logo.webp';
 import { Link } from 'react-router-dom';
 
 const MENU_LIST = [
-    ["목록", "list"],
-    ["나의 에셋", "my"]
+    ["목록", "assets"],
+    ["나의 에셋", "domilove"]
 ]
 
 export default function HeaderMain() {

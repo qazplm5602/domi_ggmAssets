@@ -1,4 +1,6 @@
 import AssetDetailHead from '@components/AssetDetail/Head';
+import AssetDetailMore from '@components/AssetDetail/More/MoreDetail';
+import AssetDetailPreviewContainer from '@components/AssetDetail/PreviewContainer';
 import style from '@styles/assetDetail/style.module.scss';
 
 export default function AssetDetail() {
@@ -7,6 +9,8 @@ export default function AssetDetail() {
 
         <section className={style.main}>
             <AssetDetailHead />
+            <AssetDetailPreviewContainer />
+            <AssetDetailMore />
         </section>
     </main>;
 }
