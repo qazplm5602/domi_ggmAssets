@@ -4,9 +4,13 @@ import { Link } from 'react-router-dom';
 import AssetItemDetail from './Detail';
 import AssetItemInfo from './Info';
 
-export default function AssetItem() {
+type Props = {
+    className?: string
+}
+
+export default function AssetItem({ className }: Props) {
     return <Link to='/asset/1'>
-        <div className={style.item}>
+        <div className={`${style.item} ${className || ''}`}>
             <AssetsListItemThumbnail />
             <AssetItemDetail />
             <AssetItemInfo />

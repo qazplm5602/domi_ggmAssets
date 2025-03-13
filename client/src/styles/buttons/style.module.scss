@@ -1,3 +1,5 @@
+@use '@styles/declare/_declare.scss' as *;
+
 .onlyIco {
     position: relative;
 
@@ -9,4 +11,16 @@
     & > img {
         display: block;
     }
+}
+
+.base {
+    font-size: 12px;
+    color: $color-white;
+    background-color: $color-misExtra;
+    
+    
+    padding: 7px 15px;
+
+    border: none;
+    border-radius: 3px;
 }
