@@ -8,8 +8,8 @@ type Props = {
     show?: boolean
 }
 
-const INIT_ANIM = { opacity: 0, scale: 0.95 };
-const FINISH_ANIM = { opacity: 1, scale: 1.0 };
+const INIT_ANIM = { opacity: 0, translate: "-50% 0", scale: 0.95 };
+const FINISH_ANIM = { opacity: 1, translate: "-50% 0", scale: 1.0 };
 const TRANSITION_ANIM = { duration: 0.15 };
 
 export default function SearchPreview({ show, className }: Props) {
