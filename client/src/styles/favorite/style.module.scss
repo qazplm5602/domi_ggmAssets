@@ -37,13 +37,28 @@
 
     margin-bottom: 15px;
     
-    & > .right {
+    & > article {
         display: flex;
-        gap: 0 6px;
+        align-items: center;
+    
+        &.right {
+            gap: 0 6px;
+        }
+
+        &.left {
+            gap: 0 10px;
+        }
     }
 
     & .amount {
         color: $color-white;
         font-size: 14px;
+    }
+
+    & .download {
+        background-color: $color-primary;
+    }
+    & .remove {
+        background-color: $color-alert;
     }
 }
