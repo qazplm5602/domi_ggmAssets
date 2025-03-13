@@ -62,3 +62,21 @@
         background-color: $color-alert;
     }
 }
+
+.selectable {
+    padding: 20px;
+    border-radius: 10px;
+
+    border: 2px solid transparent;
+
+    &:hover {
+        background-color: $color-mist;
+    }
+
+    &.selected {
+        background-color: rgba($color: $color-primary, $alpha: 0.1);
+        border-color: $color-primary;
+    }
+
+    transition: background-color 200ms, border-color 200ms;
+}

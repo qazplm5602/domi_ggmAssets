@@ -1,6 +1,7 @@
 import AssetsListContainer from "@components/AssetsList/List";
 import SideSection from "@components/AssetsList/SideSection";
 import FavoriteHead from "@components/Favorite/Head";
+import FavoriteSelectList from "@components/Favorite/List";
 import FavoriteSelectHead from "@components/Favorite/SelectHead";
 import originStyle from '@styles/assetsList/style.module.scss';
 
@@ -13,7 +14,12 @@ export default function Favorite() {
     <article className={originStyle.content}>
         <FavoriteHead />
         <FavoriteSelectHead />
-        <AssetsListContainer />
+
+        {/* 선택 할때 */}
+        <FavoriteSelectList />
+
+        {/* 선택 안할때 */}
+        {/* <AssetsListContainer /> */}
     </article>
 </main>;
 }
