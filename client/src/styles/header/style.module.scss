@@ -81,14 +81,31 @@
     }
 }
 
+
+@mixin searchWidth {
+    max-width: calc(100% - 300px);
+}
+$search-box-height: 36px;
+
 .search {
     position: absolute;
     top: 50%;
     left: 50%;
 
     // width: 100% !important;
-    max-width: calc(100% - 300px);
-    height: 36px !important;
+    @include searchWidth;
+    height: $search-box-height !important;
 
     transform: translate(-50%, -50%);
+
+    z-index: 1;
+}
+
+.search_preview {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    @include searchWidth;
+    transform: translate(-50%, calc(($search-box-height / 2) + 6px));
 }
