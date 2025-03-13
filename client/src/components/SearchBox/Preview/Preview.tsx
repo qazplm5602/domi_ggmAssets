@@ -1,14 +1,27 @@
 import style from '@styles/searchBox/style.module.scss';
 import SearchPreviewBox from './Box';
+import { AnimatePresence, motion } from 'framer-motion';
+
 
 type Props = {
-    className?: string
+    className?: string,
+    show?: boolean
 }
 
-export default function SearchPreview({ className }: Props) {
-    return <div className={`${style.preview} ${className || ''}`}>
+const INIT_ANIM = { opacity: 0, scale: 0.95 };
+const FINISH_ANIM = { opacity: 1, scale: 1.0 };
+const TRANSITION_ANIM = { duration: 0.15 };
+
+export default function SearchPreview({ show, className }: Props) {
+    return <AnimatePresence>
+        {show && <Box className={className} />}
+    </AnimatePresence>;
+}
+
+function Box({ className }: { className?: string }) {
+    return <motion.div className={`${style.preview} ${className || ''}`} initial={INIT_ANIM} animate={FINISH_ANIM} exit={INIT_ANIM} transition={TRANSITION_ANIM}>
         <SearchPreviewBox />
         <SearchPreviewBox />
         <SearchPreviewBox />
-    </div>;
+    </motion.div>;
 }
