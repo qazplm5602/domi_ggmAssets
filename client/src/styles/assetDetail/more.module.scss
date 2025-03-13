@@ -1,6 +1,8 @@
 @use '@styles/declare/_declare.scss' as *;
 
 .compatibility {
+    margin-top: 2px;
+
     & > .fill {
         width: 100%;
         display: flex;
@@ -15,8 +17,6 @@
         font-weight: 500;
 
         color: $color-textSupporting;
-
-        margin-top: 2px;
     }
 
     & > .item {
@@ -29,38 +29,41 @@
             color: $color-white;
             font-size: 15px;
         }
-
-        & > .check {
-            display: flex;
-            align-items: center;
-
-            gap: 0 8px;
-    
-            & > .icon {
-                $size: 10px;
-
-                display: flex;
-                align-items: center;
-                justify-content: center;
-
-                border-radius: 50%;
-                background-color: $color-success;
-
-                padding: 5px;
-
-                & > img {
-                    display: block;
-
-                    width: $size;
-                    height: $size;
-                }
-            }
-
-            & > p {
-                color: $color-white;
-                font-size: 15px;
-            }
-        }
     }
 
+    & .check {
+        display: flex;
+        align-items: center;
+
+        gap: 0 8px;
+
+        & > .icon {
+            $size: 10px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+            background-color: $color-textSupporting;
+
+            padding: 5px;
+
+            & > img {
+                display: block;
+
+                width: $size;
+                height: $size;
+            }
+
+            &.success {
+                background-color: $color-success;
+            }
+        }
+
+        & > p {
+            color: $color-white;
+            font-size: 15px;
+        }
+    }
 }

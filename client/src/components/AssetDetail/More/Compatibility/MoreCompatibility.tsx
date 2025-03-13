@@ -1,7 +1,11 @@
-import AssetDetailMoreSection from "../MoreSection";
 import style from '@styles/assetDetail/more.module.scss';
+
+import AssetDetailMoreSection from "../MoreSection";
 import AssetDetailMoreCompatibilityHead from "./Head";
 import AssetDetailMoreCompatibilityItem from "./Item";
+// import AssetDetailMoreCompatibilityIconText from "./IconText";
+
+// import questionIcon from '@assets/icons/question.svg';
 
 
 export default function AssetDetailMoreCompatibility() {
@@ -9,5 +13,6 @@ export default function AssetDetailMoreCompatibility() {
         <AssetDetailMoreCompatibilityHead />
 
         <AssetDetailMoreCompatibilityItem />
+        {/* <AssetDetailMoreCompatibilityIconText icon={questionIcon} text="몰 ? 루" /> */}
     </AssetDetailMoreSection>;
 }
