@@ -5,7 +5,7 @@ import AssetItemDetail from './Detail';
 import AssetItemInfo from './Info';
 
 export default function AssetItem() {
-    return <Link to='/test'>
+    return <Link to='/asset/1'>
         <div className={style.item}>
             <AssetsListItemThumbnail />
             <AssetItemDetail />

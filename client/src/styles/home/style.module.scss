@@ -1,0 +1,17 @@
+.bg_blur {
+    $size: 500px;
+
+    width: 100%;
+    height: $size;
+    margin-bottom: -$size;
+
+    transform: translateY(calc($size / -2));
+    filter: blur(245px);
+    opacity: 0.3;
+
+    pointer-events: none;
+}
+
+.head {
+    
+}
