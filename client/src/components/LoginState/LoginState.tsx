@@ -1,17 +1,27 @@
 import { request } from "@utils/request";
 import { useEffect } from "react";
 import useLoginStore from "./store";
+import { AliveType } from "@domiTypes/alive";
+import { UserDTO } from "@domiTypes/user";
 
 export default function LoginState() {
     const loginStore = useLoginStore();
 
-    const onLoad = async function() {
-        const result = await request<string>('user/@me');
-        console.log(result);
+    const onLoad = async function(aliveRef: AliveType) {
+        const { data } = await request<UserDTO>('user/@me');
+        if (!aliveRef.alive) return;
+
+        loginStore.setLogin(data.email, data.name);
     }
 
     useEffect(() => {
-        onLoad();
+        const aliveRef = { alive: true };
+
+        onLoad(aliveRef);
+
+        return () => {
+            aliveRef.alive = false;
+        }
     }, []);
     
     return null;
