@@ -103,9 +103,9 @@ $search-box-height: 36px;
 
 .search_preview {
     position: absolute;
-    top: 50%;
+    top: calc(50% + ($search-box-height / 2) + 6px);
     left: 50%;
 
     @include searchWidth;
-    transform: translate(-50%, calc(($search-box-height / 2) + 6px));
+    transform: translate(-50%, 0);
 }

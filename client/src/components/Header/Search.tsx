@@ -5,6 +5,6 @@ import style from '@styles/header/style.module.scss';
 export default function HeaderSearch() {
     return <>
         <SearchBox className={style.search} />
-        <SearchPreview className={style.search_preview} show={true} />
+        <SearchPreview className={style.search_preview} show={false} />
     </>;
 }

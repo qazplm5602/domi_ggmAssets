@@ -1,6 +1,7 @@
 import style from '@styles/searchBox/style.module.scss';
 import SearchPreviewBox from './Box';
 import { AnimatePresence, motion } from 'framer-motion';
+import Spinner from '@components/Spinner/Spinner';
 
 
 type Props = {
@@ -8,8 +9,8 @@ type Props = {
     show?: boolean
 }
 
-const INIT_ANIM = { opacity: 0, scale: 0.95 };
-const FINISH_ANIM = { opacity: 1, scale: 1.0 };
+const INIT_ANIM = { opacity: 0, translate: "-50% 0", scale: 0.95 };
+const FINISH_ANIM = { opacity: 1, translate: "-50% 0", scale: 1.0 };
 const TRANSITION_ANIM = { duration: 0.15 };
 
 export default function SearchPreview({ show, className }: Props) {
@@ -23,5 +24,6 @@ function Box({ className }: { className?: string }) {
         <SearchPreviewBox />
         <SearchPreviewBox />
         <SearchPreviewBox />
+        <Spinner className={style.spinner} />
     </motion.div>;
 }
