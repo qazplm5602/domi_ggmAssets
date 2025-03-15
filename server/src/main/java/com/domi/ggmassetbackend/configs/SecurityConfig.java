@@ -1,5 +1,6 @@
 package com.domi.ggmassetbackend.configs;
 
+import com.domi.ggmassetbackend.filters.LoginFailHandler;
 import com.domi.ggmassetbackend.filters.LoginSuccessHandler;
 import com.domi.ggmassetbackend.services.AuthService;
 import com.domi.ggmassetbackend.services.JwtService;
@@ -20,6 +21,7 @@ import com.domi.ggmassetbackend.services.DomiOauth2UserService;
 public class SecurityConfig {
     private final DomiOauth2UserService oauth2UserService;
     private final LoginSuccessHandler loginSuccessHandler;
+    private final LoginFailHandler LoginFailHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -43,7 +45,8 @@ public class SecurityConfig {
                         v.userService(oauth2UserService)
                 )
                 .redirectionEndpoint(v -> v.baseUri("/oauth2/callback/*"))
-                .successHandler(loginSuccessHandler) // 이건 나중에
+                .successHandler(loginSuccessHandler)
+                .failureHandler(LoginFailHandler)
         );
 
         http.anonymous(AbstractHttpConfigurer::disable);
