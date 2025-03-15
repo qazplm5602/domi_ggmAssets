@@ -46,6 +46,15 @@ public class SecurityConfig {
                 .successHandler(loginSuccessHandler) // 이건 나중에
         );
 
+        http.anonymous(AbstractHttpConfigurer::disable);
+
+        http.authorizeHttpRequests(request ->
+                request
+//                        .requestMatchers("/api/user/@me").authenticated()
+                        .anyRequest().permitAll()
+        );
+
+
         return http.build();
     }
 }
