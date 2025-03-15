@@ -8,6 +8,7 @@ import com.domi.ggmassetbackend.services.UserService;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Component
@@ -28,19 +31,23 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String authorization = request.getHeader("Authorization");
+//        String authorization = request.getHeader("Authorization");
+        Optional<Cookie> cookieToken = Arrays.stream(request.getCookies())
+                                            .filter(cookie -> cookie.getName().equals("accessToken"))
+                                            .findFirst();
 
-        tokenCheck(authorization);
-        
+        cookieToken.ifPresent(cookie -> tokenCheck(cookie.getValue()));
+
         filterChain.doFilter(request, response);
     }
     
     private void tokenCheck(String authorization) {
-        if (authorization == null || !authorization.startsWith("Bearer ")) {
-            return; // 이상한 토큰
-        }
+//        if (authorization == null || !authorization.startsWith("Bearer ")) {
+//            return; // 이상한 토큰
+//        }
 
-        String token = authorization.substring(7);
+//        String token = authorization.substring(7);
+        String token = authorization;
         Claims claims = jwtService.parseToken(token);
 
         // 리프레시 토큰은 재발급 하셔야지ㅣㅣㅣ
