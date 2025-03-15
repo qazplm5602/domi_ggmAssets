@@ -32,11 +32,16 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 //        String authorization = request.getHeader("Authorization");
-        Optional<Cookie> cookieToken = Arrays.stream(request.getCookies())
-                                            .filter(cookie -> cookie.getName().equals("accessToken"))
-                                            .findFirst();
 
-        cookieToken.ifPresent(cookie -> tokenCheck(cookie.getValue()));
+        Cookie[] cookies = request.getCookies();
+
+        if (cookies != null) {
+            Optional<Cookie> cookieToken = Arrays.stream(request.getCookies())
+                                                .filter(cookie -> cookie.getName().equals("accessToken"))
+                                                .findFirst();
+
+            cookieToken.ifPresent(cookie -> tokenCheck(cookie.getValue()));
+        }
 
         filterChain.doFilter(request, response);
     }

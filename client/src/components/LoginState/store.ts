@@ -4,7 +4,8 @@ import { create } from 'zustand'
 interface LoginStoreType extends UserDTO {
     logined: boolean,
     loading: boolean,
-    setLogin: (email: string, name: string) => void
+    setLogin: (email: string, name: string) => void,
+    setFail: () => void
 }
 
 const useLoginStore = create<LoginStoreType>()((set) => ({
@@ -14,6 +15,9 @@ const useLoginStore = create<LoginStoreType>()((set) => ({
     loading: true,
     setLogin(email, name) {
         set({ loading: false, logined: true, email, name });
+    },
+    setFail() {
+        set({ loading: false });
     }
 }));
 
