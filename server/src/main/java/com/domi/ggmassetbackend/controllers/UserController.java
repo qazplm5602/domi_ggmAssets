@@ -3,6 +3,8 @@ package com.domi.ggmassetbackend.controllers;
 import com.domi.ggmassetbackend.data.entity.User;
 import com.domi.ggmassetbackend.data.vo.UserVO;
 import com.domi.ggmassetbackend.services.UserService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,5 +20,19 @@ public class UserController {
     UserVO getMyInfo() {
         User user = userService.getCurrentUser();
         return UserVO.from(user);
+    }
+
+    @GetMapping("/logout")
+    void logoutUser(HttpServletResponse response) {
+        Cookie access = new Cookie("accessToken", null);
+        access.setMaxAge(0);
+        access.setPath("/");
+
+        Cookie refresh = new Cookie("refreshToken", null);
+        refresh.setMaxAge(0);
+        refresh.setPath("/");
+
+        response.addCookie(access);
+        response.addCookie(refresh);
     }
 }

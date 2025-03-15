@@ -5,7 +5,8 @@ interface LoginStoreType extends UserDTO {
     logined: boolean,
     loading: boolean,
     setLogin: (email: string, name: string) => void,
-    setFail: () => void
+    setFail: () => void,
+    forceRefresh: () => void
 }
 
 const useLoginStore = create<LoginStoreType>()((set) => ({
@@ -17,7 +18,10 @@ const useLoginStore = create<LoginStoreType>()((set) => ({
         set({ loading: false, logined: true, email, name });
     },
     setFail() {
-        set({ loading: false });
+        set({ loading: false, logined: false });
+    },
+    forceRefresh() {
+        set({ loading: true }); // 강제적으로 로딩중으로 바꿈
     }
 }));
 

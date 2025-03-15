@@ -29,6 +29,8 @@ export default function LoginState() {
     }
 
     useEffect(() => {
+        if (!loginStore.loading) return;
+
         const aliveRef = { alive: true };
 
         onLoad(aliveRef);
@@ -36,7 +38,7 @@ export default function LoginState() {
         return () => {
             aliveRef.alive = false;
         }
-    }, []);
+    }, [loginStore.loading]);
 
     // url 막기
     useEffect(() => {
