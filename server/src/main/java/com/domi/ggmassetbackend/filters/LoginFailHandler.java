@@ -21,7 +21,7 @@ public class LoginFailHandler implements AuthenticationFailureHandler {
         String message = "잘못된 인증 입니다.";
 
         if (exception instanceof NotAllowEmailException) {
-            message = "전용 이메일이 아닙니다.";
+            message = "학교 전용 이메일이 아닙니다. 학교 계정으로 로그인 하세요.";
         }
 
         response.sendRedirect(String.format("/login?error=%s", URLEncoder.encode(message, StandardCharsets.UTF_8)));
