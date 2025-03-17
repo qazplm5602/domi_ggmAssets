@@ -31,9 +31,9 @@ public class Asset {
 
     private String category;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.PERSIST)
     private List<Compatibility> supports;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.PERSIST)
     private List<Thumbnail> images;
 }

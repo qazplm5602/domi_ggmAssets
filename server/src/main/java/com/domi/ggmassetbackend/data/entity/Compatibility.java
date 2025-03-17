@@ -1,12 +1,13 @@
 package com.domi.ggmassetbackend.data.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
+
+import java.util.UUID;
 
 @Getter
 @Builder
@@ -15,8 +16,9 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Compatibility {
     @Id
-    @ManyToOne
-    private Asset asset;
+    @GeneratedValue(generator = "uuid2")
+    @Column(columnDefinition = "VARCHAR(128)")
+    private UUID id;
 
     private String version;
 
