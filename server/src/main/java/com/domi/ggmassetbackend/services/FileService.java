@@ -2,6 +2,7 @@ package com.domi.ggmassetbackend.services;
 
 import com.domi.ggmassetbackend.data.enums.FileCategory;
 import com.domi.ggmassetbackend.exceptions.DomiException;
+import com.domi.ggmassetbackend.exceptions.FileException;
 import com.domi.ggmassetbackend.utils.MiscUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +49,7 @@ public class FileService {
         File file = new File(path);
 
         if (!file.exists()) {
-            throw new DomiException("FILE0", "파일을 찾을 수 없습니다.", HttpStatus.NOT_FOUND);
+            throw new FileException(FileException.Type.NOT_FOUND_FILE);
         }
 
         return file;
@@ -58,6 +59,16 @@ public class FileService {
         File file = getFile(category, fileName);
 
         if (!file.delete())
-            throw new DomiException("FILE1", "파일 삭제에 실패하였습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new FileException(FileException.Type.ERROR_FILE_DELETE);
+    }
+
+    public FileCategory getCategory(String name) {
+        String formatName = name.substring(0, 1).toUpperCase() + name.substring(1);
+
+        try {
+            return FileCategory.valueOf(formatName);
+        } catch (IllegalArgumentException e) {
+            throw new FileException(FileException.Type.WRONG_CATEGORY);
+        }
     }
 }
