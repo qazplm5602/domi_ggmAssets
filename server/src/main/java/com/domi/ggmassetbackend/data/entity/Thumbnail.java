@@ -1,8 +1,7 @@
 package com.domi.ggmassetbackend.data.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import com.domi.ggmassetbackend.data.enums.ThumbnailType;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,14 +12,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Compatibility {
+public class Thumbnail {
     @Id
     @ManyToOne
     private Asset asset;
 
-    private String version;
+    @Enumerated(EnumType.STRING)
+    private ThumbnailType type;
 
-    private boolean builtIn;
-    private boolean urp;
-    private boolean hdrp;
+    private String contentUrl;
+    private String previewUrl;
 }

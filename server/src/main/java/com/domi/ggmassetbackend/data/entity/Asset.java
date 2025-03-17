@@ -1,11 +1,17 @@
 package com.domi.ggmassetbackend.data.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Asset {
     @Id
@@ -27,4 +33,7 @@ public class Asset {
 
     @OneToMany
     private List<Compatibility> supports;
+
+    @OneToMany
+    private List<Thumbnail> images;
 }
