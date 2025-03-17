@@ -71,4 +71,11 @@
             height: 20px;
         }
     }
+
+    & > .error {
+        margin-top: 9px;
+        font-size: 13px;
+
+        color: #ff6060;
+    }
 }

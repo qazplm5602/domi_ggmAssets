@@ -1,6 +1,7 @@
 package com.domi.ggmassetbackend.services;
 
 import com.domi.ggmassetbackend.data.entity.User;
+import com.domi.ggmassetbackend.exceptions.NotAllowEmailException;
 import com.domi.ggmassetbackend.exceptions.UserException;
 import com.domi.ggmassetbackend.repositories.UserRepository;
 import jakarta.validation.Valid;
@@ -8,6 +9,7 @@ import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +28,8 @@ public class UserService {
 
         // 겜마고 이메일 아닌듯
         if (!domain.equals(allowEmailDomain)) {
-            throw new UserException(UserException.Type.NOT_ALLOW_DOMAIN);
+//            throw new UserException(UserException.Type.NOT_ALLOW_DOMAIN);
+            throw new NotAllowEmailException("전용 이메일이 아닙니다.");
         }
 
         User user = userRepository.findByEmail(email).orElse(null);

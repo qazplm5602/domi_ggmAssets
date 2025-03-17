@@ -1,4 +1,5 @@
 import Header from "@components/Header/Header";
+import LoginState from "@components/LoginState/LoginState";
 import AssetDetail from "@pages/AssetDetail/AssetDetail";
 import AssetsList from "@pages/Assets/AssetsList";
 import Favorite from "@pages/Favorite/Favorite";
@@ -8,7 +9,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 export default function App() {
     return <BrowserRouter>
+        <LoginState />
         <Header />
+
         <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
