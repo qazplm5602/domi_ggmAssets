@@ -4,6 +4,7 @@ import AssetDetailGalleryList from './GalleryList';
 import { ThumbnailVO } from '@domiTypes/asset';
 import { useEffect, useState } from 'react';
 import { getThumbnailURL } from '@utils/file';
+import { motion } from 'framer-motion';
 
 type Props = {
     images: ThumbnailVO[]
@@ -36,8 +37,8 @@ export default function AssetDetailGallery({ images }: Props) {
         setCurrentIdx(0);
     }, [ images ]);
 
-    return <div className={style.gallery}>
+    return <motion.div className={style.gallery} initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: 'tween', duration: 0.3, delay: 0.1 }}>
         <AssetDetailGalleryPreview url={getThumbnailURL(thumbnail.contentUrl)} onPrev={handlePrev} onNext={handleNext} />
         <AssetDetailGalleryList images={images} current={currentIdx} onClick={handleChangeImage} />
-    </div>;
+    </motion.div>;
 }

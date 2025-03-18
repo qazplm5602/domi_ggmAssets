@@ -1,4 +1,5 @@
 import style from '@styles/assetDetail/style.module.scss';
+import { motion } from 'framer-motion';
 
 type Props = {
     title: string,
@@ -6,7 +7,7 @@ type Props = {
 }
 
 export default function AssetDetailHead({ title, category }: Props) {
-    return <article className={style.head}>
+    return <motion.article className={style.head} initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: 'tween', duration: 0.3 }}>
         <h1>{title}</h1>
         
         <section className={style.category}>
@@ -14,5 +15,5 @@ export default function AssetDetailHead({ title, category }: Props) {
             <div className={style.line}></div>
             <p>자습서</p>
         </section>
-    </article>;
+    </motion.article>;
 }
