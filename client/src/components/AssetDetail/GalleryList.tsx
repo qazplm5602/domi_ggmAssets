@@ -1,12 +1,22 @@
+import { ThumbnailVO } from '@domiTypes/asset';
 import style from '@styles/assetDetail/style.module.scss';
+import { getThumbnailURL } from '@utils/file';
 
-export default function AssetDetailGalleryList() {
+type Props = {
+    images: ThumbnailVO[],
+    current: number,
+    onClick?: (idx: number) => void
+}
+
+export default function AssetDetailGalleryList({ images, current, onClick }: Props) {
+    const handleImageClick = function(idx: number) {
+        if (onClick)
+            onClick(idx);
+    }
+
     return <section className={style.list}>
-        <button className={style.box}>
-            <img src="https://assetstorev1-prd-cdn.unity3d.com/key-image/c01ce1fe-99e0-49f6-93ad-7499b15f120f.jpg" alt="thumbnail 1" />
-        </button>
-        <button className={`${style.box} ${style.disable}`}>
-            <img src="https://assetstorev1-prd-cdn.unity3d.com/key-image/c01ce1fe-99e0-49f6-93ad-7499b15f120f.jpg" alt="thumbnail 1" />
-        </button>
+        {images.map((v, i) => <button key={v.previewUrl} className={`${style.box} ${current === i ? style.disable : ''}`} onClick={() => handleImageClick(i)}>
+            <img src={getThumbnailURL(v.previewUrl)} alt={`thumbnail ${i}`} />
+        </button>)}
     </section>;
 }
