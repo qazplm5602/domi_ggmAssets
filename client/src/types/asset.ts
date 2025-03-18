@@ -23,3 +23,10 @@ export interface AssetDetailVO extends AssetBaseVO {
     supports: CompatibilityVO[],
     images: ThumbnailVO[]
 }
+
+export interface AssetSearchOption {
+    category: string,
+    order: string,
+    amount: string,
+    page: string
+}

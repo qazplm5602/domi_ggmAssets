@@ -1,11 +1,5 @@
+import { AssetSearchOption } from "@domiTypes/asset";
 import { useSearchParams } from "react-router-dom";
-
-export interface AssetSearchOption {
-    category: string,
-    order: string,
-    amount: string,
-    page: string
-}
 
 function getParams(key: string, defaultVal: string, onlyNum: boolean = false) {
     const [ searchParams ] = useSearchParams();
@@ -28,9 +22,14 @@ export function useAssetSearchOption(): AssetSearchOption {
 }
 
 export function useSetAssetSearchOption() {
-    const [ _, setSearchParams ] = useSearchParams();
+    const [ searchParams, setSearchParams ] = useSearchParams();
 
     return function(values: Partial<AssetSearchOption>) {
-        setSearchParams(values);
+        const currentParams: { [key: string]: string } = {};
+        searchParams.forEach((v, k) => {
+            currentParams[k] = v;
+        });
+
+        setSearchParams({ ...currentParams, ...values });
     }
 }
