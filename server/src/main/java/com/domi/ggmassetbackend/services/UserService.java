@@ -1,6 +1,7 @@
 package com.domi.ggmassetbackend.services;
 
 import com.domi.ggmassetbackend.data.entity.User;
+import com.domi.ggmassetbackend.data.enums.UserGroup;
 import com.domi.ggmassetbackend.exceptions.NotAllowEmailException;
 import com.domi.ggmassetbackend.exceptions.UserException;
 import com.domi.ggmassetbackend.repositories.UserRepository;
@@ -13,6 +14,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -39,6 +41,7 @@ public class UserService {
             user = new User();
             user.setEmail(email);
             user.setName(name);
+            user.setRoles(List.of(UserGroup.USER)); // USER 기본 권한
 
             user = userRepository.save(user);
         }

@@ -54,6 +54,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(request ->
                 request
 //                        .requestMatchers("/api/user/@me").authenticated()
+                        .requestMatchers("/api/domi").hasAnyAuthority("ROLE_DOMI")
                         .anyRequest().permitAll()
         );
 
