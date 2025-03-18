@@ -12,7 +12,7 @@ export default function AssetDetailHead({ title, category }: Props) {
         <section className={style.category}>
             <p>Unity 필수에셋</p>    
             <div className={style.line}></div>
-            <p>자습서</p>    
+            <p>자습서</p>
         </section>
     </article>;
 }

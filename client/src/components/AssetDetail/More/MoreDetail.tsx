@@ -11,7 +11,7 @@ type Props = {
 export default function AssetDetailMore({ data }: Props) {
     return <article className={style.more}>
         {data.shortDesc && <AssetDetailMoreSimpleDesc content={data.shortDesc} />}
-        <AssetDetailMoreCompatibility />
+        <AssetDetailMoreCompatibility list={data.supports} />
         <AssetDetailMoreFullDesc content={data.description || "설명이 없습니다."} />
     </article>;
 }

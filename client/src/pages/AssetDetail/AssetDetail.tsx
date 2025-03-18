@@ -39,7 +39,7 @@ export default function AssetDetail() {
 
         <section className={style.main}>
             <AssetDetailHead title={data.title} category={data.category} />
-            <AssetDetailPreviewContainer />
+            <AssetDetailPreviewContainer data={data} />
             <AssetDetailMore data={data} />
         </section>
     </main>;
