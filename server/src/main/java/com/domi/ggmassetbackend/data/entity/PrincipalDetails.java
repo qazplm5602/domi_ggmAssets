@@ -3,6 +3,7 @@ package com.domi.ggmassetbackend.data.entity;
 import com.domi.ggmassetbackend.data.enums.UserGroup;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
@@ -69,7 +70,7 @@ public class PrincipalDetails implements OAuth2User, UserDetails {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
 
         for (UserGroup group : user.getRoles()) {
-            authorities.add(() -> "ROLE_" + group.name());
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + group.name()));
         }
 
         return authorities;

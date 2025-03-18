@@ -2,8 +2,10 @@ package com.domi.ggmassetbackend.configs;
 
 import com.domi.ggmassetbackend.filters.LoginFailHandler;
 import com.domi.ggmassetbackend.filters.LoginSuccessHandler;
+import com.domi.ggmassetbackend.filters.TokenAuthenticationFilter;
 import com.domi.ggmassetbackend.services.AuthService;
 import com.domi.ggmassetbackend.services.JwtService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +16,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.web.SecurityFilterChain;
 import com.domi.ggmassetbackend.services.DomiOauth2UserService;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
 @RequiredArgsConstructor
@@ -22,6 +25,7 @@ public class SecurityConfig {
     private final DomiOauth2UserService oauth2UserService;
     private final LoginSuccessHandler loginSuccessHandler;
     private final LoginFailHandler LoginFailHandler;
+    private final TokenAuthenticationFilter tokenAuthenticationFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -51,12 +55,26 @@ public class SecurityConfig {
 
         http.anonymous(AbstractHttpConfigurer::disable);
 
+        // 권한 확인 하기 전에 토큰 인증해야 됨 !!!!!
+        http.addFilterAfter(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
         http.authorizeHttpRequests(request ->
                 request
-//                        .requestMatchers("/api/user/@me").authenticated()
-                        .requestMatchers("/api/domi").hasAnyAuthority("ROLE_DOMI")
-                        .anyRequest().permitAll()
+                        .requestMatchers("/api/user/@me").permitAll()
+//                        .requestMatchers("/api/domi").hasAnyRole("DOMI")
+                        .anyRequest().authenticated()
         );
+
+        http.exceptionHandling(exception -> {
+            exception.authenticationEntryPoint((request, response, authException) -> {
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                response.getWriter().write("Access Denied");
+            });
+            exception.accessDeniedHandler((request, response, accessDeniedException) -> {
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                response.getWriter().write("Access Denied");
+            });
+        });
 
 
         return http.build();
