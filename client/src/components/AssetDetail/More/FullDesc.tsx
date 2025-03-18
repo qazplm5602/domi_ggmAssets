@@ -1,8 +1,12 @@
 import style from '@styles/assetDetail/style.module.scss';
 import AssetDetailMoreSection from './MoreSection';
 
-export default function AssetDetailMoreFullDesc() {
+type Props = {
+    content: string
+}
+
+export default function AssetDetailMoreFullDesc({ content }: Props) {
     return <AssetDetailMoreSection title="설명" className={`${style.default_words} ${style.pre}`}>
-        {`아무 설명 ㅁㄴㅇㄹ`}
+        {content}
     </AssetDetailMoreSection>
 }

@@ -1,8 +1,13 @@
 import style from '@styles/assetDetail/style.module.scss';
 
-export default function AssetDetailHead() {
+type Props = {
+    title: string,
+    category: string
+}
+
+export default function AssetDetailHead({ title, category }: Props) {
     return <article className={style.head}>
-        <h1>Fantasy Kingdom in Unity 6 | URP</h1>
+        <h1>{title}</h1>
         
         <section className={style.category}>
             <p>Unity 필수에셋</p>    

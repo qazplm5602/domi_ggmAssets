@@ -38,9 +38,9 @@ export default function AssetDetail() {
         <AssetDetailBlurBG images={data.images} />
 
         <section className={style.main}>
-            <AssetDetailHead />
+            <AssetDetailHead title={data.title} category={data.category} />
             <AssetDetailPreviewContainer />
-            <AssetDetailMore />
+            <AssetDetailMore data={data} />
         </section>
     </main>;
 }
