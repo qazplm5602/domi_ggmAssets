@@ -1,14 +1,12 @@
 package com.domi.ggmassetbackend.data.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,7 +27,9 @@ public class Asset {
 
     private String publisher;
 
-    private String category;
+//    private String category;
+    @ManyToOne
+    private Category category;
 
     @OneToMany(cascade = CascadeType.PERSIST)
     private List<Compatibility> supports;

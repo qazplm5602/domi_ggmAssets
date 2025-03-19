@@ -10,7 +10,7 @@ public class AssetPreviewVO extends AssetBaseVO {
     public static AssetPreviewVO from(Asset asset) {
         AssetPreviewVO result = new AssetPreviewVO();
 
-        result.category = asset.getCategory();
+//        result.category = asset.getCategory();
         result.title = asset.getTitle();
         result.publisher = asset.getPublisher();
         result.thumbnail = ThumbnailPageVO.from(asset, (byte) 0);

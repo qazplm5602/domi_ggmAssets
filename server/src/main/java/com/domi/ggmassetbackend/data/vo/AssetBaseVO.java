@@ -12,7 +12,7 @@ public class AssetBaseVO {
     public static AssetBaseVO from(Asset asset) {
         AssetBaseVO result = new AssetBaseVO();
 
-        result.category = asset.getCategory();
+//        result.category = asset.getCategory();
         result.title = asset.getTitle();
         result.publisher = asset.getPublisher();
 
