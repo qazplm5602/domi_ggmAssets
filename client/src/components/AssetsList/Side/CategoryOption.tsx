@@ -26,7 +26,8 @@ export default function AssetsListSideCategoryOption() {
 
         return { dict, children };
     }, [ data ]);
-
+    const firstCategories = useMemo(() => data.filter(v => v.parentId === null), [ data ]);
+    
     const onLoad = async function(aliveRef: AliveType) {
         const result = await request<CategoryVO[]>("asset/category");
         if (!aliveRef.alive) return;
@@ -45,6 +46,6 @@ export default function AssetsListSideCategoryOption() {
     }, []);
 
     return <AssetsListSideBox title="카테고리">
-        <AssetsListSideCategoryBox />
+        {firstCategories.map(v => <AssetsListSideCategoryBox key={v.id} my={v.id} depth={0} list={indexingData} />)}
     </AssetsListSideBox>
 }
