@@ -26,7 +26,7 @@ public class ThumbnailPageVO {
                 .filter(v -> v.getType() == ThumbnailType.Image)
                 .toList();
 
-        if (startIdx >= images.size()) {
+        if (startIdx > images.size()) {
             throw new DomiException("THUMBNAIL0", "미리보기 이미지 페이지가 너무 큽니다.", HttpStatus.BAD_REQUEST);
         }
 

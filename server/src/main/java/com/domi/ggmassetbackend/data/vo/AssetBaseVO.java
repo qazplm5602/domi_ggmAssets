@@ -5,6 +5,7 @@ import lombok.Getter;
 
 @Getter
 public class AssetBaseVO {
+    protected int id;
     protected String category;
     protected String title;
     protected String publisher;
@@ -12,6 +13,7 @@ public class AssetBaseVO {
     public static AssetBaseVO from(Asset asset) {
         AssetBaseVO result = new AssetBaseVO();
 
+        result.id = asset.getId();
 //        result.category = asset.getCategory();
         result.title = asset.getTitle();
         result.publisher = asset.getPublisher();

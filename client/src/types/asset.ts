@@ -11,7 +11,13 @@ export interface ThumbnailVO {
     previewUrl: string
 }
 
+export interface PageThumbnailVO {
+    images: ThumbnailVO[],
+    size: number
+}
+
 export interface AssetBaseVO {
+    id: number,
     category: string,
     title: string,
     publisher: string
@@ -22,6 +28,10 @@ export interface AssetDetailVO extends AssetBaseVO {
     description: string,
     supports: CompatibilityVO[],
     images: ThumbnailVO[]
+}
+
+export interface AssetPreviewVO extends AssetBaseVO {
+    thumbnail: PageThumbnailVO
 }
 
 export interface AssetSearchOption {

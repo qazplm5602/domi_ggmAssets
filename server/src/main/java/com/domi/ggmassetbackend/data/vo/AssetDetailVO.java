@@ -16,6 +16,7 @@ public class AssetDetailVO extends AssetBaseVO {
     public static AssetDetailVO from(Asset asset) {
         AssetDetailVO result = new AssetDetailVO();
 
+        result.id = asset.getId();
 //        result.category = asset.getCategory();
         result.title = asset.getTitle();
         result.publisher = asset.getPublisher();
