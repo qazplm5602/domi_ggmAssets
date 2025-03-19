@@ -38,17 +38,13 @@ public class AssetService {
             page = option.getPage();
         }
 
-//        categoryService.findSubCategoryIds(2);
+        // 검색 조건
+        Specification<Asset> specification = Specification.allOf();
+        if (option.getCategory() != null && !option.getCategory().isEmpty()) {
+            specification = specification.and(categoryService.hasCategory(option.getCategory()));
+        }
 
         Pageable pageable = PageRequest.of(page, amount);
-        return assetRepository.findAll(pageable);
+        return assetRepository.findAll(specification, pageable);
     }
-
-//    public Specification<Asset> hasCategory(int categoryId) {
-//        return (root, query, cb) -> {
-////            return cb.equal(root.get("category"), );
-//        };
-//    }
-
-
 }

@@ -1,7 +1,10 @@
 package com.domi.ggmassetbackend.services;
 
+import com.domi.ggmassetbackend.data.entity.Asset;
 import com.domi.ggmassetbackend.repositories.CategoryRepository;
+import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,5 +34,32 @@ public class CategoryService {
         }
 
         return ids;
+    }
+
+    public Specification<Asset> hasCategory(String categoryList) {
+        List<Integer> ids = new ArrayList<>();
+        String[] categorys = categoryList.split(",");
+        boolean isNotCategoryInclude = false;
+
+        for (String category : categorys) {
+            int idx = Integer.parseInt(category);
+
+            if (idx == -1) {
+                isNotCategoryInclude = true;
+                continue;
+            }
+
+            ids.addAll(findSubCategoryIds(idx)); // 자식 id 다 넣음
+        }
+
+        boolean finalIsNotCategoryInclude = isNotCategoryInclude;
+        return (root, query, cb) -> {
+            Predicate predicate = root.get("category").get("id").in(ids);
+
+            if (finalIsNotCategoryInclude)
+                predicate = cb.or(predicate, cb.isNull(root.get("category").get("id")));
+
+            return predicate;
+        };
     }
 }
