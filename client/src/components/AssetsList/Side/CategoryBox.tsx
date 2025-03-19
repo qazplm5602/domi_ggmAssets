@@ -3,7 +3,8 @@ import checkIcon from '@assets/icons/check.svg';
 
 import leftArrowSvg from '@assets/icons/arrow-left.svg';
 import { CategoryIndexing } from '@domiTypes/category';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import { useAssetSearchOption, useSetAssetSearchOption } from '../hook';
 
 type Props = {
     list: CategoryIndexing,
@@ -16,14 +17,34 @@ export default function AssetsListSideCategoryBox({ my, depth, list }: Props) {
     const myChildren = list.children[my];
     const myCategory = list.dict[my];
     const ID = `domi-category-check-${my}`;
+    const { category } = useAssetSearchOption();
+    const setAssetSearchOption = useSetAssetSearchOption();
 
+    const checked = useMemo<boolean | null>(() => { // null은 부분 선택
+        const nowCategorys = new Set(category.split(",").map(v => Number(v)).filter(v => !isNaN(v)));
+        
+        // 체크 된게 없엉
+        if (nowCategorys.size === 0)
+            return false;
+
+        if (nowCategorys.has(my))
+            return true;
+
+        return false;
+    }, [ category ]);
+    
     const handleExpand = function() {
         setExpand(!expand);
     }
 
+    const handleChangeCheck = function(e: React.ChangeEvent<HTMLInputElement>) {
+        const active = e.target.checked;
+        const nowCategorys = new Set(category.split(",").map(v => Number(v)).filter(v => !isNaN(v)));
+    }
+
     return <>
         <div className={style.category} style={{ paddingLeft: (15 * depth) }}>
-            <input type="checkbox" id={ID} className={style.check} />
+            <input type="checkbox" id={ID} className={style.check} checked={checked !== false} onChange={handleChangeCheck} />
             <label htmlFor={ID} className={style.check_design}>
                 <img src={checkIcon} draggable={false} alt='check' />
             </label>
