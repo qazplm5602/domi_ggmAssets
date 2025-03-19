@@ -7,13 +7,17 @@ import { CategoryIndexing } from '@domiTypes/category';
 import { useMemo, useState } from 'react';
 import { useAssetSearchOption, useSetAssetSearchOption } from '../hook';
 
+import { motion } from 'framer-motion';
+
+
 type Props = {
     list: CategoryIndexing,
     my: number,
-    depth: number
+    depth: number,
+    idx?: number
 }
 
-export default function AssetsListSideCategoryBox({ my, depth, list }: Props) {
+export default function AssetsListSideCategoryBox({ my, depth, list, idx = 1 }: Props) {
     const [ expand, setExpand ] = useState(false);
     const myChildren = list.children[my];
     const myCategory = list.dict[my];
@@ -118,7 +122,7 @@ export default function AssetsListSideCategoryBox({ my, depth, list }: Props) {
     }
 
     return <>
-        <div className={style.category} style={{ paddingLeft: (15 * depth) }}>
+        <motion.div className={style.category} style={{ paddingLeft: (15 * depth) }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.01 * idx }}>
             <input type="checkbox" id={ID} className={style.check} checked={checked !== false} onChange={handleChangeCheck} />
             <label htmlFor={ID} className={style.check_design}>
                 <img src={checked === null ? lineIcon : checkIcon} draggable={false} alt='check' />
@@ -129,9 +133,9 @@ export default function AssetsListSideCategoryBox({ my, depth, list }: Props) {
             {myChildren && <button className={`${style.toggle} ${expand ? style.active : ''}`} onClick={handleExpand}>
                 <img src={leftArrowSvg} alt="toggle" />
             </button>}
-        </div>
+        </motion.div>
 
         {/* 하위 카테고리까지 선택 ㅁㄴㅇㄹ */}
-        {(expand && myChildren) && Array.from(myChildren).map(v => <AssetsListSideCategoryBox key={v} my={v} depth={depth + 1} list={list} />)}
+        {(expand && myChildren) && Array.from(myChildren).map((v, i) => <AssetsListSideCategoryBox key={v} my={v} depth={depth + 1} list={list} idx={i} />)}
     </>;
 }

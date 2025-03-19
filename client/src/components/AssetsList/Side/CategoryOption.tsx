@@ -46,6 +46,6 @@ export default function AssetsListSideCategoryOption() {
     }, []);
 
     return <AssetsListSideBox title="카테고리">
-        {firstCategories.map(v => <AssetsListSideCategoryBox key={v.id} my={v.id} depth={0} list={indexingData} />)}
+        {firstCategories.map((v, i) => <AssetsListSideCategoryBox key={v.id} my={v.id} depth={0} list={indexingData} idx={i + 1} />)}
     </AssetsListSideBox>
 }
