@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AssetController {
     private final AssetService assetService;
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/detail")
     AssetDetailVO getAssetById(@PathVariable int id) {
         Asset asset = assetService.getAssetById(id);
         return AssetDetailVO.from(asset);

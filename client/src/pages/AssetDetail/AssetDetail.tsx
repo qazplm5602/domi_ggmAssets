@@ -15,7 +15,7 @@ export default function AssetDetail() {
     const [ data, setData ] = useState<AssetDetailVO | null>(null);
 
     const onLoad = async function(aliveRef: AliveType) {
-        const result = await request<AssetDetailVO>(`asset/${id}`);
+        const result = await request<AssetDetailVO>(`asset/${id}/detail`);
         if (!aliveRef.alive) return;
 
         setData(result.data);

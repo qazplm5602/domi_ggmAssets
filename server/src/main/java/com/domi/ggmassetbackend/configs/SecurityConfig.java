@@ -61,7 +61,8 @@ public class SecurityConfig {
         http.authorizeHttpRequests(request ->
                 request
                         .requestMatchers("/api/user/@me").permitAll()
-//                        .requestMatchers("/api/domi").hasAnyRole("DOMI")
+//                        .anyRequest().permitAll() // security 버그 ㅁㄴㅇㄹ
+                        .requestMatchers("/api/domi").hasAnyRole("DOMI")
                         .anyRequest().authenticated()
         );
 
