@@ -2,7 +2,10 @@ package com.domi.ggmassetbackend.data.vo;
 
 import com.domi.ggmassetbackend.data.entity.Asset;
 import com.domi.ggmassetbackend.data.entity.Thumbnail;
+import com.domi.ggmassetbackend.data.enums.ThumbnailType;
+import com.domi.ggmassetbackend.exceptions.DomiException;
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
@@ -18,7 +21,14 @@ public class ThumbnailPageVO {
 
         int startIdx = amount * page;
         int endIdx = startIdx + amount;
-        List<Thumbnail> images = asset.getImages();
+        List<Thumbnail> images = asset.getImages()
+                .stream()
+                .filter(v -> v.getType() == ThumbnailType.Image)
+                .toList();
+
+        if (startIdx >= images.size()) {
+            throw new DomiException("THUMBNAIL0", "미리보기 이미지 페이지가 너무 큽니다.", HttpStatus.BAD_REQUEST);
+        }
 
         List<ThumbnailVO> thumbnails = images
                 .subList(startIdx, Math.min(images.size(), endIdx))
