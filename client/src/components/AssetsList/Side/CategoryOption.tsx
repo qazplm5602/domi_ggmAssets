@@ -31,6 +31,13 @@ export default function AssetsListSideCategoryOption() {
     const onLoad = async function(aliveRef: AliveType) {
         const result = await request<CategoryVO[]>("asset/category");
         if (!aliveRef.alive) return;
+        
+        // 분류 되지 않은것도 포함
+        result.data.push({
+            id: -1,
+            name: "분류되지 않음",
+            parentId: null
+        });
 
         setData(result.data);
     }

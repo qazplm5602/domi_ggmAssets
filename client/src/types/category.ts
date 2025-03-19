@@ -1,7 +1,7 @@
 export interface CategoryVO {
     id: number,
     name: string,
-    parentId?: number
+    parentId: number | null
 }
 
 export interface CategoryIndexing {
