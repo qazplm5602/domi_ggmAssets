@@ -2,15 +2,11 @@ package com.domi.ggmassetbackend.controllers;
 
 import com.domi.ggmassetbackend.data.dto.AssetSearchParamDTO;
 import com.domi.ggmassetbackend.data.entity.Asset;
-import com.domi.ggmassetbackend.data.vo.AssetDetailVO;
-import com.domi.ggmassetbackend.data.vo.AssetPreviewVO;
-import com.domi.ggmassetbackend.data.vo.PageContentVO;
+import com.domi.ggmassetbackend.data.vo.*;
 import com.domi.ggmassetbackend.services.AssetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("/api/asset")
@@ -29,5 +25,11 @@ public class AssetController {
         Page<Asset> pageAssets = assetService.searchAssets(option);
 
         return new PageContentVO<>(pageAssets.map(AssetPreviewVO::from).toList(), pageAssets.getTotalPages());
+    }
+
+    @GetMapping("/{id}/preview")
+    ThumbnailPageVO getThumbnailById(@PathVariable int id, @RequestParam byte page) {
+        Asset asset = assetService.getAssetById(id);
+        return ThumbnailPageVO.from(asset, page);
     }
 }

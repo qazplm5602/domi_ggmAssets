@@ -17,16 +17,17 @@ public class ThumbnailPageVO {
         ThumbnailPageVO result = new ThumbnailPageVO();
 
         int startIdx = amount * page;
-        int endIdx = startIdx + page;
+        int endIdx = startIdx + amount;
+        List<Thumbnail> images = asset.getImages();
 
-        List<ThumbnailVO> thumbnails = asset.getImages()
-                .subList(startIdx, endIdx)
+        List<ThumbnailVO> thumbnails = images
+                .subList(startIdx, Math.min(images.size(), endIdx))
                 .stream()
                 .map(ThumbnailVO::from)
                 .toList();
 
         result.images = thumbnails;
-        result.size = Math.ceilDiv(asset.getImages().size(), amount);
+        result.size = Math.ceilDiv(images.size(), amount);
 
         return result;
     }

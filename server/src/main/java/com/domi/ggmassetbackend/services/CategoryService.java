@@ -56,6 +56,7 @@ public class CategoryService {
         return (root, query, cb) -> {
             Predicate predicate = root.get("category").get("id").in(ids);
 
+            // -1은 분류되지 않은것도 포함임 ㅁㄴㅇㄹ
             if (finalIsNotCategoryInclude)
                 predicate = cb.or(predicate, cb.isNull(root.get("category").get("id")));
 
