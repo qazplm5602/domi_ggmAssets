@@ -1,6 +1,7 @@
 package com.domi.ggmassetbackend.services;
 
 import com.domi.ggmassetbackend.data.entity.Asset;
+import com.domi.ggmassetbackend.data.entity.Category;
 import com.domi.ggmassetbackend.repositories.CategoryRepository;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
@@ -62,5 +63,9 @@ public class CategoryService {
 
             return predicate;
         };
+    }
+
+    public List<Category> getCategoryParents(Category category) {
+        return categoryRepository.findByParents(category.getId());
     }
 }

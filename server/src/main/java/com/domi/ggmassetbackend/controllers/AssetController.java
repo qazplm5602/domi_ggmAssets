@@ -4,6 +4,7 @@ import com.domi.ggmassetbackend.data.dto.AssetSearchParamDTO;
 import com.domi.ggmassetbackend.data.entity.Asset;
 import com.domi.ggmassetbackend.data.vo.*;
 import com.domi.ggmassetbackend.services.AssetService;
+import com.domi.ggmassetbackend.services.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class AssetController {
     private final AssetService assetService;
+    private final CategoryService categoryService;
 
     @GetMapping("/{id}/detail")
     AssetDetailVO getAssetById(@PathVariable int id) {
@@ -24,7 +26,7 @@ public class AssetController {
     PageContentVO<AssetPreviewVO> getAssetsBySearch(@ModelAttribute AssetSearchParamDTO option) {
         Page<Asset> pageAssets = assetService.searchAssets(option);
 
-        return new PageContentVO<>(pageAssets.map(AssetPreviewVO::from).toList(), pageAssets.getTotalPages());
+        return new PageContentVO<>(pageAssets.map(v -> AssetPreviewVO.from(v, categoryService)).toList(), pageAssets.getTotalPages());
     }
 
     @GetMapping("/{id}/preview")
