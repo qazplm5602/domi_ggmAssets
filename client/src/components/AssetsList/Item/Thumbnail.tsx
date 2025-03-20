@@ -17,6 +17,7 @@ const ANIM_VARIANTS = {
         x: 0
     },
     exit: (back: boolean) => ({
+        position: "absolute",
         x: (100 * (back ? 1 : -1)) + '%'
     })
 }
@@ -67,7 +68,7 @@ export default function AssetsListItemThumbnail({ images }: Props) {
                     animate="center"
                     exit="exit"
                     transition={ANIM_TRANSITION}
-                    variants={ANIM_VARIANTS}
+                    variants={ANIM_VARIANTS as any}
                 />
             </AnimatePresence>
         </article>
