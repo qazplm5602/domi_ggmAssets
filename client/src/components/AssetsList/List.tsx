@@ -8,17 +8,27 @@ import { PageContentVO } from '@domiTypes/page';
 import AssetsListLoadingContainer from './ListLoading';
 import AssetItemAnim from './Item/ItemAnim';
 
-export default function AssetsListContainer() {
+type Props = {
+    onChangeMaxPage?: (amount: number | null) => void
+}
+
+export default function AssetsListContainer({ onChangeMaxPage }: Props) {
     const { amount, category, order, page } = useAssetSearchOption();
     const [ data, setData ] = useState<PageContentVO<AssetPreviewVO> | null>(null);
     
     const onLoad = async function(aliveRef: AliveType) {
         setData(null);
         
+        if (onChangeMaxPage)
+            onChangeMaxPage(null);
+        
         const result = await request<PageContentVO<AssetPreviewVO>>("asset/search", { params: { amount, category, order, page } });
         if (!aliveRef.alive) return;
 
         setData(result.data);
+
+        if (onChangeMaxPage)
+            onChangeMaxPage(result.data.size);
     }
 
     useEffect(() => {
