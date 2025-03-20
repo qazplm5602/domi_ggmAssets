@@ -37,8 +37,9 @@ public class ThumbnailPageVO {
                 .toList();
 
         result.images = thumbnails;
-        result.size = Math.ceilDiv(images.size(), amount);
-
+//        result.size = Math.ceilDiv(images.size(), amount);
+        result.size = images.size(); // 생각 해보니 페이지 갯수로 하면 제대로 몇개인지 모름
+        
         return result;
     }
 }
