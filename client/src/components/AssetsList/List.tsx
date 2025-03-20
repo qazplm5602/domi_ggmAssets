@@ -6,6 +6,7 @@ import { AliveType } from '@domiTypes/alive';
 import { request } from '@utils/request';
 import { AssetPreviewVO } from '@domiTypes/asset';
 import { PageContentVO } from '@domiTypes/page';
+import AssetsListLoadingContainer from './ListLoading';
 
 export default function AssetsListContainer() {
     const { amount, category, order, page } = useAssetSearchOption();
@@ -31,7 +32,7 @@ export default function AssetsListContainer() {
     }, [ amount, category, order, page ]);
 
     if (data === null)
-        return;
+        return <AssetsListLoadingContainer />;
 
     return <section className={style.itemContainer}>
         {data.items.map(v => <AssetItem key={v.title} />)}
