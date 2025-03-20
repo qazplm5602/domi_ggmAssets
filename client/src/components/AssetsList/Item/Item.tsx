@@ -35,7 +35,7 @@ const TEST_MOCK_ITEM: AssetPreviewVO = {
 export default function AssetItem({ className, data = TEST_MOCK_ITEM }: Props) {
     return <Link to='/asset/1'>
         <div className={`${style.item} ${className || ''}`}>
-            <AssetsListItemThumbnail images={data.thumbnail} />
+            <AssetsListItemThumbnail id={data.id} images={data.thumbnail} />
             <AssetItemDetail title={data.title} publisher={data.publisher} />
             <AssetItemInfo />
         </div>
