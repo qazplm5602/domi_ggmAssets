@@ -1,3 +1,5 @@
+import { CategoryVO } from "./category"
+
 export interface CompatibilityVO {
     version: string,
     builtIn: boolean,
@@ -18,7 +20,7 @@ export interface PageThumbnailVO {
 
 export interface AssetBaseVO {
     id: number,
-    category: string,
+    category: CategoryVO[] | null,
     title: string,
     publisher: string
 }

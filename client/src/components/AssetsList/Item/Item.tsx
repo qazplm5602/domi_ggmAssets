@@ -10,9 +10,9 @@ type Props = {
     data?: AssetPreviewVO
 }
 
-const TEST_MOCK_ITEM: AssetPreviewVO = {
+const TEST_MOCK_ITEM: AssetPreviewVO =  {
     "id": 1,
-    "category": "",
+    "category": null,
     "title": "도미 에셋 ㅁㄴㅇㄹ",
     "publisher": "도미임",
     "thumbnail": {
@@ -24,11 +24,21 @@ const TEST_MOCK_ITEM: AssetPreviewVO = {
             },
             {
                 "type": "Image",
-                "contentUrl": "domi_content222.jpg",
-                "previewUrl": "domi_preview222.jpg"
+                "contentUrl": "domi_content.jpg",
+                "previewUrl": "domi_preview.jpg"
+            },
+            {
+                "type": "Image",
+                "contentUrl": "domi_content.jpg",
+                "previewUrl": "domi_preview.jpg"
+            },
+            {
+                "type": "Image",
+                "contentUrl": "domi_content.jpg",
+                "previewUrl": "domi_preview.jpg"
             }
         ],
-        "size": 1
+        "size": 12
     }
 }
 
@@ -37,7 +47,7 @@ export default function AssetItem({ className, data = TEST_MOCK_ITEM }: Props) {
         <div className={`${style.item} ${className || ''}`}>
             <AssetsListItemThumbnail id={data.id} images={data.thumbnail} />
             <AssetItemDetail title={data.title} publisher={data.publisher} />
-            <AssetItemInfo />
+            <AssetItemInfo category={data.category} />
         </div>
     </Link>;
 }
