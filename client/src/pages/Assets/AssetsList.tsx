@@ -1,6 +1,6 @@
 import AssetsListContainer from '@components/AssetsList/List';
+import AssetsListPaginationQuery from '@components/AssetsList/PaginationQuery';
 import SideSection from '@components/AssetsList/SideSection';
-import Pagination from '@components/Pagination/Pagination';
 import style from '@styles/assetsList/style.module.scss';
 
 export default function AssetsList() {
@@ -11,7 +11,7 @@ export default function AssetsList() {
         {/* 리스트 */}
         <article className={style.content}>
             <AssetsListContainer />
-            <Pagination current={4} maxPage={6} />
+            <AssetsListPaginationQuery max={null} />
         </article>
     </main>
 }

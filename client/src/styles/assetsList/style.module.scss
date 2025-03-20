@@ -38,12 +38,18 @@ $size-padding: 20px;
     justify-content: center;
 
     gap: 0 10px;
-    
-    & > button {
-        padding: 0 12px;
-        
+
+    .box {
         // width: ;
         height: 32px;
+
+        border-radius: 5px;
+    }
+    
+    & > button {
+        @extend .box;
+
+        padding: 0 12px;
         
         border: none;
         
@@ -52,7 +58,6 @@ $size-padding: 20px;
         font-weight: 400;
 
         background-color: $color-misExtra;
-        border-radius: 5px;
 
         transition: background-color 200ms;
 
@@ -71,6 +76,12 @@ $size-padding: 20px;
                 transform: rotateZ(180deg);
             }
         }
+    }
+
+    & > .pre {
+        @extend .box;
+
+        width: 32px;
     }
 }
 
