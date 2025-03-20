@@ -11,7 +11,7 @@ export default function AssetsList() {
         {/* 리스트 */}
         <article className={style.content}>
             <AssetsListContainer />
-            <Pagination />
+            <Pagination current={4} maxPage={6} />
         </article>
     </main>
 }
