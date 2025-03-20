@@ -1,5 +1,4 @@
 import style from '@styles/assetsList/style.module.scss';
-import AssetItem from './Item/Item';
 import { useEffect, useState } from 'react';
 import { useAssetSearchOption } from './hook';
 import { AliveType } from '@domiTypes/alive';
@@ -7,6 +6,7 @@ import { request } from '@utils/request';
 import { AssetPreviewVO } from '@domiTypes/asset';
 import { PageContentVO } from '@domiTypes/page';
 import AssetsListLoadingContainer from './ListLoading';
+import AssetItemAnim from './Item/ItemAnim';
 
 export default function AssetsListContainer() {
     const { amount, category, order, page } = useAssetSearchOption();
@@ -35,6 +35,6 @@ export default function AssetsListContainer() {
         return <AssetsListLoadingContainer />;
 
     return <section className={style.itemContainer}>
-        {data.items.map(v => <AssetItem key={v.title} />)}
+        {data.items.map((v, i) => <AssetItemAnim key={v.title} idx={i + 1} />)}
     </section>;
 }
