@@ -17,11 +17,6 @@ export default function AssetsListContainer({ onChangeMaxPage }: Props) {
     const [ data, setData ] = useState<PageContentVO<AssetPreviewVO> | null>(null);
     
     const onLoad = async function(aliveRef: AliveType) {
-        setData(null);
-        
-        if (onChangeMaxPage)
-            onChangeMaxPage(null);
-        
         const result = await request<PageContentVO<AssetPreviewVO>>("asset/search", { params: { amount, category, order, page } });
         if (!aliveRef.alive) return;
 
@@ -29,6 +24,13 @@ export default function AssetsListContainer({ onChangeMaxPage }: Props) {
 
         if (onChangeMaxPage)
             onChangeMaxPage(result.data.size);
+    }
+
+    const onDataClear = function() {
+        setData(null);
+        
+        if (onChangeMaxPage)
+            onChangeMaxPage(null);
     }
 
     useEffect(() => {
@@ -41,10 +43,13 @@ export default function AssetsListContainer({ onChangeMaxPage }: Props) {
         }
     }, [ amount, category, order, page ]);
 
+    useEffect(onDataClear, [ amount, category ]);
+
     if (data === null)
         return <AssetsListLoadingContainer />;
 
     return <section className={style.itemContainer}>
         {data.items.map((v, i) => <AssetItemAnim key={v.title} idx={i + 1} />)}
+        {data.items.length === 0 && <div className={style.alert}>검색 결과가 없습니다.</div>}
     </section>;
 }

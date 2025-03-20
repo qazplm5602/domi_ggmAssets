@@ -92,6 +92,16 @@ $size-padding: 20px;
 
     display: flex;
     flex-wrap: wrap;
+
+    & > .alert {
+        width: 100%;
+        text-align: center;
+        
+        color: $color-textSupporting;
+        font-size: 15px;
+
+        margin-top: 30px;
+    }
 }
 
 .side_box {
