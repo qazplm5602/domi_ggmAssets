@@ -14,25 +14,27 @@ public class AssetBaseVO {
     protected String title;
     protected String publisher;
 
-    public static AssetBaseVO from(Asset asset) {
-        AssetBaseVO result = new AssetBaseVO();
+    public void assetDataInit(Asset asset, CategoryService categoryService) {
+        this.id = asset.getId();
+        this.title = asset.getTitle();
+        this.publisher = asset.getPublisher();
 
-        result.id = asset.getId();
-//        result.category = asset.getCategory();
-        result.title = asset.getTitle();
-        result.publisher = asset.getPublisher();
-
-        return result;
+        if (categoryService != null && asset.getCategory() != null) {
+            this.category = categoryService.getCategoryParents(asset.getCategory())
+                    .stream()
+                    .map(CategoryVO::from)
+                    .collect(Collectors.toList())
+                    .reversed();
+        }
     }
 
-    // 동일한 코드가 있어서 개선 예정...
+    public static AssetBaseVO from(Asset asset) {
+        return from(asset, null);
+    }
+
     public static AssetBaseVO from(Asset asset, CategoryService categoryService) {
-        AssetBaseVO result = from(asset);
-        result.category = categoryService.getCategoryParents(asset.getCategory())
-                .stream()
-                .map(CategoryVO::from)
-                .collect(Collectors.toList())
-                .reversed();
+        AssetBaseVO result = new AssetBaseVO();
+        result.assetDataInit(asset, null);
 
         return result;
     }

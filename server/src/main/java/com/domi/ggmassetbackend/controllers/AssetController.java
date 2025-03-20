@@ -19,7 +19,7 @@ public class AssetController {
     @GetMapping("/{id}/detail")
     AssetDetailVO getAssetById(@PathVariable int id) {
         Asset asset = assetService.getAssetById(id);
-        return AssetDetailVO.from(asset);
+        return AssetDetailVO.from(asset, categoryService);
     }
 
     @GetMapping("/search")

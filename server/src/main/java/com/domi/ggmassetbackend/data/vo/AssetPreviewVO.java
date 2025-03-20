@@ -11,30 +11,19 @@ import java.util.stream.Collectors;
 public class AssetPreviewVO extends AssetBaseVO {
     ThumbnailPageVO thumbnail;
 
-    public static AssetPreviewVO from(Asset asset) {
-        AssetPreviewVO result = new AssetPreviewVO();
-
-        result.id = asset.getId();
-//        result.category = asset.getCategory();
-        result.title = asset.getTitle();
-        result.publisher = asset.getPublisher();
-        result.thumbnail = ThumbnailPageVO.from(asset, (byte) 0);
-
-        return result;
+    @Override
+    public void assetDataInit(Asset asset, CategoryService categoryService) {
+        super.assetDataInit(asset, categoryService);
+        this.thumbnail = ThumbnailPageVO.from(asset, (byte) 0);
     }
 
-    // 동일한 코드가 있어서 개선 예정...
-    public static AssetPreviewVO from(Asset asset, CategoryService categoryService) {
-        AssetPreviewVO result = from(asset);
-        Category category = asset.getCategory();
+    public static AssetPreviewVO from(Asset asset) {
+        return from(asset, null);
+    }
 
-        if (category != null) {
-            result.category = categoryService.getCategoryParents(category)
-                    .stream()
-                    .map(CategoryVO::from)
-                    .collect(Collectors.toList())
-                    .reversed();
-        }
+    public static AssetPreviewVO from(Asset asset, CategoryService categoryService) {
+        AssetPreviewVO result = new AssetPreviewVO();
+        result.assetDataInit(asset, categoryService);
 
         return result;
     }
