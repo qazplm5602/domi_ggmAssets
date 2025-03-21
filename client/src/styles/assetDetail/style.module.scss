@@ -39,8 +39,11 @@
         align-items: center;
 
         gap: 0 8px;
-        color: $color-text;
-        font-size: 15px;
+
+        & > a {
+            color: $color-text;
+            font-size: 15px;
+        }
 
         & > .line {
             background-color: $color-textSupporting;

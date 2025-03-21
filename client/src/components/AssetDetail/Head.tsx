@@ -1,9 +1,12 @@
+import { CategoryVO } from '@domiTypes/category';
 import style from '@styles/assetDetail/style.module.scss';
 import { motion } from 'framer-motion';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 type Props = {
     title: string,
-    category: string
+    category: CategoryVO[] | null
 }
 
 export default function AssetDetailHead({ title, category }: Props) {
@@ -11,9 +14,11 @@ export default function AssetDetailHead({ title, category }: Props) {
         <h1>{title}</h1>
         
         <section className={style.category}>
-            <p>Unity 필수에셋</p>    
-            <div className={style.line}></div>
-            <p>자습서</p>
+            {!category && <Link to="/assets?category=-1">분류되지 않음</Link>}
+            {category && category.map((v, i) => <React.Fragment key={v.id}>
+                {i !== 0 && <div className={style.line}></div>}
+                <Link to={`/assets?category=${v.id}`}>{v.name}</Link>
+            </React.Fragment>)}
         </section>
     </motion.article>;
 }
