@@ -82,6 +82,10 @@
                 font-size: 24px;
                 font-weight: 500;
             }
+            
+            & > .goto {
+                @include base_button;
+            }
         }
 
         & > .list {

@@ -3,6 +3,7 @@ import HomeAssetsBoxHead from './Head';
 import AssetItem from '@components/AssetsList/Item/Item';
 
 import { AnimationProps, motion } from 'framer-motion';
+import { CategoryVO } from '@domiTypes/category';
 
 const INIT_STYLE: AnimationProps['initial'] = {
     y: 50,
@@ -13,9 +14,13 @@ const NOW_STYLE: AnimationProps['animate'] = {
     opacity: 1
 }
 
-export default function HomeAssetsBox() {
+type Props = {
+    category: CategoryVO
+}
+
+export default function HomeAssetsBox({ category }: Props) {
     return <motion.div initial={INIT_STYLE} animate={NOW_STYLE} className={style.box}>
-        <HomeAssetsBoxHead />
+        <HomeAssetsBoxHead title={category.name} id={category.id} />
         
         {/* 리스트 */}
         <article className={style.list}>
