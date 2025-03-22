@@ -5,6 +5,7 @@ import { CategoryVO } from '@domiTypes/category';
 import { useHandleAlive } from '@utils/requestEventHook';
 import { AliveType } from '@domiTypes/alive';
 import { request } from '@utils/request';
+import HomeLoading from './Loading';
 
 export default function HomeContent() {
     const [ categorys, setCategorys ] = useState<CategoryVO[] | null>(null);
@@ -18,7 +19,7 @@ export default function HomeContent() {
     useHandleAlive(handleLoad, []);
 
     if (categorys === null)
-        return;
+        return <HomeLoading />;
 
     return <section className={style.assets}>
         {categorys.map(v => <HomeAssetsBox key={v.id} category={v} />)}

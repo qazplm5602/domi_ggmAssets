@@ -57,15 +57,20 @@
 
     @include screen_container(1500px);
 
+    & > .base_box {
+        width: 435px;
+        height: 530px;
+
+        border-radius: 10px;
+    }
+
     & > .box {
+        @extend .base_box;
+
         display: flex;
         flex-direction: column;
 
-        width: 435px;
-        height: 530px;
         padding: 20px 25px;
-
-        border-radius: 10px;
 
         background-color: $color-foreground;
         border: 1px solid rgba($color: #fff, $alpha: 0.1);
