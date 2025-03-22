@@ -31,7 +31,7 @@ export default function HomeAssetsBox({ category }: Props) {
     const [ assets, setAssets ] = useState<AssetPreviewVO[] | null>(null);
     
     const handleLoad = async function(aliveRef: AliveType) {
-        const result = await request<PageContentVO<AssetPreviewVO>>("asset/search", { params: { category: category.id, amount: ASSET_AMOUNT } });
+        const result = await request<PageContentVO<AssetPreviewVO>>("asset/search", { params: { category: category.id, amount: ASSET_AMOUNT, random: true } });
 
         if (!aliveRef.alive) return;
 

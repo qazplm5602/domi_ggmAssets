@@ -10,4 +10,5 @@ public class AssetSearchParamDTO {
     String category;
     Integer order;
     Integer page;
+    Boolean random;
 }

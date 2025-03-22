@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -44,7 +45,19 @@ public class AssetService {
             specification = specification.and(categoryService.hasCategory(option.getCategory()));
         }
 
-        Pageable pageable = PageRequest.of(page, amount);
+        Sort sortOption = Sort.by(Sort.Direction.ASC, "title");
+        boolean isRandom = option.getRandom() != null && option.getRandom();
+
+        if (option.getOrder() != null && !isRandom) {
+            switch (option.getOrder()) {
+//                case 1 -> sortOption = Sort.by(Sort.Direction.ASC, "title");
+            }
+        } else if (isRandom) {
+//            sortOption = Sort.by(Sort.Order.asc("RAND()"));
+            // 랜덤 어케 할지 생각중...
+        }
+
+        Pageable pageable = PageRequest.of(page, amount, sortOption);
         return assetRepository.findAll(specification, pageable);
     }
 }
