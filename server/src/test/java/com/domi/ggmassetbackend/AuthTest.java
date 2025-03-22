@@ -2,6 +2,7 @@ package com.domi.ggmassetbackend;
 
 import com.domi.ggmassetbackend.data.entity.PrincipalDetails;
 import com.domi.ggmassetbackend.data.entity.User;
+import com.domi.ggmassetbackend.data.enums.UserGroup;
 import com.domi.ggmassetbackend.services.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
@@ -32,6 +35,7 @@ public class AuthTest {
         dbUser.setId(1);
         dbUser.setEmail(email);
         dbUser.setName("domi");
+        dbUser.setRoles(List.of(UserGroup.USER));
 
 //        doReturn(dbUser).when(userService).getUserByEmail(email);
 //        when(userService.getUserByEmail(email)).thenReturn(dbUser);
