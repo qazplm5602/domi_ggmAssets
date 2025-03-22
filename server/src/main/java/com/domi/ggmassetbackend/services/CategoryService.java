@@ -68,4 +68,8 @@ public class CategoryService {
     public List<Category> getCategoryParents(Category category) {
         return categoryRepository.findByParents(category.getId());
     }
+
+    public List<Category> getRandomCategory(int amount) {
+        return categoryRepository.findByRandom(amount);
+    }
 }

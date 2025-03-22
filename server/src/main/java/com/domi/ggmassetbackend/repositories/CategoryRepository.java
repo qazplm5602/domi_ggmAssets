@@ -23,4 +23,7 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
      SELECT * FROM category_tree;
     """, nativeQuery = true)
     List<Category> findByParents(@Param("id") Integer id);
+
+    @Query("SELECT c FROM Category c ORDER BY RAND() LIMIT :amount")
+    List<Category> findByRandom(@Param("amount") int amount);
 }

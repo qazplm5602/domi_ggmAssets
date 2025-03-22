@@ -3,6 +3,7 @@ package com.domi.ggmassetbackend.controllers;
 import com.domi.ggmassetbackend.data.entity.Category;
 import com.domi.ggmassetbackend.data.vo.CategoryVO;
 import com.domi.ggmassetbackend.repositories.CategoryRepository;
+import com.domi.ggmassetbackend.services.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,10 +16,19 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/asset/category")
 @RestController
 public class CategoryController {
+    private final CategoryService categoryService;
     private final CategoryRepository categoryRepository;
 
     @GetMapping("")
     List<CategoryVO> getAllCategory() {
         return categoryRepository.findAll().stream().map(CategoryVO::from).collect(Collectors.toList());
+    }
+
+    @GetMapping("/random")
+    List<CategoryVO> getRandomCategory() {
+        return categoryService.getRandomCategory(3)
+                .stream()
+                .map(CategoryVO::from)
+                .collect(Collectors.toList());
     }
 }
