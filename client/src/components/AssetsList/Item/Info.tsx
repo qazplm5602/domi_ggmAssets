@@ -1,12 +1,15 @@
 import style from '@styles/assetsList/style.module.scss';
-import assetsStoreLogo from '@assets/unity-assets-logo.svg';
+
+
 import { AssetPreviewVO } from '@domiTypes/asset';
+import { getPlatformLogoURL } from '@utils/file';
 
 type Props = {
     category: AssetPreviewVO['category'],
+    platform: AssetPreviewVO['platform']
 }
 
-export default function AssetItemInfo({ category }: Props) {
+export default function AssetItemInfo({ category, platform }: Props) {
     return <section className={style.info}>
         <article className={style.category}>
             {category && category.map(v => <div key={v.id}>{v.name}</div>)}
@@ -14,6 +17,6 @@ export default function AssetItemInfo({ category }: Props) {
         </article>
 
         {/* 유니티??? itch io??? */}
-        <img src={assetsStoreLogo} alt='unity assets store' className={style.logo} />
+        {platform && <img src={getPlatformLogoURL(platform)} alt='unity assets store' className={style.logo} />}
     </section>
 }

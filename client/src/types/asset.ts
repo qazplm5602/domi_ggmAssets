@@ -22,7 +22,8 @@ export interface AssetBaseVO {
     id: number,
     category: CategoryVO[] | null,
     title: string,
-    publisher: string
+    publisher: string,
+    platform: null | 'Unity' | 'Itchio'
 }
 
 export interface AssetDetailVO extends AssetBaseVO {

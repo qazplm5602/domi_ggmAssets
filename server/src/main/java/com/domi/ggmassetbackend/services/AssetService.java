@@ -50,7 +50,7 @@ public class AssetService {
 
         if (option.getOrder() != null && !isRandom) {
             switch (option.getOrder()) {
-//                case 1 -> sortOption = Sort.by(Sort.Direction.ASC, "title");
+                case 1 -> sortOption = Sort.by(Sort.Direction.ASC, "publishAt");
             }
         } else if (isRandom) {
 //            sortOption = Sort.by(Sort.Order.asc("RAND()"));
