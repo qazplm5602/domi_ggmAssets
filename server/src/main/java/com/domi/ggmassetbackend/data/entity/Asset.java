@@ -1,8 +1,11 @@
 package com.domi.ggmassetbackend.data.entity;
 
+import com.domi.ggmassetbackend.data.enums.PublishPlatform;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -36,4 +39,16 @@ public class Asset {
 
     @OneToMany(cascade = CascadeType.PERSIST)
     private List<Thumbnail> images;
+
+    @Enumerated(EnumType.STRING)
+    private PublishPlatform platform;
+
+    private String platformUrl;
+    private String downloadUrl;
+
+    private LocalDateTime publishAt;
+
+    @CreatedDate
+    @Column(nullable = false)
+    private LocalDateTime createAt;
 }
