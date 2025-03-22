@@ -1,16 +1,31 @@
+import { AssetSearchOption } from '@domiTypes/asset';
 import style from '@styles/assetsList/side.module.scss';
+import { useAssetSearchOption, useSetAssetSearchOption } from '../hook';
 
 type Props = {
-    title: string
+    title: string,
+    index: keyof AssetSearchOption,
+    items: AssetsListSelectItem[]
 }
 
-export default function AssetsListSideSelect({ title }: Props) {
+export interface AssetsListSelectItem {
+    text: string,
+    value: string
+}
+
+export default function AssetsListSideSelect({ title, index, items }: Props) {
+    const currentValue = useAssetSearchOption()[index];
+    const setSearchOption = useSetAssetSearchOption();
+
+    const handleChangeValue = function(e: React.ChangeEvent<HTMLSelectElement>) {
+        setSearchOption({ [index]: e.target.value });
+    }
+
     return <section className={style.select}>
         <h2>{title}</h2>
         
-        <select>
-            <option value="1">제목순</option>
-            <option value="1">등록순</option>
+        <select value={currentValue} onChange={handleChangeValue}>
+            {items.map(v => <option key={v.value} value={v.value}>{v.text}</option>)}
         </select>
     </section>
 }

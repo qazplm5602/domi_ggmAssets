@@ -1,0 +1,14 @@
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  jenkins-trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Request Domi Server Jenkins Build
+        run: |
+          curl -X GET "${{ secrets.JENKINS_URL }}" \
+          -u "${{ secrets.JENKINS_ACCOUNT }}" \
+          -v

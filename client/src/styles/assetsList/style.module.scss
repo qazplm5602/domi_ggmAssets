@@ -38,12 +38,18 @@ $size-padding: 20px;
     justify-content: center;
 
     gap: 0 10px;
-    
-    & > button {
-        padding: 0 12px;
-        
+
+    .box {
         // width: ;
         height: 32px;
+
+        border-radius: 5px;
+    }
+    
+    & > button {
+        @extend .box;
+
+        padding: 0 12px;
         
         border: none;
         
@@ -52,7 +58,6 @@ $size-padding: 20px;
         font-weight: 400;
 
         background-color: $color-misExtra;
-        border-radius: 5px;
 
         transition: background-color 200ms;
 
@@ -72,6 +77,12 @@ $size-padding: 20px;
             }
         }
     }
+
+    & > .pre {
+        @extend .box;
+
+        width: 32px;
+    }
 }
 
 .itemContainer {
@@ -81,6 +92,16 @@ $size-padding: 20px;
 
     display: flex;
     flex-wrap: wrap;
+
+    & > .alert {
+        width: 100%;
+        text-align: center;
+        
+        color: $color-textSupporting;
+        font-size: 15px;
+
+        margin-top: 30px;
+    }
 }
 
 .side_box {
@@ -166,6 +187,13 @@ $size-padding: 20px;
                 display: block;
             }
 
+            &:disabled {
+                cursor: initial;
+                & > img {
+                    opacity: 0.5;
+                }
+            }
+
             &.right {
                 left: initial;
                 right: 0;
@@ -227,6 +255,37 @@ $size-padding: 20px;
 
         & > .logo {
             height: 10px;
+        }
+    }
+}
+
+.item.loading {
+    & > .detail {
+        & > .owner {
+            width: 30%;
+            height: 10px;
+            
+            margin-bottom: 5px;
+        }
+        & > .title {
+            height: 18px;
+
+            &:nth-child(2) {
+                margin-bottom: 5px;
+            }
+
+            &:nth-child(3) {
+                width: 70%;
+            }
+        }
+    }
+
+    & > .info {
+        & > .category {
+            width: 40%;
+        }
+        & > .logo {
+            width: 30%;
         }
     }
 }

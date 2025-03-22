@@ -2,11 +2,16 @@ import style from '@styles/assetDetail/style.module.scss';
 import AssetDetailMoreSimpleDesc from './SimpleDesc';
 import AssetDetailMoreCompatibility from './Compatibility/MoreCompatibility';
 import AssetDetailMoreFullDesc from './FullDesc';
+import { AssetDetailVO } from '@domiTypes/asset';
 
-export default function AssetDetailMore() {
+type Props = {
+    data: AssetDetailVO
+}
+
+export default function AssetDetailMore({ data }: Props) {
     return <article className={style.more}>
-        <AssetDetailMoreSimpleDesc />
-        <AssetDetailMoreCompatibility />
-        <AssetDetailMoreFullDesc />
+        {data.shortDesc && <AssetDetailMoreSimpleDesc content={data.shortDesc} />}
+        <AssetDetailMoreCompatibility list={data.supports} />
+        <AssetDetailMoreFullDesc content={data.description || "설명이 없습니다."} />
     </article>;
 }

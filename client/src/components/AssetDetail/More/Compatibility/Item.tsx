@@ -1,11 +1,16 @@
 import style from '@styles/assetDetail/more.module.scss';
 import AssetDetailMoreCompatibilityCheck from './Check';
+import { CompatibilityVO } from '@domiTypes/asset';
 
-export default function AssetDetailMoreCompatibilityItem() {
+type Props = {
+    data: CompatibilityVO
+}
+
+export default function AssetDetailMoreCompatibilityItem({ data }: Props) {
     return <article className={`${style.fill} ${style.item}`}>
-        <div className={style.version}>6000.0.23f1</div>
-        <AssetDetailMoreCompatibilityCheck active={true} />
-        <AssetDetailMoreCompatibilityCheck active={true} />
-        <AssetDetailMoreCompatibilityCheck active={true} />
+        <div className={style.version}>{data.version}</div>
+        <AssetDetailMoreCompatibilityCheck active={data.builtIn} />
+        <AssetDetailMoreCompatibilityCheck active={data.urp} />
+        <AssetDetailMoreCompatibilityCheck active={data.hdrp} />
     </article>;
 }

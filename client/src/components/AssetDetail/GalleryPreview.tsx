@@ -1,11 +1,21 @@
 import style from '@styles/assetDetail/style.module.scss';
 import AssetDetailGalleryArrow from './GalleryArrow';
+import { ThumbnailVO } from '@domiTypes/asset';
+import { getThumbnailURL } from '@utils/file';
 
-export default function AssetDetailGalleryPreview() {
+import emptyBg from '@assets/empty-bg.webp';
+
+type Props = {
+    thumbnail: ThumbnailVO | undefined,
+    onNext?: () => void,
+    onPrev?: () => void,
+}
+
+export default function AssetDetailGalleryPreview({ thumbnail, onPrev, onNext }: Props) {
     return <div className={style.viewer}>
-        <img src="https://assetstorev1-prd-cdn.unity3d.com/key-image/c01ce1fe-99e0-49f6-93ad-7499b15f120f.jpg" alt="thumbnail 1" />
+        {thumbnail?.type !== "Youtube" ? <img src={thumbnail ? getThumbnailURL(thumbnail.contentUrl) : emptyBg} alt="thumbnail 1" /> : <iframe src={thumbnail.contentUrl} />}
         
-        <AssetDetailGalleryArrow />
-        <AssetDetailGalleryArrow right={true} />
+        <AssetDetailGalleryArrow onClick={onPrev} />
+        <AssetDetailGalleryArrow right={true} onClick={onNext} />
     </div>;
 }

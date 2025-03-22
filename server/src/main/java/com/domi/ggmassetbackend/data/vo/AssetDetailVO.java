@@ -1,6 +1,7 @@
 package com.domi.ggmassetbackend.data.vo;
 
 import com.domi.ggmassetbackend.data.entity.Asset;
+import com.domi.ggmassetbackend.services.CategoryService;
 import lombok.Getter;
 
 import java.util.List;
@@ -13,26 +14,31 @@ public class AssetDetailVO extends AssetBaseVO {
     private List<CompatibilityVO> supports;
     private List<ThumbnailVO> images;
 
-    public static AssetDetailVO from(Asset asset) {
-        AssetDetailVO result = new AssetDetailVO();
+    @Override
+    public void assetDataInit(Asset asset, CategoryService categoryService) {
+        super.assetDataInit(asset, categoryService);
 
-        result.category = asset.getCategory();
-        result.title = asset.getTitle();
-        result.publisher = asset.getPublisher();
+        this.shortDesc = asset.getShortDesc();
+        this.description = asset.getDescription();
 
-        result.shortDesc = asset.getShortDesc();
-        result.description = asset.getDescription();
-
-        result.supports = asset.getSupports()
+        this.supports = asset.getSupports()
                 .stream()
                 .map(CompatibilityVO::from)
                 .toList();
 
-        result.images = asset.getImages()
+        this.images = asset.getImages()
                 .stream()
                 .map(ThumbnailVO::from)
                 .toList();
+    }
 
+    public static AssetDetailVO from(Asset asset) {
+        return from(asset, null);
+    }
+
+    public static AssetDetailVO from(Asset asset, CategoryService categoryService) {
+        AssetDetailVO result = new AssetDetailVO();
+        result.assetDataInit(asset, categoryService);
         return result;
     }
 }

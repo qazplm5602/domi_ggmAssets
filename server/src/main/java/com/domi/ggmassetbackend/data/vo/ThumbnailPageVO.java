@@ -2,7 +2,10 @@ package com.domi.ggmassetbackend.data.vo;
 
 import com.domi.ggmassetbackend.data.entity.Asset;
 import com.domi.ggmassetbackend.data.entity.Thumbnail;
+import com.domi.ggmassetbackend.data.enums.ThumbnailType;
+import com.domi.ggmassetbackend.exceptions.DomiException;
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
@@ -17,17 +20,26 @@ public class ThumbnailPageVO {
         ThumbnailPageVO result = new ThumbnailPageVO();
 
         int startIdx = amount * page;
-        int endIdx = startIdx + page;
+        int endIdx = startIdx + amount;
+        List<Thumbnail> images = asset.getImages()
+                .stream()
+                .filter(v -> v.getType() == ThumbnailType.Image)
+                .toList();
 
-        List<ThumbnailVO> thumbnails = asset.getImages()
-                .subList(startIdx, endIdx)
+        if (startIdx > images.size()) {
+            throw new DomiException("THUMBNAIL0", "미리보기 이미지 페이지가 너무 큽니다.", HttpStatus.BAD_REQUEST);
+        }
+
+        List<ThumbnailVO> thumbnails = images
+                .subList(startIdx, Math.min(images.size(), endIdx))
                 .stream()
                 .map(ThumbnailVO::from)
                 .toList();
 
         result.images = thumbnails;
-        result.size = Math.ceilDiv(asset.getImages().size(), amount);
-
+//        result.size = Math.ceilDiv(images.size(), amount);
+        result.size = images.size(); // 생각 해보니 페이지 갯수로 하면 제대로 몇개인지 모름
+        
         return result;
     }
 }
