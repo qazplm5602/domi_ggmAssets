@@ -30,7 +30,8 @@ export interface AssetDetailVO extends AssetBaseVO {
     shortDesc: string,
     description: string,
     supports: CompatibilityVO[],
-    images: ThumbnailVO[]
+    images: ThumbnailVO[],
+    publishAt: string | null
 }
 
 export interface AssetPreviewVO extends AssetBaseVO {
