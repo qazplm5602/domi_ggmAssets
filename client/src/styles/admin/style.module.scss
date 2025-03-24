@@ -29,3 +29,22 @@
     @extend .screen;
     @include screen_container(1000px);
 }
+
+.field {
+    & > .head {
+        & > .small {
+            font-size: 12px;
+            color: $color-textSupporting;
+            margin-bottom: 3px;
+        }
+        & > h3 {
+            font-size: 20px;
+            color: $color-white;
+            font-weight: 500;
+        }
+        & > .desc {
+            font-size: 14px;
+            color: $color-textSupporting;
+        }
+    }
+}
