@@ -1,3 +1,5 @@
+@use '@styles/declare/_declare.scss' as *;
+
 .main {
     & > .head {
         margin-bottom: 20px;
@@ -10,5 +12,24 @@
 
     & > .version > input {
         width: 180px;
+    }
+}
+
+.interaction {
+    margin-top: 60px;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    & > .alert {
+        font-size: 13px;
+        margin-bottom: 5px;
+        color: $color-idle;
+    }
+
+    & > .send {
+        font-size: 14px;
+        background-color: $color-primary;
     }
 }
