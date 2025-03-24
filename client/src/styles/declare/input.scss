@@ -9,5 +9,14 @@
     background-color: $color-mist;
     
     border: none;
-    border-radius: 3px;
+    border-radius: 4px;
+
+    outline: none;
+    border: 2px solid transparent;
+
+    transition: border-color 100ms;
+
+    &:focus {
+        border-color: $color-textShy;
+    }
 }

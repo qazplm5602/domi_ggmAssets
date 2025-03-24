@@ -47,4 +47,9 @@
             color: $color-textSupporting;
         }
     }
+
+    & > input {
+        margin-top: 6px;
+        width: 100%;
+    }
 }
