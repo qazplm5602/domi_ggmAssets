@@ -33,3 +33,18 @@
         background-color: $color-primary;
     }
 }
+
+.detect {
+    display: flex;
+    align-items: center;
+
+    gap: 5px;
+    margin-top: 5px;
+
+    color: $color-textSupporting;
+    font-size: 14px;
+    
+    & > img {
+        height: 10px;
+    }
+}
