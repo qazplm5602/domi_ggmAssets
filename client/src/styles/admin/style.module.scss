@@ -1,0 +1,11 @@
+@use '@styles/declare/_declare.scss' as *;
+
+.screen {
+    @include screen_container(1300px);
+
+    & > h1 {
+        color: $color-white;        
+        font-size: 30px;
+        margin-bottom: 10px;
+    }
+}

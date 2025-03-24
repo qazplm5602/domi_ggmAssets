@@ -1,5 +1,6 @@
 import Header from "@components/Header/Header";
 import LoginState from "@components/LoginState/LoginState";
+import AdminMenu from "@pages/Admin/AdminMenu";
 import AssetDetail from "@pages/AssetDetail/AssetDetail";
 import AssetsList from "@pages/Assets/AssetsList";
 import Favorite from "@pages/Favorite/Favorite";
@@ -18,6 +19,7 @@ export default function App() {
             <Route path="/assets" element={<AssetsList />} />
             <Route path="/asset/:id" element={<AssetDetail />} />
             <Route path="/domilove" element={<Favorite />} />
+            <Route path="/admin" element={<AdminMenu />} />
         </Routes>
     </BrowserRouter>;
 }
