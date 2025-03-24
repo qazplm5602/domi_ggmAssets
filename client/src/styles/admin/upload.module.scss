@@ -1,0 +1,14 @@
+.main {
+    & > .head {
+        margin-bottom: 20px;
+    }
+
+    // 첫번째껀 마진 없음
+    & > .field:not(:nth-child(2)) {
+        margin-top: 40px;
+    }
+
+    & > .version > input {
+        width: 180px;
+    }
+}

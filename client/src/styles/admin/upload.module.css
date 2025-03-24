@@ -1,0 +1,10 @@
+.main > .head {
+  margin-bottom: 20px;
+}
+.main > .field:not(:nth-child(2)) {
+  margin-top: 40px;
+}
+.main > .version > input {
+  width: 180px;
+}
+/*# sourceMappingURL=upload.module.css.map */
