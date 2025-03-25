@@ -1,3 +1,4 @@
+import Dialog from "@components/Dialog/Dialog";
 import AdminEditCategoryField from "../Field/CategoryField";
 import AdminEditCompatibilityField from "../Field/Compatibility/CompatibilityField";
 import AdminField from "../Field/Field";
@@ -38,5 +39,8 @@ export default function AdminEditContent() {
         <AdminField title="설명" className={style.field}>
             <textarea className={`${style.skinTextarea} ${style.big}`} placeholder="설명을 입력하세요."></textarea>
         </AdminField>
+
+        {/* TEST */}
+        <Dialog />
     </section>
 }
