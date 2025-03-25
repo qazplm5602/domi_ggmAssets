@@ -1,4 +1,3 @@
-import Dialog from "@components/Dialog/Dialog";
 import AdminEditCategoryField from "../Field/CategoryField";
 import AdminEditCompatibilityField from "../Field/Compatibility/CompatibilityField";
 import AdminField from "../Field/Field";
@@ -8,6 +7,7 @@ import AdminEditPublisherField from "../Field/PublisherField";
 import AdminStoreLinkField from "../Field/StoreLinkField";
 import VersionField from "../Field/VersionField";
 import Input from "../Inputs/Input";
+import AdminEditCategorySelectDialog from "./CategorySelect/CategorySelectDialog";
 import AdminEditHead from "./Head";
 import style from '@styles/admin/edit.module.scss';
 
@@ -40,7 +40,6 @@ export default function AdminEditContent() {
             <textarea className={`${style.skinTextarea} ${style.big}`} placeholder="설명을 입력하세요."></textarea>
         </AdminField>
 
-        {/* TEST */}
-        <Dialog />
+        <AdminEditCategorySelectDialog />
     </section>
 }
