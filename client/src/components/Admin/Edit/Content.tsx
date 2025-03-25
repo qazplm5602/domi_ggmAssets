@@ -1,6 +1,7 @@
 import AdminEditCategoryField from "../Field/CategoryField";
 import AdminField from "../Field/Field";
 import AdminFileLinkField from "../Field/FileLinkField";
+import AdminEditImageField from "../Field/ImageField";
 import AdminStoreLinkField from "../Field/StoreLinkField";
 import VersionField from "../Field/VersionField";
 import Input from "../Inputs/Input";
@@ -19,5 +20,11 @@ export default function AdminEditContent() {
         <AdminStoreLinkField className={style.field} />
         <VersionField className={style.field} />
         <AdminEditCategoryField className={style.field} />
+        
+        <AdminField title="등록일" className={style.field}>
+            <Input type="date" />
+        </AdminField>
+
+        <AdminEditImageField className={style.field} />
     </section>
 }
