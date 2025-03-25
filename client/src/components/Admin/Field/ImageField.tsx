@@ -12,6 +12,7 @@ export default function AdminEditImageField({ className }: Props) {
         <section className={style.gallery}>
             <AdminEditGalleryAddBox />
             <AdminEditGalleryItem />
+            <AdminEditGalleryItem />
         </section>
     </AdminField>
 }
