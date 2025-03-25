@@ -204,3 +204,37 @@
         min-height: 180px;
     }
 }
+
+.verticalField {
+    display: flex;
+    width: 100%;
+
+    align-items: center;
+
+    gap: 0 10px;
+
+    &:not(:first-child) {
+        margin-top: 5px;
+    }
+
+    & > h4 {
+        font-weight: 400;
+        font-size: 16px;
+        color: $color-white;
+
+    }
+
+    & > input {
+        flex-grow: 1;
+    }
+
+    & > select {
+        @include base_input;
+        border-right: 10px solid transparent;
+        width: 200px;
+
+        &:focus {
+            border-color: transparent;
+        }
+    }
+}
