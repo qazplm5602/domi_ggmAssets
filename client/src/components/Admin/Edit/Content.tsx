@@ -1,3 +1,4 @@
+import AdminEditCategoryField from "../Field/CategoryField";
 import AdminField from "../Field/Field";
 import AdminFileLinkField from "../Field/FileLinkField";
 import AdminStoreLinkField from "../Field/StoreLinkField";
@@ -17,5 +18,6 @@ export default function AdminEditContent() {
         <AdminFileLinkField className={style.field} />
         <AdminStoreLinkField className={style.field} />
         <VersionField className={style.field} />
+        <AdminEditCategoryField className={style.field} />
     </section>
 }

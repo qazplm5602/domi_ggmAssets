@@ -3,7 +3,7 @@ import style from '@styles/admin/style.module.scss';
 type Props = {
     required?: boolean
     title: string,
-    desc?: string
+    desc?: React.ReactNode
 }
 
 export default function AdminFieldHead({ title, desc, required }: Props) {
