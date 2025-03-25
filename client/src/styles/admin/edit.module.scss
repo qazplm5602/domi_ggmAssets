@@ -1,0 +1,64 @@
+@use '@styles/declare/_declare.scss' as *;
+
+.screen {
+    display: flex;
+    gap: 0 20px;
+}
+
+.head {
+    display: flex;
+    justify-content: space-between;
+
+    & > h1 {
+        color: $color-white;
+        font-size: 24px;
+    }
+
+    & > .interaction {
+        display: flex;
+        align-items: center;
+        gap: 0 8px;
+
+        & > p {
+            color: $color-textSupporting;
+            font-size: 14px;
+        }
+
+        & > .save {
+            font-size: 14px;
+            background-color: $color-primary;
+        }
+    }
+}
+
+.content {
+    flex-grow: 1;
+}
+
+.side {
+    width: 275px;
+    flex-shrink: 0;
+
+    & > .autoBtn {
+        width: 100%;
+        margin-top: 10px;
+        padding: 10px 0;
+    }
+}
+
+.previewAsset {
+    position: sticky;
+    top: 0;
+    left: 0;
+
+    width: max-content;
+
+    padding: 20px;
+
+    background-color: $color-mist;
+
+    border: 1px solid $color-misExtra;
+    border-radius: 10px;
+    
+    box-shadow: 0 0 18px rgba($color: #000000, $alpha: 0.3);
+}
