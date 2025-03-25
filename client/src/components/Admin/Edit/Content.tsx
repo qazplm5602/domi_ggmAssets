@@ -1,4 +1,5 @@
 import AdminEditCategoryField from "../Field/CategoryField";
+import AdminEditCompatibilityField from "../Field/Compatibility/CompatibilityField";
 import AdminField from "../Field/Field";
 import AdminFileLinkField from "../Field/FileLinkField";
 import AdminEditImageField from "../Field/ImageField";
@@ -28,6 +29,7 @@ export default function AdminEditContent() {
         </AdminField>
 
         <AdminEditImageField className={style.field} />
+        <AdminEditCompatibilityField className={style.field} />
 
         <AdminField title="간단한 설명" className={style.field}>
             <textarea className={style.skinTextarea} placeholder="간단한 설명을 입력하세요."></textarea>

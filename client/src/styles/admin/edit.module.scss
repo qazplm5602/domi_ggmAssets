@@ -238,3 +238,45 @@
         }
     }
 }
+
+.supportList {
+    margin: 10px 0;
+
+    & > .item {
+        display: flex;
+        align-items: center;
+
+        & > input {
+            padding: 6px 10px;
+        }
+
+        &:not(:first-child) {
+            margin-top: 5px;
+        }
+
+        & > .removeBtn {
+            & > img {
+                width: 15px;
+                height: 15px;
+            }
+
+            margin-right: 13px;
+        }
+
+        & > .checks {
+            display: flex;
+            gap: 0 40px;
+
+            margin-left: 20px;
+
+            & > .option {
+                display: flex;
+                align-items: center;
+                gap: 0 10px;
+
+                color: $color-white;
+                font-size: 14px;
+            }
+        }
+    }
+}
