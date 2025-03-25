@@ -9,10 +9,10 @@
     & > .field:not(:nth-child(2)) {
         margin-top: 40px;
     }
+}
 
-    & > .version > input {
-        width: 180px;
-    }
+.version > input {
+    width: 180px;
 }
 
 .interaction {

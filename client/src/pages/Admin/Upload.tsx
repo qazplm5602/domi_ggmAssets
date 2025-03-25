@@ -10,9 +10,9 @@ export default function AdminUpload() {
     return <main className={`${baseStyle.small_screen} ${style.main}`}>
         <AdminHead className={style.head} />
         
-        <AdminFileLinkField />
-        <AdminStoreLinkField />
-        <VersionField />
+        <AdminFileLinkField className={style.field} />
+        <AdminStoreLinkField className={style.field} />
+        <VersionField className={style.field} />
 
         <AdminUploadInteraction />
     </main>;

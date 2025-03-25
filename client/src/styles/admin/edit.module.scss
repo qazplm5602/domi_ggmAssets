@@ -33,6 +33,14 @@
 
 .content {
     flex-grow: 1;
+
+    & > .field {
+        margin-top: 40px;
+        
+        &:nth-child(2) {
+            margin-top: 10px;
+        }
+    }
 }
 
 .side {
