@@ -7,10 +7,11 @@ import { useState } from 'react';
 type Props = {
     onCancel?: () => void,
     onSave?: (newValue: string) => void
-    defaultValue?: string
+    defaultValue?: string,
+    inputRef?: React.Ref<HTMLInputElement>
 }
 
-export default function AdminCategoryItemEditContent({ defaultValue, onCancel, onSave }: Props) {
+export default function AdminCategoryItemEditContent({ defaultValue, inputRef, onCancel, onSave }: Props) {
     const [ value, setValue ] = useState(defaultValue || '');
 
     const handleChangeValue = function(e: React.ChangeEvent<HTMLInputElement>) {
@@ -23,7 +24,7 @@ export default function AdminCategoryItemEditContent({ defaultValue, onCancel, o
     }
 
     return <>
-        <input type="text" className={style.rename} placeholder='카테고리 이름을 입력하세요.' value={value} onChange={handleChangeValue} />
+        <input type="text" ref={inputRef} className={style.rename} placeholder='카테고리 이름을 입력하세요.' value={value} onChange={handleChangeValue} />
         
         <section className={style.interaction}>
             <IconButton icon={checkIco} onClick={handleSave} />

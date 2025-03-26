@@ -1,16 +1,18 @@
 import style from '@styles/admin/category.module.scss';
 import AdminCategoryItemContent from './ItemContent';
-import { CategoryCountVO } from '@domiTypes/category';
-import { useState } from 'react';
+import { CategoryOptionDTO } from '@domiTypes/category';
+import { useEffect, useRef, useState } from 'react';
 import AdminCategoryItemEditContent from './ItemEdit';
 
 type Props = {
     // edit?: boolean
-    category: CategoryCountVO
+    category: CategoryOptionDTO
 }
 
 export default function AdminCategoryItem({ category }: Props) {
-    const [ edit, setEdit ] = useState(false);
+    const [ edit, setEdit ] = useState(category.local);
+    const elementRef = useRef<HTMLDivElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const handleEdit = function() {
         setEdit(true);
@@ -26,8 +28,15 @@ export default function AdminCategoryItem({ category }: Props) {
         
         handleExitEdit();
     }
+    
+    useEffect(() => {
+        if (!category.local || elementRef.current === null || inputRef.current === null) return;
 
-    return <div className={style.item}>
-        {edit ? <AdminCategoryItemEditContent defaultValue={category.name} onSave={handleChangeName} onCancel={handleExitEdit} /> : <AdminCategoryItemContent name={category.name} count={category.count} onEdit={handleEdit} />}
+        // 이거 처음 추가 한거잉
+        inputRef.current.focus();
+    }, [ category.id ]);
+
+    return <div className={style.item} ref={elementRef}>
+        {edit ? <AdminCategoryItemEditContent defaultValue={category.name} onSave={handleChangeName} onCancel={handleExitEdit} inputRef={inputRef} /> : <AdminCategoryItemContent name={category.name} count={category.count} onEdit={handleEdit} />}
     </div>;
 }

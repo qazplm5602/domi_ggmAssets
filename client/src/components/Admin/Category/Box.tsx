@@ -1,12 +1,12 @@
 import style from '@styles/admin/category.module.scss';
 import AdminEditCategorySelectItemGrid from '../Edit/CategorySelect/Grid';
 import AdminCategoryItem from './Item';
-import { CategoryCountVO, NodeIndexing } from '@domiTypes/category';
+import { CategoryOptionDTO, NodeIndexing } from '@domiTypes/category';
 import { useMemo } from 'react';
 
 type Props = {
     id: number,
-    table: NodeIndexing<CategoryCountVO>,
+    table: NodeIndexing<CategoryOptionDTO>,
     depth?: number,
     last?: boolean,
     lalast?: boolean

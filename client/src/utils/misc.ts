@@ -18,3 +18,7 @@ export function formatDateToKorean(date: Date): string {
 export function formatNumberWithCommas(number: number): string {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
+
+export function generateRandomNumber(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}

@@ -1,11 +1,11 @@
 import style from '@styles/admin/category.module.scss';
 import AdminCategoryBox from './Box';
-import { CategoryCountVO } from '@domiTypes/category';
+import { CategoryOptionDTO } from '@domiTypes/category';
 import { useMemo } from 'react';
 import { categoryDataIndex } from '@utils/category';
 
 type Props = {
-    list: CategoryCountVO[]
+    list: CategoryOptionDTO[]
 }
 
 export default function AdminCategoryList({ list }: Props) {
