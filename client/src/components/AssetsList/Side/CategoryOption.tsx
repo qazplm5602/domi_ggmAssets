@@ -4,28 +4,11 @@ import AssetsListSideCategoryBox from "./CategoryBox";
 import { CategoryIndexing, CategoryVO } from "@domiTypes/category";
 import { AliveType } from "@domiTypes/alive";
 import { request } from "@utils/request";
+import { categoryDataIndex } from "@utils/category";
 
 export default function AssetsListSideCategoryOption() {
     const [ data, setData ] = useState<CategoryVO[]>([]);
-    const indexingData = useMemo<CategoryIndexing>(() => {
-        const dict: CategoryIndexing['dict'] = {};
-        const children: CategoryIndexing['children'] = {};
-
-        for (const element of data) {
-            dict[element.id] = element;
-            
-            if (element.parentId) {
-                let tb = children[element.parentId];
-
-                if (tb === undefined)
-                    children[element.parentId] = tb = new Set();
-            
-                tb.add(element.id);
-            }
-        }
-
-        return { dict, children };
-    }, [ data ]);
+    const indexingData = useMemo<CategoryIndexing>(() => categoryDataIndex<CategoryVO>(data), [ data ]);
     const firstCategories = useMemo(() => data.filter(v => v.parentId === null), [ data ]);
     
     const onLoad = async function(aliveRef: AliveType) {

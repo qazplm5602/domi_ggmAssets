@@ -1,0 +1,416 @@
+@use '@styles/declare/_declare.scss' as *;
+
+.screen {
+    display: flex;
+    gap: 0 20px;
+    
+    padding-bottom: 50px;
+}
+
+.head {
+    display: flex;
+    justify-content: space-between;
+
+    & > h1 {
+        color: $color-white;
+        font-size: 24px;
+    }
+
+    & > .interaction {
+        display: flex;
+        align-items: center;
+        gap: 0 8px;
+
+        & > p {
+            color: $color-textSupporting;
+            font-size: 14px;
+        }
+
+        & > .save {
+            font-size: 14px;
+            background-color: $color-primary;
+        }
+    }
+}
+
+.content {
+    width: 0;
+    flex-grow: 1;
+
+    & > .field {
+        margin-top: 40px;
+        
+        &:nth-child(2) {
+            margin-top: 10px;
+        }
+    }
+}
+
+.side {
+    width: 275px;
+    flex-shrink: 0;
+
+    & > .autoBtn {
+        width: 100%;
+        margin-top: 13px;
+        padding: 10px 0;
+    }
+}
+
+.previewAsset {
+    width: max-content;
+
+    padding: 20px;
+
+    background-color: $color-mist;
+
+    border: 1px solid $color-misExtra;
+    border-radius: 10px;
+    
+    box-shadow: 0 0 18px rgba($color: #000000, $alpha: 0.3);
+}
+
+.link {
+    color: $color-primary;
+    text-decoration: underline;
+}
+
+.tags {
+    display: flex;
+    align-items: end;
+
+    font-size: 15px;
+    color: $color-textSupporting;
+
+    margin-top: 2px;
+    margin-bottom: 10px;
+
+    & > span {
+        color: $color-white;
+        font-size: 18px;
+        font-weight: 500;
+        margin-left: 5px;
+    }
+}
+
+.categoryField > section:nth-child(1) {
+    display: flex;
+    align-items: center;
+     gap: 0 7px;
+}
+
+.imageField > .gallery {
+    display: flex;
+    gap: 0 5px;
+    flex-wrap: no-wrap;
+    
+    overflow-x: scroll;
+    overflow-y: hidden;
+
+    width: 100%;
+    margin-top: 5px;
+
+    overflow-x: auto;
+
+    & > .box {
+        position: relative;
+
+        flex: 0 0 auto;
+        width: 180px;
+        height: 100px;
+        background-color: $color-mist;
+        border-radius: 6px;
+        overflow: hidden;
+
+        &.add {
+            border: none;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            cursor: pointer;
+
+            & > img {
+                width: 35px;
+                height: 35px;
+                opacity: 0.1;
+            }
+        }
+
+        & > .preview {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        & > .option {
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 0 13px;
+            
+            background-color: rgba($color: #000000, $alpha: 0.6);
+
+            // 가림
+            display: none;
+            
+            & > button {
+                width: 40px;
+                height: 40px;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                border-radius: 50%;
+                border: none;
+
+                backdrop-filter: blur(5px);
+                background-color: rgba($color: #fff, $alpha: 0.2);
+                
+                & > img {
+                    height: 16px;
+
+                    &.flip {
+                        transform: rotate(180deg);
+                    }
+                }
+            }
+        }
+
+        &:hover > .option {
+            display: flex;
+        }
+    }
+}
+
+.skinTextarea {
+    @include base_input;
+    width: 100%;
+    margin-top: 6px;
+
+    resize: vertical;
+
+    &.big {
+        min-height: 180px;
+    }
+}
+
+.verticalField {
+    display: flex;
+    width: 100%;
+
+    align-items: center;
+
+    gap: 0 10px;
+
+    &:not(:first-child) {
+        margin-top: 5px;
+    }
+
+    & > h4 {
+        font-weight: 400;
+        font-size: 16px;
+        color: $color-white;
+
+    }
+
+    & > input {
+        flex-grow: 1;
+    }
+
+    & > select {
+        @include base_input;
+        border-right: 10px solid transparent;
+        width: 200px;
+
+        &:focus {
+            border-color: transparent;
+        }
+    }
+}
+
+.supportList {
+    margin: 10px 0;
+
+    & > .item {
+        display: flex;
+        align-items: center;
+
+        & > input {
+            padding: 6px 10px;
+        }
+
+        &:not(:first-child) {
+            margin-top: 5px;
+        }
+
+        & > .removeBtn {
+            & > img {
+                width: 15px;
+                height: 15px;
+            }
+
+            margin-right: 13px;
+        }
+
+        & > .checks {
+            display: flex;
+            gap: 0 40px;
+
+            margin-left: 20px;
+
+            & > .option {
+                display: flex;
+                align-items: center;
+                gap: 0 10px;
+
+                color: $color-white;
+                font-size: 14px;
+            }
+        }
+    }
+}
+
+.categorySelect {
+    & > .searchBox {
+        background-color: $color-misExtra;
+        padding: 5px 10px;
+        border-radius: 5px;
+
+        display: flex;
+
+        & > .icon {
+            width: 22px;
+        }
+
+        & > input {
+            margin-left: 5px;
+            flex-grow: 1;
+            
+            font-size: 14px;
+            color: $color-white;
+
+            border: none;
+            outline: none;
+
+            background-color: transparent;
+        }
+    }
+
+    & > .list {
+        height: 0;
+        flex-grow: 1;
+        
+        margin-top: 10px;
+        padding: 10px;
+
+        border-radius: 5px;
+        background-color: rgba($color: #fff, $alpha: 0.05);
+
+        overflow: auto;
+
+        & > .item {
+            display: flex;
+            height: 30px;
+            
+            color: $color-white;
+            font-size: 15px;
+            
+            & > button {
+                height: 100%;
+                flex-grow: 1;
+                
+                text-align: left;
+                font-size: 15px;
+
+                color: $color-white;
+
+                border: none;
+                border-radius: 5px;
+                background-color: transparent;
+
+                padding: 5px 10px;
+
+                &:hover {
+                    background-color: rgba($color: #fff, $alpha: 0.05);
+                }
+            }
+        }
+    }
+}
+
+.autoFieldDialog {
+    
+    & > .container {
+        width: 100%;
+        flex-grow: 1;
+
+        & > .field {
+            & > section {
+                display: none;
+            }
+        }
+    }
+
+    & > .interaction {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        & > .alert {
+            font-size: 13px;
+            color: $color-textSupporting;
+        }
+
+        & > .startBtn {
+            margin-left: 10px;
+        }
+    }
+}
+
+.grid {
+    position: relative;
+        
+    width: 15px;
+    height: 100%;
+    display: block;
+    
+    margin-left: 10px;
+
+    &.hide {
+        opacity: 0;
+    }
+
+    & > .horizontal {
+        width: 1px;
+        height: 100%;
+        
+        background-color: $color-textShy;
+        
+        &.half {
+            height: 50%;
+        }
+    }
+    & > .vertical {
+        position: absolute;
+        
+        width: 100%;
+        height: 1px;
+
+        top: 50%;
+        left: 0;
+        transform: translate(0, -50%);
+        
+        background-color: $color-textShy;
+    }
+}

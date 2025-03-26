@@ -1,6 +1,7 @@
 package com.domi.ggmassetbackend.data.vo;
 
 import com.domi.ggmassetbackend.data.entity.Asset;
+import com.domi.ggmassetbackend.data.enums.PublishPlatform;
 import com.domi.ggmassetbackend.services.CategoryService;
 import lombok.Getter;
 
@@ -13,11 +14,13 @@ public class AssetBaseVO {
     protected List<CategoryVO> category;
     protected String title;
     protected String publisher;
+    protected PublishPlatform platform;
 
     public void assetDataInit(Asset asset, CategoryService categoryService) {
         this.id = asset.getId();
         this.title = asset.getTitle();
         this.publisher = asset.getPublisher();
+        this.platform = asset.getPlatform();
 
         if (categoryService != null && asset.getCategory() != null) {
             this.category = categoryService.getCategoryParents(asset.getCategory())

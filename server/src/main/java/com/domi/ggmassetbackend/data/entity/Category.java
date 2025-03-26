@@ -1,14 +1,12 @@
 package com.domi.ggmassetbackend.data.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Setter
 @Getter
 @Entity
 public class Category {
@@ -18,6 +16,6 @@ public class Category {
 
     private String displayName;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     private Category parent;
 }

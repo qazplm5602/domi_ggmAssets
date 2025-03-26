@@ -2,7 +2,7 @@ import { request } from "@utils/request";
 import { useEffect } from "react";
 import useLoginStore from "./store";
 import { AliveType } from "@domiTypes/alive";
-import { UserDTO } from "@domiTypes/user";
+import { UserAdminDTO } from "@domiTypes/user";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 
@@ -12,7 +12,7 @@ export default function LoginState() {
     const navigate = useNavigate();
 
     const onLoad = async function(aliveRef: AliveType) {
-        const result = await request<UserDTO>('user/@me').catch(e => e as AxiosError);
+        const result = await request<UserAdminDTO>('user/@me').catch(e => e as AxiosError);
         if (!aliveRef.alive) return;
 
         // 오류남
@@ -25,7 +25,7 @@ export default function LoginState() {
         }
 
         const { data } = result;
-        loginStore.setLogin(data.email, data.name);
+        loginStore.setLogin(data.email, data.name, data.admin);
     }
 
     useEffect(() => {

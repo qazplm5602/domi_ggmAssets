@@ -1,0 +1,23 @@
+@use 'color.scss' as *;
+
+@mixin base_input {
+    font-size: 14px;
+
+    padding: 8px 10px;
+    
+    color: $color-white;
+    background-color: $color-mist;
+    
+    border: none;
+    border-radius: 4px;
+
+    outline: none;
+    border: 2px solid transparent;
+    box-sizing: border-box;
+
+    transition: border-color 100ms;
+
+    &:focus {
+        border-color: $color-textShy;
+    }
+}

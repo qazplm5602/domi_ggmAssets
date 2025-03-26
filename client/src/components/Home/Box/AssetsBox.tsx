@@ -3,6 +3,14 @@ import HomeAssetsBoxHead from './Head';
 import AssetItem from '@components/AssetsList/Item/Item';
 
 import { AnimationProps, motion } from 'framer-motion';
+import { CategoryVO } from '@domiTypes/category';
+import { request } from '@utils/request';
+import { useState } from 'react';
+import { AssetPreviewVO } from '@domiTypes/asset';
+import { useHandleAlive } from '@utils/requestEventHook';
+import { AliveType } from '@domiTypes/alive';
+import { PageContentVO } from '@domiTypes/page';
+import AssetItemLoading from '@components/AssetsList/Item/ItemLoading';
 
 const INIT_STYLE: AnimationProps['initial'] = {
     y: 50,
@@ -13,18 +21,34 @@ const NOW_STYLE: AnimationProps['animate'] = {
     opacity: 1
 }
 
-export default function HomeAssetsBox() {
+const ASSET_AMOUNT = 8;
+
+type Props = {
+    category: CategoryVO
+}
+
+export default function HomeAssetsBox({ category }: Props) {
+    const [ assets, setAssets ] = useState<AssetPreviewVO[] | null>(null);
+    
+    const handleLoad = async function(aliveRef: AliveType) {
+        const result = await request<PageContentVO<AssetPreviewVO>>("asset/search", { params: { category: category.id, amount: ASSET_AMOUNT, random: true } });
+
+        if (!aliveRef.alive) return;
+
+        setAssets(result.data.items);
+    }
+
+    useHandleAlive(handleLoad, [ category ]);
+
     return <motion.div initial={INIT_STYLE} animate={NOW_STYLE} className={style.box}>
-        <HomeAssetsBoxHead />
+        <HomeAssetsBoxHead title={category.name} id={category.id} />
         
         {/* 리스트 */}
         <article className={style.list}>
-            <AssetItem className={style.item} />
-            <AssetItem className={style.item} />
-            <AssetItem className={style.item} />
-            <AssetItem className={style.item} />
-            <AssetItem className={style.item} />
-            <AssetItem className={style.item} />
+            {assets
+                ? assets.map(v => <AssetItem className={style.item} key={v.id} data={v} />)
+                : Array.from(new Array(ASSET_AMOUNT)).map((_, i) => <AssetItemLoading className={style.item} key={i} />)
+            }
         </article>
     </motion.div>
 }

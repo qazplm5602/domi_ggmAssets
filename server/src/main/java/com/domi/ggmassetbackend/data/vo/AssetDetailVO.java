@@ -4,6 +4,7 @@ import com.domi.ggmassetbackend.data.entity.Asset;
 import com.domi.ggmassetbackend.services.CategoryService;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,6 +12,7 @@ import java.util.stream.Collectors;
 public class AssetDetailVO extends AssetBaseVO {
     private String shortDesc;
     private String description;
+    private LocalDateTime publishAt;
     private List<CompatibilityVO> supports;
     private List<ThumbnailVO> images;
 
@@ -20,6 +22,7 @@ public class AssetDetailVO extends AssetBaseVO {
 
         this.shortDesc = asset.getShortDesc();
         this.description = asset.getDescription();
+        this.publishAt = asset.getPublishAt();
 
         this.supports = asset.getSupports()
                 .stream()

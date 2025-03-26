@@ -1,7 +1,10 @@
 package com.domi.ggmassetbackend.services;
 
+import com.domi.ggmassetbackend.data.dto.CategoryFormDTO;
 import com.domi.ggmassetbackend.data.entity.Asset;
 import com.domi.ggmassetbackend.data.entity.Category;
+import com.domi.ggmassetbackend.data.vo.CategoryCountVO;
+import com.domi.ggmassetbackend.exceptions.CategoryException;
 import com.domi.ggmassetbackend.repositories.CategoryRepository;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
@@ -67,5 +70,42 @@ public class CategoryService {
 
     public List<Category> getCategoryParents(Category category) {
         return categoryRepository.findByParents(category.getId());
+    }
+
+    public List<Category> getRandomCategory(int amount) {
+        return categoryRepository.findByRandom(amount);
+    }
+
+    public List<Category> getAllCategory() {
+        return categoryRepository.findAll();
+    }
+
+    public Category getCategoryById(int id) {
+        return categoryRepository.findById(id).orElseThrow(() -> new CategoryException(CategoryException.Type.NOT_FOUND_USER));
+    }
+
+    public void changeCategoryName(int id, String newName) {
+        Category category = getCategoryById(id);
+        category.setDisplayName(newName);
+
+        categoryRepository.save(category);
+    }
+
+    public Category createCategory(CategoryFormDTO form) {
+        Category parentCategory = null;
+        if (form.getParentId() != null) {
+            parentCategory = getCategoryById(form.getParentId());
+        }
+
+        Category category = new Category();
+        category.setDisplayName(form.getName());
+        category.setParent(parentCategory);
+
+        return categoryRepository.save(category);
+    }
+
+    public void deleteCategory(int id) {
+        Category category = getCategoryById(id);
+        categoryRepository.delete(category);
     }
 }

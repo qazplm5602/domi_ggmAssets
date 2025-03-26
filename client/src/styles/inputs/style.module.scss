@@ -1,0 +1,5 @@
+@use '@styles/declare/_declare.scss' as *;
+
+.main {
+    @include base_input;    
+}

@@ -15,6 +15,7 @@ const TEST_MOCK_ITEM: AssetPreviewVO =  {
     "category": null,
     "title": "도미 에셋 ㅁㄴㅇㄹ",
     "publisher": "도미임",
+    "platform": "Unity",
     "thumbnail": {
         "images": [
             {
@@ -47,7 +48,7 @@ export default function AssetItem({ className, data = TEST_MOCK_ITEM }: Props) {
         <div className={`${style.item} ${className || ''}`}>
             <AssetsListItemThumbnail id={data.id} images={data.thumbnail} />
             <AssetItemDetail title={data.title} publisher={data.publisher} />
-            <AssetItemInfo category={data.category} />
+            <AssetItemInfo category={data.category} platform={data.platform} />
         </div>
     </Link>;
 }

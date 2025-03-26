@@ -1,7 +1,7 @@
 package com.domi.ggmassetbackend.controllers;
 
 import com.domi.ggmassetbackend.data.entity.User;
-import com.domi.ggmassetbackend.data.vo.UserVO;
+import com.domi.ggmassetbackend.data.vo.UserAdminVO;
 import com.domi.ggmassetbackend.services.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,9 +17,9 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/@me")
-    UserVO getMyInfo() {
+    UserAdminVO getMyInfo() {
         User user = userService.getCurrentUser();
-        return UserVO.from(user);
+        return UserAdminVO.from(user);
     }
 
     @GetMapping("/logout")

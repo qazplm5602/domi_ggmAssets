@@ -22,14 +22,16 @@ export interface AssetBaseVO {
     id: number,
     category: CategoryVO[] | null,
     title: string,
-    publisher: string
+    publisher: string,
+    platform: null | 'Unity' | 'Itchio'
 }
 
 export interface AssetDetailVO extends AssetBaseVO {
     shortDesc: string,
     description: string,
     supports: CompatibilityVO[],
-    images: ThumbnailVO[]
+    images: ThumbnailVO[],
+    publishAt: string | null
 }
 
 export interface AssetPreviewVO extends AssetBaseVO {
