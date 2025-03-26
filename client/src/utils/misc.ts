@@ -14,3 +14,7 @@ export function formatDateToKorean(date: Date): string {
     const day = date.getDate().toString().padStart(2, '0');
     return `${year}-${month}-${day}`;
 }
+
+export function formatNumberWithCommas(number: number): string {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}

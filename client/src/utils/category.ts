@@ -7,14 +7,13 @@ export function categoryDataIndex<T extends CategoryVO>(data: T[]): NodeIndexing
     for (const element of data) {
         dict[element.id] = element;
         
-        if (element.parentId) {
-            let tb = children[element.parentId];
+        const parentId = element.parentId || -1;
+        let tb = children[parentId];
 
-            if (tb === undefined)
-                children[element.parentId] = tb = new Set();
-        
-            tb.add(element.id);
-        }
+        if (tb === undefined)
+            children[parentId] = tb = new Set();
+    
+        tb.add(element.id);
     }
 
     return { dict, children };

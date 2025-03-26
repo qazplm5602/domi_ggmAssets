@@ -4,12 +4,18 @@ import IconButton from '@components/Buttons/IconButton';
 import editIco from '@assets/icons/ic-baseline-create.svg';
 import addIco from '@assets/icons/ic-round-add.svg';
 import deleteIco from '@assets/icons/ic-baseline-delete.svg';
+import { formatNumberWithCommas } from '@utils/misc';
 
-export default function AdminCategoryItemContent() {
+type Props = {
+    name: string,
+    count: number
+}
+
+export default function AdminCategoryItemContent({ name, count }: Props) {
     return <>
         <section className={style.name}>
-            <h3>3D</h3>
-            <p>(100개)</p>
+            <h3>{name}</h3>
+            <p>({formatNumberWithCommas(count)}개)</p>
         </section>
         
         <section className={style.interaction}>
