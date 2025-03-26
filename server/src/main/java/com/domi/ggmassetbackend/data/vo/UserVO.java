@@ -6,8 +6,8 @@ import lombok.Getter;
 
 @Getter
 public class UserVO {
-    private String email;
-    private String name;
+    protected String email;
+    protected String name;
 
     public static UserVO from(User user) {
         UserVO result = new UserVO();

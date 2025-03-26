@@ -38,6 +38,7 @@
         margin-left: 25px;
 
         & > a {
+            position: relative;
             color: #606260;
 
             font-size: 16px;
@@ -54,6 +55,19 @@
             &.active {
                 color: $color-white;
                 text-shadow: 0 0 5px rgb(137, 139, 137);
+            }
+
+            & > .admin {
+                position: absolute;
+                top: -3px;
+                left: -3px;
+
+                width: 5px;
+                height: 5px;
+                border-radius: 50%;
+
+                background-color: #FF002D;
+                box-shadow: 0 0 6px #FF0000;
             }
         }
     }
