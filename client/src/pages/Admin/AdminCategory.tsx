@@ -9,6 +9,7 @@ import { useHandleAlive } from '@utils/requestEventHook';
 import { AliveType } from '@domiTypes/alive';
 import { request } from '@utils/request';
 import { generateRandomNumber } from '@utils/misc';
+import { AdminCategoryContext } from '@components/Admin/Category/Context';
 
 export default function AdminCategory() {
     const [ categoryList, setCategoryList ] = useState<CategoryOptionDTO[] | null>(null);
@@ -54,6 +55,20 @@ export default function AdminCategory() {
 
         setCategoryList([ ...categoryList, newCategory ]);
     }
+    
+    const handleChangeName = function(id: number, newValue: string) {
+        if (categoryList === null) return;
+
+        // console.log("handleChangeName", id, newValue);
+        const idx = categoryList.findIndex(v => v.id === id);
+        const newObj = { ...categoryList[idx] };
+        const newArr = [ ...categoryList ];
+
+        newObj.name = newValue;
+        newArr[idx] = newObj;
+
+        setCategoryList(newArr);
+    }
 
     useHandleAlive(onLoad, []);
 
@@ -63,6 +78,8 @@ export default function AdminCategory() {
             <Button onClick={handleAddCategory}>추가</Button>
         </section>
 
-        {categoryList ? <AdminCategoryList list={categoryList} /> : <AdminCategoryLoading />}
+        <AdminCategoryContext.Provider value={{ onChangeName: handleChangeName }}>
+            {categoryList ? <AdminCategoryList list={categoryList} /> : <AdminCategoryLoading />}
+        </AdminCategoryContext.Provider>
     </main>;
 }

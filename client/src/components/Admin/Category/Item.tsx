@@ -1,8 +1,9 @@
 import style from '@styles/admin/category.module.scss';
 import AdminCategoryItemContent from './ItemContent';
-import { CategoryOptionDTO } from '@domiTypes/category';
-import { useEffect, useRef, useState } from 'react';
+import { AdminCategoryContextType, CategoryOptionDTO } from '@domiTypes/category';
+import { useContext, useEffect, useRef, useState } from 'react';
 import AdminCategoryItemEditContent from './ItemEdit';
+import { AdminCategoryContext } from './Context';
 
 type Props = {
     // edit?: boolean
@@ -11,6 +12,7 @@ type Props = {
 
 export default function AdminCategoryItem({ category }: Props) {
     const [ edit, setEdit ] = useState(category.local);
+    const { onChangeName } = useContext(AdminCategoryContext) as AdminCategoryContextType;
     const elementRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -26,6 +28,7 @@ export default function AdminCategoryItem({ category }: Props) {
         const value = newValue.trim();
         if (value.length === 0 || value === ' ') return;
         
+        onChangeName(category.id, value);
         handleExitEdit();
     }
     
