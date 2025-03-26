@@ -58,6 +58,30 @@ export default function AdminCategory() {
 
     const handleAddCategory = () => addCategory();
     const handleAdd = (parent: number) => addCategory(parent);
+
+    const registerCategoryToServer = async function(id: number, name: string, parentId: number | null) {
+        const result = await request<number>("asset/category/admin", { method: "PUT", data: { name: name, parentId: parentId } });
+        // 나중에 오류 처리
+
+        setCategoryList(prev => {
+            const idx = prev?.findIndex(v => v.id === id);
+
+            if (!prev || !idx || idx < 0)
+                return prev;
+
+            const newArr = [ ...prev ];
+            const newObj = { ...newArr[idx], local: false, id: result.data };
+            
+            newArr[idx] = newObj;
+            return newArr;
+        });
+    }
+
+    const updateNameToServer = async function(id: number, name: string) {
+        await request<number>("asset/category/rename", { method: "POST", params: { id }, data: name, headers: { "Content-Type": "applicaion/json" } });
+
+        // 나중에 오류 처리
+    }
     
     const handleChangeName = async function(id: number, newValue: string) {
         if (categoryList === null) return;
@@ -73,21 +97,11 @@ export default function AdminCategory() {
         setCategoryList(newArr);
 
         // 아마 이미 등록 하고 있는지 체크 넣어야 할듯
-        const result = await request<number>("asset/category/admin", { method: "PUT", data: { name: newValue, parentId: newObj.parentId } });
-        // 나중에 오류 처리
 
-        setCategoryList(prev => {
-            const idx = prev?.findIndex(v => v.id === id);
-
-            if (!prev || !idx || idx < 0)
-                return prev;
-
-            const newArr = [ ...prev ];
-            const newObj = { ...newArr[idx], local: false, id: result.data };
-            
-            newArr[idx] = newObj;
-            return newArr;
-        });
+        if (newObj.local)
+            registerCategoryToServer(id, newValue, newObj.parentId);
+        else
+            updateNameToServer(id, newValue);
     }
     
     const handleRemove = function(id: number) {
