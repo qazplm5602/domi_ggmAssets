@@ -59,7 +59,7 @@ export default function AdminCategory() {
     const handleAddCategory = () => addCategory();
     const handleAdd = (parent: number) => addCategory(parent);
     
-    const handleChangeName = function(id: number, newValue: string) {
+    const handleChangeName = async function(id: number, newValue: string) {
         if (categoryList === null) return;
 
         // console.log("handleChangeName", id, newValue);
@@ -71,6 +71,23 @@ export default function AdminCategory() {
         newArr[idx] = newObj;
 
         setCategoryList(newArr);
+
+        // 아마 이미 등록 하고 있는지 체크 넣어야 할듯
+        const result = await request<number>("asset/category/admin", { method: "PUT", data: { name: newValue, parentId: newObj.parentId } });
+        // 나중에 오류 처리
+
+        setCategoryList(prev => {
+            const idx = prev?.findIndex(v => v.id === id);
+
+            if (!prev || !idx || idx < 0)
+                return prev;
+
+            const newArr = [ ...prev ];
+            const newObj = { ...newArr[idx], local: false, id: result.data };
+            
+            newArr[idx] = newObj;
+            return newArr;
+        });
     }
     
     const handleRemove = function(id: number) {
