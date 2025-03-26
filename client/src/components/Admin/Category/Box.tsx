@@ -8,10 +8,11 @@ type Props = {
     id: number,
     table: NodeIndexing<CategoryCountVO>,
     depth?: number,
-    last?: boolean
+    last?: boolean,
+    lalast?: boolean
 }
 
-export default function AdminCategoryBox({ id, table, depth = 0, last = false }: Props) {
+export default function AdminCategoryBox({ id, table, depth = 0, last = false, lalast = false }: Props) {
     const childCategorys = useMemo(() => Array.from(table.children[id] || []), [ table ]);
 
     return <>
@@ -23,8 +24,8 @@ export default function AdminCategoryBox({ id, table, depth = 0, last = false }:
                 // 끝쪽임
                 if (i === depth - 1) {
                     mode = last ? 'end' : 'center';
-                } else if (last) { // 끝쪽은 아닌데 아무튼 카테고리 내에서 맨 마지막에 있엉
-                    // mode = 'space';
+                } else if (lalast) { // 끝쪽은 아닌데 아무튼 카테고리 내에서 맨 마지막에 있엉
+                    mode = 'space';
                 }
 
                 return <AdminEditCategorySelectItemGrid key={i} mode={mode} />;
@@ -32,7 +33,7 @@ export default function AdminCategoryBox({ id, table, depth = 0, last = false }:
 
             <AdminCategoryItem category={table.dict[id]} />
         </div>
-        {childCategorys.map((targetId, idx) => <AdminCategoryBox depth={depth + 1} last={idx === childCategorys.length - 1} key={targetId} id={targetId} table={table} />)}
+        {childCategorys.map((targetId, idx) => <AdminCategoryBox depth={depth + 1} last={idx === childCategorys.length - 1} lalast={last} key={targetId} id={targetId} table={table} />)}
     </>;
 }
 
