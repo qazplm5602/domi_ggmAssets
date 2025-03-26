@@ -1,5 +1,6 @@
 import Header from "@components/Header/Header";
 import LoginState from "@components/LoginState/LoginState";
+import AdminCategory from "@pages/Admin/AdminCategory";
 import AdminMenu from "@pages/Admin/AdminMenu";
 import AdminAssetEdit from "@pages/Admin/AssetEdit";
 import AdminUpload from "@pages/Admin/Upload";
@@ -24,6 +25,7 @@ export default function App() {
             <Route path="/admin" element={<AdminMenu />} />
             <Route path="/admin/upload" element={<AdminUpload />} />
             <Route path="/admin/edit/:id" element={<AdminAssetEdit />} />
+            <Route path="/admin/category" element={<AdminCategory />} />
         </Routes>
     </BrowserRouter>;
 }
