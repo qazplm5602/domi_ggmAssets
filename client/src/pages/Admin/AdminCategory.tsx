@@ -42,19 +42,22 @@ export default function AdminCategory() {
         setCategoryList(data);
     }
 
-    const handleAddCategory = function() {
+    const addCategory = function(parentId: number | null = null) {
         if (categoryList === null) return; // 아직 로딩 안됨
 
         const newCategory: CategoryOptionDTO = {
             count: 0,
             id: generateTempId(),
-            parentId: null,
+            parentId: parentId,
             local: true, // 아직 서버에 반영 안됨
             name: ""
         };
 
         setCategoryList([ ...categoryList, newCategory ]);
     }
+
+    const handleAddCategory = () => addCategory();
+    const handleAdd = (parent: number) => addCategory(parent);
     
     const handleChangeName = function(id: number, newValue: string) {
         if (categoryList === null) return;
@@ -69,6 +72,17 @@ export default function AdminCategory() {
 
         setCategoryList(newArr);
     }
+    
+    const handleRemove = function(id: number) {
+        if (categoryList === null) return;
+        
+        const idx = categoryList.findIndex(v => v.id === id);
+        const newArr = [ ...categoryList ];
+
+        newArr.splice(idx, 1);
+
+        setCategoryList(newArr);
+    }
 
     useHandleAlive(onLoad, []);
 
@@ -78,7 +92,7 @@ export default function AdminCategory() {
             <Button onClick={handleAddCategory}>추가</Button>
         </section>
 
-        <AdminCategoryContext.Provider value={{ onChangeName: handleChangeName }}>
+        <AdminCategoryContext.Provider value={{ onChangeName: handleChangeName, onRemove: handleRemove, onAdd: handleAdd }}>
             {categoryList ? <AdminCategoryList list={categoryList} /> : <AdminCategoryLoading />}
         </AdminCategoryContext.Provider>
     </main>;

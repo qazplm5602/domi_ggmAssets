@@ -20,5 +20,7 @@ export interface NodeIndexing<T> {
 export interface CategoryIndexing extends NodeIndexing<CategoryVO> {}
 
 export interface AdminCategoryContextType {
-    onChangeName: (id: number, value: string) => void
+    onChangeName: (id: number, value: string) => void,
+    onRemove: (id: number) => void,
+    onAdd: (parent: number) => void
 }

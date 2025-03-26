@@ -9,10 +9,12 @@ import { formatNumberWithCommas } from '@utils/misc';
 type Props = {
     name: string,
     count: number,
-    onEdit?: () => void
+    onEdit?: () => void,
+    onAdd?: () => void,
+    onRemove?: () => void
 }
 
-export default function AdminCategoryItemContent({ name, count, onEdit }: Props) {
+export default function AdminCategoryItemContent({ name, count, onEdit, onAdd, onRemove }: Props) {
     return <>
         <section className={style.name}>
             <h3>{name}</h3>
@@ -21,8 +23,8 @@ export default function AdminCategoryItemContent({ name, count, onEdit }: Props)
         
         <section className={style.interaction}>
             <IconButton icon={editIco} onClick={onEdit} />
-            <IconButton icon={addIco} />
-            <IconButton icon={deleteIco} />
+            <IconButton icon={addIco} onClick={onAdd} />
+            <IconButton icon={deleteIco} onClick={onRemove} />
         </section>
     </>;
 }
