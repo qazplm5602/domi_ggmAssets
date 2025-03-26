@@ -1,8 +1,12 @@
 import style from '@styles/admin/category.module.scss';
-import AdminCategoryItem from './Item';
+import AdminCategoryBox, { AdminCategoryBox2, AdminCategoryBox3, AdminCategoryBox4 } from './Box';
 
 export default function AdminCategoryList() {
     return <section className={style.list}>
-        <AdminCategoryItem />
+        <AdminCategoryBox />
+        <AdminCategoryBox2 />
+        <AdminCategoryBox2 />
+        <AdminCategoryBox4 />
+        <AdminCategoryBox3 />
     </section>;
 }
