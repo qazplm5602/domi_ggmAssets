@@ -349,10 +349,16 @@
             & > .grid {
                 position: relative;
                     
-                width: 30px;
+                width: 15px;
                 height: 100%;
                 display: block;
                 
+                margin-left: 10px;
+
+                &.hide {
+                    opacity: 0;
+                }
+
                 & > .horizontal {
                     width: 1px;
                     height: 100%;
