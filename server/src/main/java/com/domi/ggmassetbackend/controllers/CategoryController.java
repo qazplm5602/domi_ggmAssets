@@ -7,6 +7,7 @@ import com.domi.ggmassetbackend.data.vo.CategoryVO;
 import com.domi.ggmassetbackend.repositories.CategoryRepository;
 import com.domi.ggmassetbackend.services.AssetService;
 import com.domi.ggmassetbackend.services.CategoryService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,6 +41,13 @@ public class CategoryController {
     @PutMapping("/admin")
     int createCategory(@RequestBody CategoryFormDTO form) {
         return categoryService.createCategory(form).getId();
+    }
+
+    @DeleteMapping("/admin")
+    @Transactional
+    void removeCategory(@RequestBody int id) {
+        assetService.setCategoryCancel(categoryService.findSubCategoryIds(id));
+        categoryService.deleteCategory(id);
     }
 
     @PostMapping("/rename")

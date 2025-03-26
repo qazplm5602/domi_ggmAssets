@@ -64,4 +64,9 @@ public class AssetService {
     public int getCategoryCount(List<Integer> ids) {
         return assetRepository.countByCategoryIdIn(ids);
     }
+
+    // 이 태그에 해당하는건 다 해제 시킴
+    public void setCategoryCancel(List<Integer> ids) {
+        assetRepository.updateCategoryCancel(ids);
+    }
 }

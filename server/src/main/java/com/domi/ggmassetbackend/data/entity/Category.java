@@ -16,6 +16,6 @@ public class Category {
 
     private String displayName;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     private Category parent;
 }
