@@ -9,16 +9,18 @@ public class CategoryVO {
     private String name;
     private Integer parentId;
 
-    public static CategoryVO from(Category category) {
-        CategoryVO result = new CategoryVO();
-
-        result.id = category.getId();
-        result.name = category.getDisplayName();
+    public void initData(Category category) {
+        this.id = category.getId();
+        this.name = category.getDisplayName();
 
         if (category.getParent() != null) {
-            result.parentId = category.getParent().getId();
+            this.parentId = category.getParent().getId();
         }
+    }
 
+    public static CategoryVO from(Category category) {
+        CategoryVO result = new CategoryVO();
+        result.initData(category);
         return result;
     }
 }

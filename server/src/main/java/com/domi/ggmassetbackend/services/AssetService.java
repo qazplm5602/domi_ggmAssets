@@ -60,4 +60,8 @@ public class AssetService {
         Pageable pageable = PageRequest.of(page, amount, sortOption);
         return assetRepository.findAll(specification, pageable);
     }
+
+    public int getCategoryCount(List<Integer> ids) {
+        return assetRepository.countByCategoryIdIn(ids);
+    }
 }

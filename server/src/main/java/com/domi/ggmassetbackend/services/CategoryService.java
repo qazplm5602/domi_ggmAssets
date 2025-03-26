@@ -2,6 +2,7 @@ package com.domi.ggmassetbackend.services;
 
 import com.domi.ggmassetbackend.data.entity.Asset;
 import com.domi.ggmassetbackend.data.entity.Category;
+import com.domi.ggmassetbackend.data.vo.CategoryCountVO;
 import com.domi.ggmassetbackend.repositories.CategoryRepository;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
@@ -71,5 +72,9 @@ public class CategoryService {
 
     public List<Category> getRandomCategory(int amount) {
         return categoryRepository.findByRandom(amount);
+    }
+
+    public List<Category> getAllCategory() {
+        return categoryRepository.findAll();
     }
 }
