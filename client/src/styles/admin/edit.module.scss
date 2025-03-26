@@ -385,3 +385,32 @@
         }
     }
 }
+
+.autoFieldDialog {
+    
+    & > .container {
+        width: 100%;
+        flex-grow: 1;
+
+        & > .field {
+            & > section {
+                display: none;
+            }
+        }
+    }
+
+    & > .interaction {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        & > .alert {
+            font-size: 13px;
+            color: $color-textSupporting;
+        }
+
+        & > .startBtn {
+            margin-left: 10px;
+        }
+    }
+}
