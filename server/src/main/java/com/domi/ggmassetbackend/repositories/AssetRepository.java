@@ -16,6 +16,6 @@ public interface AssetRepository extends JpaRepository<Asset, Integer>, JpaSpeci
     int countByCategoryIdIn(List<Integer> ids);
 
     @Modifying
-    @Query("UPDATE Category c SET c.parent = NULL WHERE c.parent.id IN :categorys")
+    @Query("UPDATE Asset a SET a.category = NULL WHERE a.category.id IN :categorys")
     void updateCategoryCancel(@Param("categorys") List<Integer> categorys);
 }

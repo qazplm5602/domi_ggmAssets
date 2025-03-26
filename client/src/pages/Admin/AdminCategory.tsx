@@ -110,9 +110,13 @@ export default function AdminCategory() {
         const idx = categoryList.findIndex(v => v.id === id);
         const newArr = [ ...categoryList ];
 
-        newArr.splice(idx, 1);
+        const [ category ] = newArr.splice(idx, 1);
 
         setCategoryList(newArr);
+
+        // 서버한테 삭제 요청 ㄱㄱㄱ
+        if (!category.local)
+            request("asset/category/admin", { method: "DELETE", headers: { "Content-Type": "application/json" }, data: id });
     }
 
     useHandleAlive(onLoad, []);

@@ -43,6 +43,7 @@ export default function AdminCategoryItem({ category }: Props) {
     
     const handleRemove = function() {
         // 이건 한번 확인 하고 삭제 해야함
+        onRemove(category.id);
     }
     
     useEffect(() => {
