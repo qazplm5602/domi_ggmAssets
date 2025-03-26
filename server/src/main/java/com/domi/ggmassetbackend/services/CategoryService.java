@@ -3,6 +3,7 @@ package com.domi.ggmassetbackend.services;
 import com.domi.ggmassetbackend.data.entity.Asset;
 import com.domi.ggmassetbackend.data.entity.Category;
 import com.domi.ggmassetbackend.data.vo.CategoryCountVO;
+import com.domi.ggmassetbackend.exceptions.CategoryException;
 import com.domi.ggmassetbackend.repositories.CategoryRepository;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
@@ -76,5 +77,16 @@ public class CategoryService {
 
     public List<Category> getAllCategory() {
         return categoryRepository.findAll();
+    }
+
+    public Category getCategoryById(int id) {
+        return categoryRepository.findById(id).orElseThrow(() -> new CategoryException(CategoryException.Type.NOT_FOUND_USER));
+    }
+
+    public void changeCategoryName(int id, String newName) {
+        Category category = getCategoryById(id);
+        category.setDisplayName(newName);
+
+        categoryRepository.save(category);
     }
 }

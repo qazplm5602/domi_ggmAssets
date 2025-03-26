@@ -7,9 +7,7 @@ import com.domi.ggmassetbackend.repositories.CategoryRepository;
 import com.domi.ggmassetbackend.services.AssetService;
 import com.domi.ggmassetbackend.services.CategoryService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,6 +34,11 @@ public class CategoryController {
 
             return result;
         }).toList();
+    }
+
+    @PostMapping("/rename")
+    void changeName(@RequestParam("id") int id, @RequestBody String newName) {
+        categoryService.changeCategoryName(id, newName);
     }
 
     @GetMapping("/random")
