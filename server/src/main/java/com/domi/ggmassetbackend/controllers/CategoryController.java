@@ -1,5 +1,6 @@
 package com.domi.ggmassetbackend.controllers;
 
+import com.domi.ggmassetbackend.data.dto.CategoryFormDTO;
 import com.domi.ggmassetbackend.data.entity.Category;
 import com.domi.ggmassetbackend.data.vo.CategoryCountVO;
 import com.domi.ggmassetbackend.data.vo.CategoryVO;
@@ -34,6 +35,11 @@ public class CategoryController {
 
             return result;
         }).toList();
+    }
+
+    @PutMapping("/admin")
+    int createCategory(@RequestBody CategoryFormDTO form) {
+        return categoryService.createCategory(form).getId();
     }
 
     @PostMapping("/rename")

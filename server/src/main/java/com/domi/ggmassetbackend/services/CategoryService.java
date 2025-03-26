@@ -1,5 +1,6 @@
 package com.domi.ggmassetbackend.services;
 
+import com.domi.ggmassetbackend.data.dto.CategoryFormDTO;
 import com.domi.ggmassetbackend.data.entity.Asset;
 import com.domi.ggmassetbackend.data.entity.Category;
 import com.domi.ggmassetbackend.data.vo.CategoryCountVO;
@@ -88,5 +89,18 @@ public class CategoryService {
         category.setDisplayName(newName);
 
         categoryRepository.save(category);
+    }
+
+    public Category createCategory(CategoryFormDTO form) {
+        Category parentCategory = null;
+        if (form.getParentId() != null) {
+            parentCategory = getCategoryById(form.getParentId());
+        }
+
+        Category category = new Category();
+        category.setDisplayName(form.getName());
+        category.setParent(parentCategory);
+
+        return categoryRepository.save(category);
     }
 }
