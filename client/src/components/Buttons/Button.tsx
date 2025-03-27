@@ -7,6 +7,6 @@ type Props = {
     onClick?: React.MouseEventHandler<HTMLButtonElement>
 }
 
-export default function Button({ children, className, onClick }: Props) {
-    return <button className={`${style.base} ${className || ''}`} onClick={onClick}>{children}</button>
+export default function Button({ children, className, onClick, ...props }: Props & React.ButtonHTMLAttributes<HTMLButtonElement>) {
+    return <button className={`${style.base} ${className || ''}`} onClick={onClick} {...props}>{children}</button>
 }

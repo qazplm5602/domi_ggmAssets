@@ -4,7 +4,7 @@ import { create } from "zustand";
 export const usePopupStore = create<PopupStoreType>()(set => ({
     show: true,
     title: "domi - default value",
-    content: <h1>Hello Domi!</h1>,
+    content: <span>Hello Domi!</span>,
     interaction: [],
 
     openPopup(title, content, interactions) {

@@ -1,5 +1,6 @@
 import Header from "@components/Header/Header";
 import LoginState from "@components/LoginState/LoginState";
+import Popup from "@components/Popup/Popup";
 import AdminCategory from "@pages/Admin/AdminCategory";
 import AdminMenu from "@pages/Admin/AdminMenu";
 import AdminAssetEdit from "@pages/Admin/AssetEdit";
@@ -14,6 +15,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 export default function App() {
     return <BrowserRouter>
         <LoginState />
+        <Popup />
         <Header />
 
         <Routes>
