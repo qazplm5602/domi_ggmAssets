@@ -414,3 +414,11 @@
         background-color: $color-textShy;
     }
 }
+
+.fileLinkField {
+    & > .alert {
+        color: $color-idle;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+}
