@@ -104,8 +104,8 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
-    public void deleteCategory(int id) {
-        Category category = getCategoryById(id);
-        categoryRepository.delete(category);
+    public void deleteCategorys(List<Integer> ids) {
+        categoryRepository.setCategorysParentCancel(ids);
+        categoryRepository.deleteAllById(ids);
     }
 }
