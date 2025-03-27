@@ -21,6 +21,6 @@ export default function AdminUpload() {
         <AdminStoreLinkField className={style.field} value={[storeLink, setStoreLink]} platform={[platform, setPlatform]} />
         <VersionField className={style.field} value={[version, setVersion]} />
 
-        <AdminUploadInteraction />
+        <AdminUploadInteraction warning={platform === null} />
     </main>;
 }
