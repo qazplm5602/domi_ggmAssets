@@ -1,6 +1,6 @@
 import AdminField from "./Field";
 import Input from "../Inputs/Input";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import style from '@styles/admin/edit.module.scss';
 
 type Props = {
