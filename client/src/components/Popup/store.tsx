@@ -2,7 +2,7 @@ import { PopupStoreType } from "@domiTypes/popup";
 import { create } from "zustand";
 
 export const usePopupStore = create<PopupStoreType>()(set => ({
-    show: true,
+    show: false,
     title: "domi - default value",
     content: <span>Hello Domi!</span>,
     interaction: [],
@@ -13,14 +13,14 @@ export const usePopupStore = create<PopupStoreType>()(set => ({
     closePopup() {
         set({ show: false });
     },
-    clickButton(idx) {
-        this.closePopup();
-        const cb = this.interaction[idx];
+    // clickButton(idx) {
+    //     this.closePopup();
+    //     const cb = this.interaction[idx];
         
-        if (!cb) {
-            throw new Error(`popup 버튼을 찾을 수 없습니다. idx: ${idx}`);
-        }
+    //     if (!cb) {
+    //         throw new Error(`popup 버튼을 찾을 수 없습니다. idx: ${idx}`);
+    //     }
 
-        cb.callback();
-    }
+    //     cb.callback();
+    // }
 }));
