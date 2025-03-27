@@ -1,14 +1,14 @@
 import { Request } from 'express-serve-static-core';
 import { AssetDTO } from './asset.ts';
 
-type CallbackType = (req: Request<{}, any, any, any, Record<string, any>>) => Promise<AssetDTO>;
+export type CrawlerCallbackType = (req: Request<{}, any, any, any, Record<string, any>>) => Promise<AssetDTO>;
 
-const crawlerCalls: { [key: string]: CallbackType } = {};
+const crawlerCalls: { [key: string]: CrawlerCallbackType } = {};
 
-export function registerPlatformHandler(platform: string, cb: CallbackType) {
+export function registerPlatformHandler(platform: string, cb: CrawlerCallbackType) {
     crawlerCalls[platform] = cb;
 }
 
-export function getPlatformHandler(platform: string): CallbackType | undefined {
+export function getPlatformHandler(platform: string): CrawlerCallbackType | undefined {
     return crawlerCalls[platform];
 }
