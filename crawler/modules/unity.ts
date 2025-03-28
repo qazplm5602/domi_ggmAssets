@@ -1,5 +1,6 @@
 import { CrawlerCallbackType, registerPlatformHandler } from "./crawler.ts";
 import { DomiError } from "./error.ts";
+import { getIdByUnityStoreUrl } from "./linkParse.ts";
 
 const unityAssetDataLoadhandler: CrawlerCallbackType = async function(req) {
     const url = req.body?.url;
@@ -8,7 +9,9 @@ const unityAssetDataLoadhandler: CrawlerCallbackType = async function(req) {
         throw new DomiError(400, "invalid url");
     }
 
-    return {};
+    const assetId = getIdByUnityStoreUrl(url);
+
+    return { id: assetId };
 }
 
-registerPlatformHandler("unity", unityAssetDataLoadhandler);
+registerPlatformHandler("unity", unityAssetDataLoadhandler);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
