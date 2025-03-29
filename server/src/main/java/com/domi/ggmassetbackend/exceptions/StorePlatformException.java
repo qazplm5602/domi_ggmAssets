@@ -5,7 +5,8 @@ import org.springframework.http.HttpStatus;
 public class StorePlatformException extends DomiException {
     public enum Type {
         API_IO_ERROR(0, "API 요청 오류", HttpStatus.INTERNAL_SERVER_ERROR),
-        API_URI_ERROR(1, "API 요청 오류", HttpStatus.INTERNAL_SERVER_ERROR),;
+        API_URI_ERROR(1, "API 요청 오류", HttpStatus.INTERNAL_SERVER_ERROR),
+        API_RESPONSE_ERROR(2, "API 응답 오류", HttpStatus.INTERNAL_SERVER_ERROR),;
 
         final int code;
         final String message;
