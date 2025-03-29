@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -16,7 +17,7 @@ import java.nio.charset.StandardCharsets;
 public class RequestAPI {
     public static ApiResponseVO post(String serverURL, JSONObject body) throws IOException, URISyntaxException {
         URL url = new URI(serverURL).toURL();
-        HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
         connection.setRequestMethod("POST");
         connection.setDoOutput(true);
