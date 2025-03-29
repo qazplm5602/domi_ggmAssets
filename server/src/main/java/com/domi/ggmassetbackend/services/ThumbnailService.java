@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 @Service
 public class ThumbnailService {
-    private final int MAX_PROCESS_COUNT = 3; // 썸네일 최대 3개까지만 동시 처리
+    private final int MAX_PROCESS_COUNT = 10; // 썸네일 최대 3개까지만 동시 처리
     private final FileService fileService;
 
     public List<Thumbnail> imageSave(List<Thumbnail> thumbnails) throws InterruptedException {
@@ -33,14 +33,23 @@ public class ThumbnailService {
 
         List<Thumbnail> result = new ArrayList<>();
         for (int i = 0; i < thumbnails.size(); i++) {
+            result.add(null); // 갯수 만큼 자리좀...
+        }
+
+        for (int i = 0; i < thumbnails.size(); i++) {
             final int index = i;
 
             executor.submit(() -> {
                 try {
-                    // 세마포어를 통해 최대 동시 실행 스레드를 제어
-                    semaphore.acquire(); // 세마포어 1개를 획득하여 스레드 실행
+                    semaphore.acquire();
+//                    System.out.println("Executing task " + index + " by thread " + Thread.currentThread().getName());
+
                     Thumbnail loadImage = imageDownloadApply(thumbnails.get(index));
+
+//                    System.out.println("Task " + index + " completed by thread " + Thread.currentThread().getName());
+
                     result.set(index, loadImage);
+//                    result.add(loadImage);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -76,7 +85,13 @@ public class ThumbnailService {
         URL url = null;
         InputStream in = null;
         OutputStream out = null;
-        String fileName = fileService.generateFileName(FileCategory.Thumbnail, imageUrl);
+
+        // 생략 되어있는 url
+        if (!imageUrl.startsWith("http")) {
+            imageUrl = "http:" + imageUrl;
+        }
+
+        String fileName = fileService.generateFileName(imageUrl);
 
         try {
             url = new URI(imageUrl).toURL();

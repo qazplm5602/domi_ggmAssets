@@ -31,7 +31,7 @@ public class FileService {
 
     public String createFile(FileCategory category, MultipartFile file) throws IOException {
         String originalFileName = file.getOriginalFilename();
-        String fileName = generateFileName(category, originalFileName);
+        String fileName = generateFileName(originalFileName);
 
         String path = getFilePath(category, fileName);
         File serverFile = new File(path);
@@ -40,7 +40,7 @@ public class FileService {
         return fileName;
     }
 
-    public String generateFileName(FileCategory category, String originalFileName) {
+    public String generateFileName(String originalFileName) {
         String id = MiscUtils.generateRandomStr(15, false);
         String ext = "";
 
