@@ -1,4 +1,4 @@
-import { CompatibilityVO, UnityStoreProduct } from "./asset.ts";
+import { CompatibilityVO, ThumbnailVO, UnityStoreProduct } from "./asset.ts";
 import { CrawlerCallbackType, registerPlatformHandler } from "./crawler.ts";
 import { DomiError } from "./error.ts";
 import { getIdByUnityStoreUrl } from "./linkParse.ts";
@@ -43,6 +43,7 @@ const unityAssetDataLoadhandler: CrawlerCallbackType = async function(req) {
     const data = await result.json();
     const product = data[0].data.product as UnityStoreProduct;
     const supports: CompatibilityVO[] = [];
+    const images: ThumbnailVO[] = [];
 
     // 서포트 컨버팅팅팅팅
     // 가독성 포기 for... (성능 짱짱짱짱)
@@ -70,6 +71,29 @@ const unityAssetDataLoadhandler: CrawlerCallbackType = async function(req) {
         supports.push({ version: element.version, builtIn, urp, hdrp });
     }
 
+    // 이미지
+    for (const element of product.images) {
+        let type: ThumbnailVO['type'] = 'Image';
+
+        switch (element.type) {
+            case "screenshot":
+                // type = 'Image'; // 어차피 기본값이 image임
+                break;
+            case 'youtube':
+                type = 'Youtube';
+                break;
+
+            default:
+                continue; // 다른 type이면 안넣음 ㅅㄱ
+        }
+        
+        images.push({
+            type,
+            contentUrl: element.imageUrl,
+            previewUrl: element.thumbnailUrl
+        });
+    }
+
     // 내가 만든 데베에 맞게 함 ㅁㄴㅇㄹ
     return {
         id: Number(product.id),
@@ -79,7 +103,7 @@ const unityAssetDataLoadhandler: CrawlerCallbackType = async function(req) {
         publisher: product.publisher.name,
         publishAt: product.firstPublishedDate,
         supports,
-        images: [],
+        images: images,
         version: product.currentVersion.name,
         category: product.category.longName,
     };
