@@ -2,17 +2,20 @@ package com.domi.ggmassetbackend.controllers;
 
 import com.domi.ggmassetbackend.data.dto.AssetSearchParamDTO;
 import com.domi.ggmassetbackend.data.entity.Asset;
+import com.domi.ggmassetbackend.data.entity.Thumbnail;
 import com.domi.ggmassetbackend.data.enums.PublishPlatform;
 import com.domi.ggmassetbackend.data.vo.*;
 import com.domi.ggmassetbackend.services.AssetService;
 import com.domi.ggmassetbackend.services.CategoryService;
 import com.domi.ggmassetbackend.services.StorePlatformService;
+import com.domi.ggmassetbackend.services.ThumbnailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("/api/asset")
@@ -21,6 +24,7 @@ public class AssetController {
     private final AssetService assetService;
     private final CategoryService categoryService;
     private final StorePlatformService storePlatformService;
+    private final ThumbnailService thumbnailService;
 
     @GetMapping("/{id}/detail")
     AssetDetailVO getAssetById(@PathVariable int id) {
@@ -42,8 +46,13 @@ public class AssetController {
     }
 
     @GetMapping("/test")
-    Asset domiTest() {
+    Asset domiTest() throws InterruptedException {
         Asset asset = storePlatformService.fetchAssetFromStore(PublishPlatform.Unity, "https://assetstore.unity.com/packages/3d/environments/urban/hq-residential-house-48976");
-        return assetService.saveAsset(asset);
+        List<Thumbnail> savedImages = thumbnailService.imageSave(asset.getImages());
+
+        asset.setImages(savedImages);
+
+        return asset;
+//        return assetService.saveAsset(asset);
     }
 }
