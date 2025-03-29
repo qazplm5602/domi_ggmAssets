@@ -1,5 +1,26 @@
+export interface CompatibilityVO {
+    version: string,
+    builtIn: boolean
+    urp: boolean
+    hdrp: boolean
+}
+
+export interface ThumbnailVO {
+    type: 'Image' | 'Youtube',
+    contentUrl: string
+    previewUrl: string
+}
+
 export interface AssetDTO {
-    
+    id: number,
+    title: string,
+    desc: string,
+    shortDesc: string,
+    publisher: string,
+    supports: CompatibilityVO[],
+    images: ThumbnailVO[],
+    publishAt: string,
+    category: string
 }
 
 interface UnityStoreSrp {

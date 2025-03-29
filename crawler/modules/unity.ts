@@ -1,4 +1,4 @@
-import { UnityStoreProduct } from "./asset.ts";
+import { CompatibilityVO, UnityStoreProduct } from "./asset.ts";
 import { CrawlerCallbackType, registerPlatformHandler } from "./crawler.ts";
 import { DomiError } from "./error.ts";
 import { getIdByUnityStoreUrl } from "./linkParse.ts";
@@ -42,8 +42,47 @@ const unityAssetDataLoadhandler: CrawlerCallbackType = async function(req) {
 
     const data = await result.json();
     const product = data[0].data.product as UnityStoreProduct;
+    const supports: CompatibilityVO[] = [];
 
-    return product;
+    // 서포트 컨버팅팅팅팅
+    // 가독성 포기 for... (성능 짱짱짱짱)
+    for (const element of product.srps) {
+        let builtIn = false;
+        let urp = false;
+        let hdrp = false;
+        
+        for (const pipeline of element.types) {
+            switch (pipeline) {
+                case 'standard':
+                    builtIn = true;
+                    break;
+                case 'lightweight':
+                    urp = true;
+                    break;
+                case 'hd':
+                    hdrp = true;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        supports.push({ version: element.version, builtIn, urp, hdrp });
+    }
+
+    // 내가 만든 데베에 맞게 함 ㅁㄴㅇㄹ
+    return {
+        id: Number(product.id),
+        title: product.name,
+        desc: product.description,
+        shortDesc: product.elevatorPitch,
+        publisher: product.publisher.name,
+        publishAt: product.firstPublishedDate,
+        supports,
+        images: [],
+        version: product.currentVersion.name,
+        category: product.category.longName,
+    };
 }
 
 registerPlatformHandler("unity", unityAssetDataLoadhandler);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
