@@ -1,6 +1,7 @@
 package com.domi.ggmassetbackend.services;
 
 import com.domi.ggmassetbackend.data.entity.Asset;
+import com.domi.ggmassetbackend.data.entity.Compatibility;
 import com.domi.ggmassetbackend.data.entity.Thumbnail;
 import com.domi.ggmassetbackend.data.enums.PublishPlatform;
 import com.domi.ggmassetbackend.data.enums.ThumbnailType;
@@ -82,6 +83,24 @@ public class StorePlatformService {
         }
 
         asset.setImages(images);
+
+
+        // 호환성
+        JSONArray supportsJson = assetData.getJSONArray("supports");
+        List<Compatibility> supports = new ArrayList<>();
+
+        for (int i = 0; i < supportsJson.length(); i++) {
+            JSONObject supportJson = supportsJson.getJSONObject(i);
+
+            String version = supportJson.getString("version");
+            boolean builtIn = supportJson.getBoolean("builtIn");
+            boolean urp = supportJson.getBoolean("urp");
+            boolean hdrp = supportJson.getBoolean("hdrp");
+
+            supports.add(new Compatibility(null, version, builtIn, urp, hdrp));
+        }
+
+        asset.setSupports(supports);
 
         return asset;
     }
