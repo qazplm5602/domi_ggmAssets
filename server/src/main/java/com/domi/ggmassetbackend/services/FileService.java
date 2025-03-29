@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -41,7 +42,8 @@ public class FileService {
     }
 
     public String generateFileName(String originalFileName) {
-        String id = MiscUtils.generateRandomStr(15, false);
+//        String id = MiscUtils.generateRandomStr(15, false);
+        String id = UUID.randomUUID().toString();
         String ext = "";
 
         // 확장자가 있음
