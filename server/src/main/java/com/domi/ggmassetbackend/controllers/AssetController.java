@@ -52,7 +52,7 @@ public class AssetController {
 
         asset.setImages(savedImages);
 
-        return asset;
-//        return assetService.saveAsset(asset);
+//        return asset;
+        return assetService.saveAsset(asset);
     }
 }
