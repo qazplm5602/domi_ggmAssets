@@ -1,18 +1,22 @@
 package com.domi.ggmassetbackend.services;
 
 import com.domi.ggmassetbackend.data.entity.Asset;
+import com.domi.ggmassetbackend.data.entity.Category;
 import com.domi.ggmassetbackend.data.entity.Compatibility;
 import com.domi.ggmassetbackend.data.entity.Thumbnail;
 import com.domi.ggmassetbackend.data.enums.PublishPlatform;
 import com.domi.ggmassetbackend.data.enums.ThumbnailType;
 import com.domi.ggmassetbackend.data.vo.ApiResponseVO;
+import com.domi.ggmassetbackend.exceptions.CategoryException;
 import com.domi.ggmassetbackend.exceptions.StorePlatformException;
 import com.domi.ggmassetbackend.utils.MiscUtils;
 import com.domi.ggmassetbackend.utils.RequestAPI;
+import lombok.RequiredArgsConstructor;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -20,11 +24,15 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class StorePlatformService {
     @Value("${domi.crawler.url}")
     private String crawlerUrl;
 
+    private final CategoryService categoryService;
+
+    @Transactional
     public Asset fetchAssetFromStore(PublishPlatform platform, String url) {
         String platformId = convertAssetId(platform);
 
@@ -101,6 +109,34 @@ public class StorePlatformService {
         }
 
         asset.setSupports(supports);
+
+        // 카테고리
+        String categoryListName = assetData.getString("category");
+        if (categoryListName != null) { // 카테고리가 없는거 일수도
+            String[] categoryNames = categoryListName.split("/");
+            Category[] categories = new Category[categoryNames.length];
+
+            for (int i = 0; i < categoryNames.length; i++) {
+                Category category = null;
+                Category parentCategory = (i == 0) ? null : categories[i - 1];
+
+                try {
+                    category = categoryService.getCategoryByNameAndParent(categoryNames[i], parentCategory);
+                } catch (CategoryException ignored) {}
+
+                // 잉 없네
+                if (category == null) {
+                    category = categoryService.createCategory(categoryNames[i], parentCategory);
+//                    category = new Category(0, categoryNames[i], parentCategory);
+                }
+
+                categories[i] = category;
+            }
+
+            // 마지막꺼임
+            asset.setCategory(categories[categories.length - 1]);
+        }
+
 
         return asset;
     }

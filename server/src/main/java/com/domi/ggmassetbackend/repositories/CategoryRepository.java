@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
@@ -31,4 +32,6 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
     @Modifying
     @Query("UPDATE Category c SET c.parent = NULL WHERE c.id IN :ids")
     void setCategorysParentCancel(List<Integer> ids);
+
+    Optional<Category> findByDisplayNameAndParent(String displayName, Category parent);
 }
