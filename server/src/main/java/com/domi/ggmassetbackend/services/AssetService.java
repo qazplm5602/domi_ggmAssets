@@ -69,4 +69,9 @@ public class AssetService {
     public void setCategoryCancel(List<Integer> ids) {
         assetRepository.updateCategoryCancel(ids);
     }
+
+    // 이거 나중에 지울 예정 (비지니스 코드맨~~)
+    public Asset saveAsset(Asset asset) {
+        return assetRepository.save(asset);
+    }
 }

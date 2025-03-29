@@ -42,7 +42,8 @@ public class AssetController {
     }
 
     @GetMapping("/test")
-    Asset domiTest() throws IOException, URISyntaxException {
-        return storePlatformService.fetchAssetFromStore(PublishPlatform.Unity, "https://assetstore.unity.com/packages/3d/environments/urban/hq-residential-house-48976");
+    Asset domiTest() {
+        Asset asset = storePlatformService.fetchAssetFromStore(PublishPlatform.Unity, "https://assetstore.unity.com/packages/3d/environments/urban/hq-residential-house-48976");
+        return assetService.saveAsset(asset);
     }
 }
