@@ -37,6 +37,7 @@
         &:disabled {
             color: $color-textSupporting;
             background-color: $color-misExtra;
+            cursor: initial;
         }
         
         & > .loading {

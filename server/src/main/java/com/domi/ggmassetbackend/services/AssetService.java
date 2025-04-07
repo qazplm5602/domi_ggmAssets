@@ -1,7 +1,9 @@
 package com.domi.ggmassetbackend.services;
 
 import com.domi.ggmassetbackend.data.dto.AssetSearchParamDTO;
+import com.domi.ggmassetbackend.data.dto.AssetUploadFormDTO;
 import com.domi.ggmassetbackend.data.entity.Asset;
+import com.domi.ggmassetbackend.data.entity.Thumbnail;
 import com.domi.ggmassetbackend.exceptions.AssetException;
 import com.domi.ggmassetbackend.repositories.AssetRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,8 @@ import java.util.Queue;
 public class AssetService {
     private final AssetRepository assetRepository;
     private final CategoryService categoryService;
+    private final StorePlatformService storePlatformService;
+    private final ThumbnailService thumbnailService;
 
     public Asset getAssetById(int id) {
         return assetRepository.findById(id).orElseThrow(() -> new AssetException(AssetException.Type.NOT_FOUND));
@@ -71,7 +75,25 @@ public class AssetService {
     }
 
     // 이거 나중에 지울 예정 (비지니스 코드맨~~)
-    public Asset saveAsset(Asset asset) {
-        return assetRepository.save(asset);
+//    public Asset saveAsset(Asset asset) {
+//        return assetRepository.save(asset);
+//    }
+
+    public Asset createAssetWithCrawling(AssetUploadFormDTO form) throws InterruptedException {
+        Asset newAsset;
+
+        // 크롤링 ㄱㄱ
+        if (form.getPlatform() != null) {
+            newAsset = storePlatformService.fetchAssetFromStore(form.getPlatform(), form.getStore());
+
+            // 썸네일 불러오깅
+            List<Thumbnail> savedImages = thumbnailService.imageSave(newAsset.getImages());
+            newAsset.setImages(savedImages);
+        } else {
+            newAsset = new Asset();
+        }
+
+        newAsset.setDownloadUrl(form.getDownload());
+        return assetRepository.save(newAsset);
     }
 }

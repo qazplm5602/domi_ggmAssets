@@ -65,6 +65,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/domi").hasAnyRole("DOMI")
                         .requestMatchers("/api/asset/category/admin").hasAnyRole("TEACHER")
                         .requestMatchers("/api/asset/category/rename").hasAnyRole("TEACHER")
+                        .requestMatchers("/api/asset/upload").hasAnyRole("TEACHER")
                         .requestMatchers("/error").permitAll()
                         .anyRequest().authenticated()
         );
