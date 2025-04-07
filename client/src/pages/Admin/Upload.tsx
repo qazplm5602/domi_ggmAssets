@@ -7,6 +7,8 @@ import VersionField from '@components/Admin/Field/VersionField';
 import AdminUploadInteraction from '@components/Admin/UploadInteraction';
 import { useState } from 'react';
 import { AssetBaseVO } from '@domiTypes/asset';
+import { request } from '@utils/request';
+import { usePopupStore } from '@components/Popup/store';
 
 export default function AdminUpload() {
     const [ fileLink, setFileLink ] = useState("");
@@ -14,9 +16,27 @@ export default function AdminUpload() {
     const [ platform, setPlatform ] = useState<AssetBaseVO['platform']>(null);
     const [ version, setVersion ] = useState("");
     const [ loading, setLoading ] = useState(false);
+    const { openPopup } = usePopupStore();
 
-    const handleUpload = function() {
+    const handleUpload = async function() {
+        if (fileLink.length === 0) {
+            openPopup("오류", "다운로드 링크를 입력해야 합니다.", [
+                { text: "확인", callback() {} }
+            ]);
+            return;
+        }
+
         setLoading(true);
+        
+        const data = {
+            download: fileLink,
+            store: storeLink,
+            platform,
+            version
+        };
+        const response = await request<number>("asset/upload", { method: "POST", data });
+
+        setLoading(false);
     }
 
     return <main className={`${baseStyle.small_screen} ${style.main}`}>
