@@ -2,8 +2,10 @@ import AdminEditContent from '@components/Admin/Edit/Content';
 import AdminEditSide from '@components/Admin/Edit/Side';
 import baseStyle from '@styles/admin/style.module.scss';
 import style from '@styles/admin/edit.module.scss';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { AssetEditFieldStates } from '@domiTypes/assetEdit';
+import { AssetAllVO } from '@domiTypes/asset';
+import { hasAssetEditFieldUpdated } from '@components/Admin/Edit/util/diffField';
 
 export default function AdminAssetEdit() {
     const titleState = useState("");
@@ -29,8 +31,24 @@ export default function AdminAssetEdit() {
         description: descriptionState
     };
 
+    ////// 원본 에셋
+    const [ originAsset, setOriginAsset ] = useState<AssetAllVO>({
+        id: 0,
+        title: "untitled",
+        category: null,
+        description: "",
+        shortDesc: "",
+        images: [],
+        platform: null,
+        publishAt: null,
+        publisher: "",
+        supports: []
+    });
+
+    const isDifferent = useMemo(() => hasAssetEditFieldUpdated(fieldStates, originAsset), [ originAsset, fieldStates ]);
+
     return <main className={`${baseStyle.screen} ${style.screen}`}>
-        <AdminEditContent fields={fieldStates} />
+        <AdminEditContent fields={fieldStates} updated={isDifferent} />
         <AdminEditSide />
     </main>
 }

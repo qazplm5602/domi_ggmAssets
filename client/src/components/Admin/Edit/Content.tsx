@@ -17,17 +17,18 @@ import { AssetBaseVO } from "@domiTypes/asset";
 import Textarea from "../Inputs/Textarea";
 
 type Props = {
-    fields: AssetEditFieldStates
+    fields: AssetEditFieldStates,
+    updated: boolean
 }
 
-export default function AdminEditContent({ fields }: Props) {
+export default function AdminEditContent({ fields, updated }: Props) {
     const storelinkPlatformState = useState<AssetBaseVO['platform']>(null);
 
     return <section className={style.content}>
-        <AdminEditHead />
+        <AdminEditHead updated={updated} />
 
         <AdminField title="제목" required={true} className={style.field}>
-            <Input placeholder="제목을 입력하세요." />
+            <Input placeholder="제목을 입력하세요." autoValue={fields.title} />
         </AdminField>
 
         <AdminFileLinkField className={style.field} value={fields.fileLink} />

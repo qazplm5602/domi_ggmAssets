@@ -34,6 +34,10 @@ export interface AssetDetailVO extends AssetBaseVO {
     publishAt: string | null
 }
 
+export interface AssetAllVO extends AssetDetailVO {
+    
+}
+
 export interface AssetPreviewVO extends AssetBaseVO {
     thumbnail: PageThumbnailVO
 }
