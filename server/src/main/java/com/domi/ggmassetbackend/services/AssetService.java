@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -91,6 +92,8 @@ public class AssetService {
             newAsset.setImages(savedImages);
         } else {
             newAsset = new Asset();
+            newAsset.setTitle("domi untitled.");
+            newAsset.setCreateAt(LocalDateTime.now());
         }
 
         newAsset.setDownloadUrl(form.getDownload());

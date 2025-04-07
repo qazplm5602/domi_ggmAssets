@@ -57,7 +57,7 @@ public class AssetController {
 //    }
 
     @PostMapping("/upload")
-    int createAsset(@ModelAttribute @Valid AssetUploadFormDTO form) throws InterruptedException {
+    int createAsset(@RequestBody @Valid AssetUploadFormDTO form) throws InterruptedException {
         return assetService.createAssetWithCrawling(form).getId();
     }
 }
