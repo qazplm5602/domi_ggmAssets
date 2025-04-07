@@ -1,3 +1,4 @@
+import { AssetEditFieldStates } from "@domiTypes/assetEdit";
 import AdminEditCategoryField from "../Field/CategoryField";
 import AdminEditCompatibilityField from "../Field/Compatibility/CompatibilityField";
 import AdminField from "../Field/Field";
@@ -11,8 +12,17 @@ import AdminEditCategoryAutoFieldDialog from "./AutoField/Dialog";
 import AdminEditCategorySelectDialog from "./CategorySelect/CategorySelectDialog";
 import AdminEditHead from "./Head";
 import style from '@styles/admin/edit.module.scss';
+import { useState } from "react";
+import { AssetBaseVO } from "@domiTypes/asset";
+import Textarea from "../Inputs/Textarea";
 
-export default function AdminEditContent() {
+type Props = {
+    fields: AssetEditFieldStates
+}
+
+export default function AdminEditContent({ fields }: Props) {
+    const storelinkPlatformState = useState<AssetBaseVO['platform']>(null);
+
     return <section className={style.content}>
         <AdminEditHead />
 
@@ -20,25 +30,25 @@ export default function AdminEditContent() {
             <Input placeholder="제목을 입력하세요." />
         </AdminField>
 
-        <AdminFileLinkField className={style.field} />
-        <AdminStoreLinkField className={style.field} />
-        <VersionField className={style.field} />
+        <AdminFileLinkField className={style.field} value={fields.fileLink} />
+        <AdminStoreLinkField className={style.field} value={fields.storeLink} platform={storelinkPlatformState} />
+        <VersionField className={style.field} value={fields.version} />
         <AdminEditCategoryField className={style.field} />
         <AdminEditPublisherField className={style.field} />
         
         <AdminField title="등록일" className={style.field}>
-            <Input type="date" />
+            <Input type="date" autoValue={fields.createAt} />
         </AdminField>
 
         <AdminEditImageField className={style.field} />
         <AdminEditCompatibilityField className={style.field} />
 
         <AdminField title="간단한 설명" className={style.field}>
-            <textarea className={style.skinTextarea} placeholder="간단한 설명을 입력하세요."></textarea>
+            <Textarea className={style.skinTextarea} placeholder="간단한 설명을 입력하세요." autoValue={fields.shortDesc} />
         </AdminField>
 
         <AdminField title="설명" className={style.field}>
-            <textarea className={`${style.skinTextarea} ${style.big}`} placeholder="설명을 입력하세요."></textarea>
+            <Textarea className={`${style.skinTextarea} ${style.big}`} placeholder="설명을 입력하세요." autoValue={fields.description} />
         </AdminField>
 
         <AdminEditCategorySelectDialog />
