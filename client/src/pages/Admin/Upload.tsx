@@ -13,6 +13,11 @@ export default function AdminUpload() {
     const [ storeLink, setStoreLink ] = useState("");
     const [ platform, setPlatform ] = useState<AssetBaseVO['platform']>(null);
     const [ version, setVersion ] = useState("");
+    const [ loading, setLoading ] = useState(false);
+
+    const handleUpload = function() {
+        setLoading(true);
+    }
 
     return <main className={`${baseStyle.small_screen} ${style.main}`}>
         <AdminHead className={style.head} />
@@ -21,6 +26,6 @@ export default function AdminUpload() {
         <AdminStoreLinkField className={style.field} value={[storeLink, setStoreLink]} platform={[platform, setPlatform]} />
         <VersionField className={style.field} value={[version, setVersion]} />
 
-        <AdminUploadInteraction warning={platform === null} />
+        <AdminUploadInteraction warning={platform === null} loading={loading} onUpload={handleUpload} />
     </main>;
 }
