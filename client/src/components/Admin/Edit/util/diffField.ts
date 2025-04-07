@@ -15,6 +15,8 @@ export function hasAssetEditFieldUpdated(fields: AssetEditFieldStates, origin: A
     if (fields.description[0] !== origin.description)
         return true;
 
+    // 다운로드 링크
+    // if (fields.fileLink[0] !== origin.)
 
     return false;
 }

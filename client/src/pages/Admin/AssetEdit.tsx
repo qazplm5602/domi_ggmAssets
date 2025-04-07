@@ -2,10 +2,12 @@ import AdminEditContent from '@components/Admin/Edit/Content';
 import AdminEditSide from '@components/Admin/Edit/Side';
 import baseStyle from '@styles/admin/style.module.scss';
 import style from '@styles/admin/edit.module.scss';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { AssetEditFieldStates } from '@domiTypes/assetEdit';
 import { AssetAllVO } from '@domiTypes/asset';
 import { hasAssetEditFieldUpdated } from '@components/Admin/Edit/util/diffField';
+import { useParams } from 'react-router-dom';
+import { adminAssetEditLoad } from '@components/Admin/Edit/util/loadAsset';
 
 export default function AdminAssetEdit() {
     const titleState = useState("");
@@ -32,20 +34,28 @@ export default function AdminAssetEdit() {
     };
 
     ////// 원본 에셋
-    const [ originAsset, setOriginAsset ] = useState<AssetAllVO>({
-        id: 0,
-        title: "untitled",
-        category: null,
-        description: "",
-        shortDesc: "",
-        images: [],
-        platform: null,
-        publishAt: null,
-        publisher: "",
-        supports: []
-    });
+    const [ originAsset, setOriginAsset ] = useState<AssetAllVO | null>(null);
+    const { id: assetId } = useParams();
 
-    const isDifferent = useMemo(() => hasAssetEditFieldUpdated(fieldStates, originAsset), [ originAsset, fieldStates ]);
+    const isDifferent = useMemo(() => originAsset !== null && hasAssetEditFieldUpdated(fieldStates, originAsset), [ originAsset, ...Object.values(fieldStates).map(v => v[0]) ]);
+
+    useEffect(() => {
+        if (!assetId) return;
+
+        const aliveRef = { alive: true };
+        
+        adminAssetEditLoad(assetId, aliveRef, fieldStates, setOriginAsset);
+
+        return () => {
+            aliveRef.alive = false;
+        }
+    }, [ assetId ]);
+
+    if (originAsset == null) {
+        return <main className={`${baseStyle.screen} ${style.screen}`}>
+            짜치는 로딩
+        </main>
+    }
 
     return <main className={`${baseStyle.screen} ${style.screen}`}>
         <AdminEditContent fields={fieldStates} updated={isDifferent} />

@@ -56,8 +56,14 @@ public class AssetController {
 //        return assetService.saveAsset(asset);
 //    }
 
-    @PostMapping("/upload")
+    @PostMapping("/admin/upload")
     int createAsset(@RequestBody @Valid AssetUploadFormDTO form) throws InterruptedException {
         return assetService.createAssetWithCrawling(form).getId();
+    }
+
+    @GetMapping("/admin/{id}/detail")
+    AssetAllVO getAssetAdminDetailById(@PathVariable int id) {
+        Asset asset = assetService.getAssetById(id);
+        return AssetAllVO.from(asset, categoryService);
     }
 }

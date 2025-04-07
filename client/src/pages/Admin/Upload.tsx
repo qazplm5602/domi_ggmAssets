@@ -40,7 +40,7 @@ export default function AdminUpload() {
             platform,
             version
         };
-        const response = await request<number>("asset/upload", { method: "POST", data })
+        const response = await request<number>("asset/admin/upload", { method: "POST", data })
             .catch(e => e as AxiosError<ErrorResponse>);
         
         setLoading(false);
