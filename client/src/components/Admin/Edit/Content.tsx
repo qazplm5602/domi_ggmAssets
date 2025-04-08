@@ -42,7 +42,7 @@ export default function AdminEditContent({ fields, updated }: Props) {
         </AdminField>
 
         <AdminEditImageField className={style.field} />
-        <AdminEditCompatibilityField className={style.field} />
+        <AdminEditCompatibilityField className={style.field} state={fields.supports} />
 
         <AdminField title="간단한 설명" className={style.field}>
             <Textarea className={style.skinTextarea} placeholder="간단한 설명을 입력하세요." autoValue={fields.shortDesc} />

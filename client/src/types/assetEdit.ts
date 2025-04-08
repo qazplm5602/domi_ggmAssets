@@ -1,4 +1,4 @@
-import { AssetBaseVO } from "./asset";
+import { AssetBaseVO, CompatibilityVO } from "./asset";
 import { ReactState } from "./react";
 
 export interface AssetEditFieldStates {
@@ -10,5 +10,6 @@ export interface AssetEditFieldStates {
     shortDesc: ReactState<string>,
     description: ReactState<string>,
     platform: ReactState<AssetBaseVO['platform']>,
-    artist: ReactState<string>
+    artist: ReactState<string>,
+    supports: ReactState<CompatibilityVO[]>
 }

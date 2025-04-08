@@ -9,6 +9,7 @@ export function adminAssetFieldFill(asset: AssetAllVO, fields: AssetEditFieldSta
     fields.storeLink[1](asset.platformUrl || '');
     fields.platform[1](asset.platform);
     fields.artist[1](asset.publisher || '');
+    fields.supports[1](asset.supports);
 
     // 등록일
     if (asset.publishAt) {
