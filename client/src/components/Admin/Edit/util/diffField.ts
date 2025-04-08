@@ -1,4 +1,4 @@
-import { AssetAllVO } from "@domiTypes/asset";
+import { AssetAllVO, CompatibilityVO } from "@domiTypes/asset";
 import { AssetEditFieldStates } from "@domiTypes/assetEdit";
 import { ReactState } from "@domiTypes/react";
 
@@ -28,9 +28,27 @@ export function hasAssetEditFieldUpdated(fields: AssetEditFieldStates, origin: A
             return true;
     }
 
+    // 호환성 비교
+    if (otherSupportsField(fields.supports[0], origin.supports))
+        return true;
+
     return false;
 }
 
 function isOtherField(state: ReactState<string>, origin: string | null | undefined) {
     return state[0] === (origin || '');
+}
+
+function otherSupportsField(source: CompatibilityVO[], target: CompatibilityVO[]) {
+    if (source.length !== target.length) return true; // 길이가 다른거부터 다름
+
+    for (let i = 0; i < source.length; i++) {
+        const value1 = source[i];
+        const value2 = target[i];
+
+        if (value1.version !== value2.version || value1.builtIn !== value2.builtIn || value1.urp !== value2.urp || value1.hdrp !== value2.hdrp)
+            return true;
+    }
+
+    return false;
 }
