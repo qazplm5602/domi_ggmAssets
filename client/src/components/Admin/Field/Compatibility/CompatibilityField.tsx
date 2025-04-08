@@ -19,12 +19,23 @@ export default function AdminEditCompatibilityField({ className, state: [ suppor
         setSupports(newList);
     }
 
+    const handleItemRemove = function(idx: number) {
+        const newList = [ ...supports ];
+        newList.splice(idx, 1);
+        
+        setSupports(newList);
+    }
+
+    const handleItemAdd = function() {
+        setSupports([ ...supports, { version: "", builtIn: false, urp: false, hdrp: false } ]);
+    }
+
     return <AdminField title="호환성" className={className}>
         {/* 리스트 */}
         <section className={style.supportList}>
-            {supports.map((v, i) => <AdminEditCompatibilityItem key={i} data={v} onChange={value => handleItemChange(i, value)} />)}
+            {supports.map((v, i) => <AdminEditCompatibilityItem key={i} idx={i} data={v} onChange={value => handleItemChange(i, value)} onRemove={() => handleItemRemove(i)} />)}
         </section>
 
-        <Button>추가</Button>
+        <Button onClick={handleItemAdd}>추가</Button>
     </AdminField>
 }

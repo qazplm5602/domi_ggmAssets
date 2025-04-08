@@ -2,13 +2,14 @@ import CheckBox from "@components/CheckBox/CheckBox";
 import style from '@styles/admin/edit.module.scss';
 
 type Props = {
+    id: string,
     name: string,
-    onToggle?: (value: boolean) => void,
-    active?: boolean
+    active?: boolean,
+    onToggle?: (value: boolean) => void
 }
 
-export default function AdminEditCompatibilityOption({ name, onToggle, active = false }: Props) {
-    const id = `CompatibilityOption-${name}`;
+export default function AdminEditCompatibilityOption({ id, name, active = false, onToggle }: Props) {
+    // const id = `CompatibilityOption-${name}`;
 
     const handleCheckboxChange = function(e: React.ChangeEvent<HTMLInputElement>) {
         if (onToggle)

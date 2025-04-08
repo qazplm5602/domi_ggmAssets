@@ -7,11 +7,13 @@ import AdminEditCompatibilityOption from './Option';
 import { CompatibilityVO } from '@domiTypes/asset';
 
 type Props = {
+    data: CompatibilityVO,
+    idx: number,
     onChange?: (value: Partial<CompatibilityVO>) => void,
-    data: CompatibilityVO
+    onRemove?: () => void
 }
 
-export default function AdminEditCompatibilityItem({ data, onChange }: Props) {
+export default function AdminEditCompatibilityItem({ data, idx, onChange, onRemove }: Props) {
     const triggerChange = function(value: Partial<CompatibilityVO>) {
         if (onChange)
             onChange(value);
@@ -22,13 +24,13 @@ export default function AdminEditCompatibilityItem({ data, onChange }: Props) {
     }
 
     return <div className={style.item}>
-        <IconButton icon={closeIcon} className={style.removeBtn} />
+        <IconButton icon={closeIcon} className={style.removeBtn} onClick={onRemove} />
         <Input placeholder='버전' value={data.version} onChange={handleInputChange} />
         
         <section className={style.checks}>
-            <AdminEditCompatibilityOption name='Built-In' active={data.builtIn} onToggle={on => triggerChange({ builtIn: on })} />
-            <AdminEditCompatibilityOption name='URP' active={data.urp} onToggle={on => triggerChange({ urp: on })} />
-            <AdminEditCompatibilityOption name='HDRP' active={data.hdrp} onToggle={on => triggerChange({ hdrp: on })} />
+            <AdminEditCompatibilityOption id={`compatiblityOption-${idx}-built`} name='Built-In' active={data.builtIn} onToggle={on => triggerChange({ builtIn: on })} />
+            <AdminEditCompatibilityOption id={`compatiblityOption-${idx}-urp`} name='URP' active={data.urp} onToggle={on => triggerChange({ urp: on })} />
+            <AdminEditCompatibilityOption id={`compatiblityOption-${idx}-gdrp`} name='HDRP' active={data.hdrp} onToggle={on => triggerChange({ hdrp: on })} />
         </section>
     </div>;
 }
