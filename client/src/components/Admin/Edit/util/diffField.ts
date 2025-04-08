@@ -2,7 +2,7 @@ import { AssetAllVO } from "@domiTypes/asset";
 import { AssetEditFieldStates } from "@domiTypes/assetEdit";
 
 export function hasAssetEditFieldUpdated(fields: AssetEditFieldStates, origin: AssetAllVO): boolean {
-    console.log(fields.title[0], origin.title)
+    // console.log(fields.title[0], origin.title)
     // 제목 비교
     if (fields.title[0] !== origin.title)
         return true;
