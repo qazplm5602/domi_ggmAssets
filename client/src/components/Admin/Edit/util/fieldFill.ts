@@ -11,9 +11,22 @@ export function adminAssetFieldFill(asset: AssetAllVO, fields: AssetEditFieldSta
     fields.artist[1](asset.publisher || '');
     fields.supports[1](asset.supports);
 
+
     // 등록일
+    let createAtField = "";
     if (asset.publishAt) {
         const publishAtDate = new Date(asset.publishAt);
-        fields.createAt[1](`${publishAtDate.getFullYear()}-${(publishAtDate.getMonth() + 1).toString().padStart(2, '0')}-${publishAtDate.getDate().toString().padStart(2, '0')}`);
+        createAtField = `${publishAtDate.getFullYear()}-${(publishAtDate.getMonth() + 1).toString().padStart(2, '0')}-${publishAtDate.getDate().toString().padStart(2, '0')}`;
     }
+
+    fields.createAt[1](createAtField);
+
+    let categoryField: number | null = null;
+
+    if (asset.category && asset.category.length > 0) {
+        const item = asset.category[asset.category.length - 1]; // 마지막꺼
+        categoryField = item.id;
+    }
+    
+    fields.category[1](categoryField);
 }

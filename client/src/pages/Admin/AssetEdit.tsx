@@ -25,6 +25,7 @@ export default function AdminAssetEdit() {
     const artistState = useState("");
     const platformState = useState<AssetBaseVO['platform']>(null);
     const supportsState = useState<CompatibilityVO[]>([]);
+    const categoryState = useState<number | null>(null);
 
     const fieldStates: AssetEditFieldStates = {
         title: titleState,
@@ -36,7 +37,8 @@ export default function AdminAssetEdit() {
         description: descriptionState,
         artist: artistState,
         platform: platformState,
-        supports: supportsState
+        supports: supportsState,
+        category: categoryState
     };
 
     ////// 원본 에셋

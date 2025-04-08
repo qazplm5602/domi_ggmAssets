@@ -11,5 +11,6 @@ export interface AssetEditFieldStates {
     description: ReactState<string>,
     platform: ReactState<AssetBaseVO['platform']>,
     artist: ReactState<string>,
-    supports: ReactState<CompatibilityVO[]>
+    supports: ReactState<CompatibilityVO[]>,
+    category: ReactState<number | null>
 }
