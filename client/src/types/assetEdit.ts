@@ -1,4 +1,5 @@
-type ReactState<T> = [T, React.Dispatch<React.SetStateAction<T>>];
+import { AssetBaseVO } from "./asset";
+import { ReactState } from "./react";
 
 export interface AssetEditFieldStates {
     title: ReactState<string>,
@@ -8,4 +9,6 @@ export interface AssetEditFieldStates {
     createAt: ReactState<string>,
     shortDesc: ReactState<string>,
     description: ReactState<string>,
+    platform: ReactState<AssetBaseVO['platform']>,
+    artist: ReactState<string>
 }

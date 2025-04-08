@@ -4,7 +4,7 @@ import baseStyle from '@styles/admin/style.module.scss';
 import style from '@styles/admin/edit.module.scss';
 import { useEffect, useMemo, useState } from 'react';
 import { AssetEditFieldStates } from '@domiTypes/assetEdit';
-import { AssetAllVO } from '@domiTypes/asset';
+import { AssetAllVO, AssetBaseVO } from '@domiTypes/asset';
 import { hasAssetEditFieldUpdated } from '@components/Admin/Edit/util/diffField';
 import { useParams } from 'react-router-dom';
 import { adminAssetEditLoad } from '@components/Admin/Edit/util/loadAsset';
@@ -22,6 +22,8 @@ export default function AdminAssetEdit() {
     // 호환성 어카지
     const shortDescState = useState("");
     const descriptionState = useState("");
+    const artistState = useState("");
+    const platformState = useState<AssetBaseVO['platform']>(null);
 
     const fieldStates: AssetEditFieldStates = {
         title: titleState,
@@ -30,7 +32,9 @@ export default function AdminAssetEdit() {
         version: versionState,
         createAt: createAtState,
         shortDesc: shortDescState,
-        description: descriptionState
+        description: descriptionState,
+        artist: artistState,
+        platform: platformState
     };
 
     ////// 원본 에셋

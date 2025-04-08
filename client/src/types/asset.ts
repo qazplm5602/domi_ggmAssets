@@ -35,7 +35,8 @@ export interface AssetDetailVO extends AssetBaseVO {
 }
 
 export interface AssetAllVO extends AssetDetailVO {
-    
+    platformUrl: string | null,
+    downloadUrl: string
 }
 
 export interface AssetPreviewVO extends AssetBaseVO {

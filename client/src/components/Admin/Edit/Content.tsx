@@ -35,7 +35,7 @@ export default function AdminEditContent({ fields, updated }: Props) {
         <AdminStoreLinkField className={style.field} value={fields.storeLink} platform={storelinkPlatformState} />
         <VersionField className={style.field} value={fields.version} />
         <AdminEditCategoryField className={style.field} />
-        <AdminEditPublisherField className={style.field} />
+        <AdminEditPublisherField className={style.field} platform={fields.platform} artist={fields.artist} />
         
         <AdminField title="등록일" className={style.field}>
             <Input type="date" autoValue={fields.createAt} />
