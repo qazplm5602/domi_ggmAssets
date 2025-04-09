@@ -25,6 +25,7 @@ type Props = {
 export default function AdminEditContent({ fields, updated }: Props) {
     const storelinkPlatformState = useState<AssetBaseVO['platform']>(null);
     const [ categorySelectPopup, setCategorySelectPopup ] = useState(false);
+    const [ imageUploadPopup, setImageUploadPopup ] = useState(false);
 
     const handleOpenCategorySelect = function() {
         setCategorySelectPopup(true);
@@ -32,6 +33,9 @@ export default function AdminEditContent({ fields, updated }: Props) {
     const handleCloseCategorySelect = function() {
         setCategorySelectPopup(false);
     }
+    
+    const handleOpenImageUpload = () => setImageUploadPopup(true);
+    const handleCloseImageUpload = () => setImageUploadPopup(false);
 
     const handleCategoryChange = function(categoryId: number) {
         // -999는 분류되지 않음 이지롱~~~~
@@ -55,7 +59,7 @@ export default function AdminEditContent({ fields, updated }: Props) {
             <Input type="date" autoValue={fields.createAt} />
         </AdminField>
 
-        <AdminEditImageField className={style.field} state={fields.images} />
+        <AdminEditImageField className={style.field} state={fields.images} onAdd={handleOpenImageUpload} />
         <AdminEditCompatibilityField className={style.field} state={fields.supports} />
 
         <AdminField title="간단한 설명" className={style.field}>
@@ -68,6 +72,6 @@ export default function AdminEditContent({ fields, updated }: Props) {
 
         <AdminEditCategorySelectDialog show={categorySelectPopup} onClose={handleCloseCategorySelect} onSelect={handleCategoryChange} />
         <AdminEditCategoryAutoFieldDialog />
-        <AdminEditThumbnailUploadDialog />
+        <AdminEditThumbnailUploadDialog show={imageUploadPopup} onClose={handleCloseImageUpload} />
     </section>
 }

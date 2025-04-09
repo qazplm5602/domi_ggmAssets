@@ -4,7 +4,12 @@ import AdminEditThumbnailUploadDialogSelect from './Select';
 import AdminEditThumbnailUploadDialogYoutube from './Youtube';
 import { useState } from 'react';
 
-export default function AdminEditThumbnailUploadDialog() {
+type Props = {
+    show: boolean,
+    onClose?: () => void
+}
+
+export default function AdminEditThumbnailUploadDialog({ show, onClose }: Props) {
     const [ screen, setScreen ] = useState<'select' | 'youtube'>('select');
 
     const handleSelectImage = function() {
@@ -19,7 +24,7 @@ export default function AdminEditThumbnailUploadDialog() {
         setScreen('select');
     }
 
-    return <Dialog title="썸네일 업로드" show={true} className={style.thumbnailUploadDialog}>
+    return <Dialog title="썸네일 업로드" show={show} className={style.thumbnailUploadDialog} onClose={onClose}>
         {screen === 'select' && <AdminEditThumbnailUploadDialogSelect onSelectImage={handleSelectImage} onSelectYoutube={handleSelectYoutube} />}
         {screen === 'youtube' && <AdminEditThumbnailUploadDialogYoutube onBack={handleBackScreen} />}
     </Dialog>

@@ -7,14 +7,15 @@ import { ThumbnailLocalVO } from '@domiTypes/assetEdit';
 
 type Props = {
     className?: string,
-    state: ReactState<ThumbnailLocalVO[]>
+    state: ReactState<ThumbnailLocalVO[]>,
+    onAdd?: () => void
 }
 
-export default function AdminEditImageField({ className, state: [ images, setImages ] }: Props) {
+export default function AdminEditImageField({ className, state: [ images, setImages ], onAdd }: Props) {
     return <AdminField title="썸네일" className={`${style.imageField} ${className || ''}`}>
         <section className={style.gallery}>
-            <AdminEditGalleryAddBox />
-            {images.map(v => <AdminEditGalleryItem />)}
+            <AdminEditGalleryAddBox onClick={onAdd} />
+            {images.map((v, i) => <AdminEditGalleryItem key={i} data={v} />)}
             {/* <AdminEditGalleryItem />
             <AdminEditGalleryItem /> */}
         </section>
