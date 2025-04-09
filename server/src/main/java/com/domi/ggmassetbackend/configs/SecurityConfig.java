@@ -64,6 +64,7 @@ public class SecurityConfig {
 //                        .anyRequest().permitAll() // security 버그 ㅁㄴㅇㄹ
                         .requestMatchers("/api/domi").hasAnyRole("DOMI")
                         .requestMatchers("/api/asset/category/admin").hasAnyRole("TEACHER")
+                        .requestMatchers("/api/asset/category/admin/**").hasAnyRole("TEACHER")
                         .requestMatchers("/api/asset/category/rename").hasAnyRole("TEACHER")
                         .requestMatchers("/api/asset/admin/**").hasAnyRole("TEACHER")
                         .requestMatchers("/error").permitAll()
