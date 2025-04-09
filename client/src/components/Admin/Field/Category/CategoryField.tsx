@@ -34,6 +34,7 @@ export default function AdminEditCategoryField({ categoryId, className, onEdit }
         }
 
         const aliveRef = { alive: true };
+        setNames(null);
         categoryParentsLoad(aliveRef);
 
         return () => {

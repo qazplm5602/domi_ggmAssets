@@ -5,7 +5,7 @@ export function adminAssetFieldFill(asset: AssetAllVO, fields: AssetEditFieldSta
     fields.title[1](asset.title);
     fields.shortDesc[1](asset.shortDesc || '');
     fields.description[1](asset.description || '');
-    fields.fileLink[1](asset.downloadUrl);
+    fields.fileLink[1](asset.downloadUrl || '');
     fields.storeLink[1](asset.platformUrl || '');
     fields.platform[1](asset.platform);
     fields.artist[1](asset.publisher || '');

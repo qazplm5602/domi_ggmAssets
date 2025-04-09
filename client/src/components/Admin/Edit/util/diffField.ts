@@ -32,6 +32,19 @@ export function hasAssetEditFieldUpdated(fields: AssetEditFieldStates, origin: A
     if (otherSupportsField(fields.supports[0], origin.supports))
         return true;
 
+    // 카테고리 비교
+    // 서로 같으면 null === null 임 (널널하다)
+    if (fields.category[0] !== origin.category) {
+        if ((fields.category[0] === null && origin.category !== null) || fields.category[0] !== null && origin.category === null) {
+            return true;
+        } else if (origin.category !== null) {
+            const lastId = origin.category[origin.category.length - 1].id;
+            
+            if (fields.category[0] !== lastId)
+                return true;
+        }
+    }
+
     return false;
 }
 
