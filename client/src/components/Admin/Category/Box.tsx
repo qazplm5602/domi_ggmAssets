@@ -1,5 +1,4 @@
 import style from '@styles/admin/category.module.scss';
-import AdminEditCategorySelectItemGrid from '../Edit/CategorySelect/Grid';
 import AdminCategoryItem from './Item';
 import { CategoryOptionDTO, NodeIndexing } from '@domiTypes/category';
 import { useMemo } from 'react';

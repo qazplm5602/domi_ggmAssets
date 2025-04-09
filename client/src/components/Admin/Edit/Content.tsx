@@ -15,6 +15,7 @@ import style from '@styles/admin/edit.module.scss';
 import { useState } from "react";
 import { AssetBaseVO } from "@domiTypes/asset";
 import Textarea from "../Inputs/Textarea";
+import AdminEditThumbnailUploadDialog from "./Thumbnail/UploadDialog";
 
 type Props = {
     fields: AssetEditFieldStates,
@@ -67,5 +68,6 @@ export default function AdminEditContent({ fields, updated }: Props) {
 
         <AdminEditCategorySelectDialog show={categorySelectPopup} onClose={handleCloseCategorySelect} onSelect={handleCategoryChange} />
         <AdminEditCategoryAutoFieldDialog />
+        <AdminEditThumbnailUploadDialog />
     </section>
 }

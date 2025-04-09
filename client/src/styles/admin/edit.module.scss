@@ -441,3 +441,36 @@
         margin-top: 5px;
     }
 }
+
+.thumbnailUploadDialog {
+    & > .content {
+        flex-grow: 1;
+        width: 100%;
+        height: 0;
+
+        display: flex;
+        gap: 0 50px;
+
+        padding: 20px;
+        
+        &.select > button {
+            border-radius: 8px;
+            border: none;
+
+            background-color: rgba($color: #fff, $alpha: 0.05);
+            
+            flex-grow: 1;
+            
+            & > img {
+                height: 70px;
+                margin-bottom: 10px;
+            }
+
+            & > h3 {
+                font-size: 25px;
+                font-weight: 500;
+                color: $color-white;
+            }
+        }
+    }
+}
