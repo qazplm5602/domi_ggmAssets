@@ -3,6 +3,7 @@ import AdminEditCategorySelectItemGrid from '../Edit/CategorySelect/Grid';
 import AdminCategoryItem from './Item';
 import { CategoryOptionDTO, NodeIndexing } from '@domiTypes/category';
 import { useMemo } from 'react';
+import AdminEditCategorySelectItemGridList from '../Edit/CategorySelect/GridList';
 
 type Props = {
     id: number,
@@ -18,18 +19,7 @@ export default function AdminCategoryBox({ id, table, depth = 0, last = false, l
     return <>
         <div className={style.box}>
             {/* 선 그릴꺼잉 */}
-            {Array.from(new Array(depth)).map((_, i) => {
-                let mode: Parameters<typeof AdminEditCategorySelectItemGrid>['0']['mode'] = 'line';
-
-                // 끝쪽임
-                if (i === depth - 1) {
-                    mode = last ? 'end' : 'center';
-                } else if (lalast) { // 끝쪽은 아닌데 아무튼 카테고리 내에서 맨 마지막에 있엉
-                    mode = 'space';
-                }
-
-                return <AdminEditCategorySelectItemGrid key={i} mode={mode} />;
-            })}
+            <AdminEditCategorySelectItemGridList depth={depth} last={last} lalast={lalast} />
 
             <AdminCategoryItem category={table.dict[id]} />
         </div>

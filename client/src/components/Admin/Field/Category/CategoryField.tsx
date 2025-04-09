@@ -12,10 +12,11 @@ import CategoryFieldTagsLoading from './Loading';
 
 type Props = {
     className?: string,
-    categoryId: number | null
+    categoryId: number | null,
+    onEdit?: () => void
 }
 
-export default function AdminEditCategoryField({ categoryId, className }: Props) {
+export default function AdminEditCategoryField({ categoryId, className, onEdit }: Props) {
     const [ names, setNames ] = useState<string[] | null>(null);
     
     const categoryParentsLoad = async function(aliveRef: AliveType) {
@@ -44,6 +45,6 @@ export default function AdminEditCategoryField({ categoryId, className }: Props)
         <AdminFieldHead title="카테고리" desc={<>카테고리를 추가하거나 삭제하려면 <Link to="/admin/category" className={style.link}>이곳</Link>으로 이동하세요.</>} />
         {names ? <CategoryFieldTags tags={names} /> : <CategoryFieldTagsLoading />}
         
-        <Button>수정</Button>
+        <Button onClick={onEdit}>수정</Button>
     </article>
 }

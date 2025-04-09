@@ -23,6 +23,14 @@ type Props = {
 
 export default function AdminEditContent({ fields, updated }: Props) {
     const storelinkPlatformState = useState<AssetBaseVO['platform']>(null);
+    const [ categorySelectPopup, setCategorySelectPopup ] = useState(false);
+
+    const handleOpenCategorySelect = function() {
+        setCategorySelectPopup(true);
+    }
+    const handleCloseCategorySelect = function() {
+        setCategorySelectPopup(false);
+    }
 
     return <section className={style.content}>
         <AdminEditHead updated={updated} />
@@ -34,7 +42,7 @@ export default function AdminEditContent({ fields, updated }: Props) {
         <AdminFileLinkField className={style.field} value={fields.fileLink} />
         <AdminStoreLinkField className={style.field} value={fields.storeLink} platform={storelinkPlatformState} />
         <VersionField className={style.field} value={fields.version} />
-        <AdminEditCategoryField className={style.field} categoryId={fields.category[0]} />
+        <AdminEditCategoryField className={style.field} categoryId={fields.category[0]} onEdit={handleOpenCategorySelect} />
         <AdminEditPublisherField className={style.field} platform={fields.platform} artist={fields.artist} />
         
         <AdminField title="등록일" className={style.field}>
@@ -52,7 +60,7 @@ export default function AdminEditContent({ fields, updated }: Props) {
             <Textarea className={`${style.skinTextarea} ${style.big}`} placeholder="설명을 입력하세요." autoValue={fields.description} />
         </AdminField>
 
-        <AdminEditCategorySelectDialog />
+        <AdminEditCategorySelectDialog show={categorySelectPopup} onClose={handleCloseCategorySelect} />
         <AdminEditCategoryAutoFieldDialog />
     </section>
 }
