@@ -33,7 +33,8 @@ export default function AdminEditContent({ fields, updated }: Props) {
     }
 
     const handleCategoryChange = function(categoryId: number) {
-        fields.category[1](categoryId);
+        // -999는 분류되지 않음 이지롱~~~~
+        fields.category[1](categoryId === -999 ? null : categoryId);
     }
 
     return <section className={style.content}>

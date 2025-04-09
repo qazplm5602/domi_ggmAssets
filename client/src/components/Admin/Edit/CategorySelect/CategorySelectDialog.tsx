@@ -32,6 +32,14 @@ export default function AdminEditCategorySelectDialog({ show, onClose, onSelect 
         loadRef.current = true;
 
         const response = await request<CategoryVO[]>("asset/category");
+
+        // 마지막 ㅁㄴㅇㄹ
+        response.data.push({
+            id: -999,
+            name: "분류되지 않음",
+            parentId: null 
+        });
+
         setCategories(response.data);
     }
 
