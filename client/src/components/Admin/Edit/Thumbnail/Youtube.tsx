@@ -3,7 +3,11 @@ import Input from '@components/Admin/Inputs/Input';
 import Button from '@components/Buttons/Button';
 import style from '@styles/admin/edit.module.scss';
 
-export default function AdminEditThumbnailUploadDialogYoutube() {
+type Props = {
+    onBack?: () => void
+}
+
+export default function AdminEditThumbnailUploadDialogYoutube({ onBack }: Props) {
     return <section className={`${style.content} ${style.youtube}`}>
         <AdminField title="유튜브 URL" className={style.field}>
             <Input placeholder='유튜브 영상 링크를 입력하세요.' />
@@ -11,8 +15,8 @@ export default function AdminEditThumbnailUploadDialogYoutube() {
         </AdminField>
 
         <article className={style.interaction}>
-            <Button>뒤로가기</Button>
-            <Button className={style.upload}>업로드</Button>
+            <Button onClick={onBack}>뒤로가기</Button>
+            <Button className={style.upload} onClick={onBack}>업로드</Button>
         </article>
     </section>;
 }
