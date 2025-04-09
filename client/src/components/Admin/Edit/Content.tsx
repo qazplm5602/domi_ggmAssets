@@ -32,6 +32,10 @@ export default function AdminEditContent({ fields, updated }: Props) {
         setCategorySelectPopup(false);
     }
 
+    const handleCategoryChange = function(categoryId: number) {
+        fields.category[1](categoryId);
+    }
+
     return <section className={style.content}>
         <AdminEditHead updated={updated} />
 
@@ -60,7 +64,7 @@ export default function AdminEditContent({ fields, updated }: Props) {
             <Textarea className={`${style.skinTextarea} ${style.big}`} placeholder="설명을 입력하세요." autoValue={fields.description} />
         </AdminField>
 
-        <AdminEditCategorySelectDialog show={categorySelectPopup} onClose={handleCloseCategorySelect} />
+        <AdminEditCategorySelectDialog show={categorySelectPopup} onClose={handleCloseCategorySelect} onSelect={handleCategoryChange} />
         <AdminEditCategoryAutoFieldDialog />
     </section>
 }

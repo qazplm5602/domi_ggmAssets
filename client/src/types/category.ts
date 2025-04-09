@@ -26,5 +26,6 @@ export interface AdminCategoryContextType {
 }
 
 export interface AdminEditCategorySelectContextType {
-    searchValue: string
+    searchValue: string,
+    onSelect: (id: number) => void
 }
