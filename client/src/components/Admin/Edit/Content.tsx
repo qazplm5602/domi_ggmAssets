@@ -55,7 +55,7 @@ export default function AdminEditContent({ fields, updated }: Props) {
             <Input type="date" autoValue={fields.createAt} />
         </AdminField>
 
-        <AdminEditImageField className={style.field} />
+        <AdminEditImageField className={style.field} state={fields.images} />
         <AdminEditCompatibilityField className={style.field} state={fields.supports} />
 
         <AdminField title="간단한 설명" className={style.field}>

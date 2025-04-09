@@ -14,9 +14,9 @@ export default function AdminEditImageField({ className, state: [ images, setIma
     return <AdminField title="썸네일" className={`${style.imageField} ${className || ''}`}>
         <section className={style.gallery}>
             <AdminEditGalleryAddBox />
-            {images.}
-            <AdminEditGalleryItem />
-            <AdminEditGalleryItem />
+            {images.map(v => <AdminEditGalleryItem />)}
+            {/* <AdminEditGalleryItem />
+            <AdminEditGalleryItem /> */}
         </section>
     </AdminField>
 }
