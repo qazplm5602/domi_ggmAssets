@@ -24,3 +24,7 @@ export interface AdminCategoryContextType {
     onRemove: (id: number) => void,
     onAdd: (parent: number) => void
 }
+
+export interface AdminEditCategorySelectContextType {
+    searchValue: string
+}
