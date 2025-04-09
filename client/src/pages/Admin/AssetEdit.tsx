@@ -3,7 +3,7 @@ import AdminEditSide from '@components/Admin/Edit/Side';
 import baseStyle from '@styles/admin/style.module.scss';
 import style from '@styles/admin/edit.module.scss';
 import { useEffect, useMemo, useState } from 'react';
-import { AssetEditFieldStates } from '@domiTypes/assetEdit';
+import { AssetEditFieldStates, ThumbnailLocalVO } from '@domiTypes/assetEdit';
 import { AssetAllVO, AssetBaseVO, CompatibilityVO } from '@domiTypes/asset';
 import { hasAssetEditFieldUpdated } from '@components/Admin/Edit/util/diffField';
 import { useParams } from 'react-router-dom';
@@ -26,6 +26,7 @@ export default function AdminAssetEdit() {
     const platformState = useState<AssetBaseVO['platform']>(null);
     const supportsState = useState<CompatibilityVO[]>([]);
     const categoryState = useState<number | null>(null);
+    const imagesState = useState<ThumbnailLocalVO[]>([]);
 
     const fieldStates: AssetEditFieldStates = {
         title: titleState,
@@ -38,7 +39,8 @@ export default function AdminAssetEdit() {
         artist: artistState,
         platform: platformState,
         supports: supportsState,
-        category: categoryState
+        category: categoryState,
+        images: imagesState
     };
 
     ////// 원본 에셋
