@@ -89,7 +89,26 @@
         color: $color-white;
         font-size: 18px;
         font-weight: 500;
-        margin-left: 5px;
+    }
+
+    & > p {
+        margin-right: 5px;
+    }
+    
+    &.loading {
+        gap: 0 5px;
+
+        & > .box {
+            width: 100px;
+            height: 20px;
+
+            &:nth-child(1) {
+                width: 40px;
+            }
+            &:nth-child(3) {
+                width: 70px;
+            }
+        }
     }
 }
 
