@@ -1,8 +1,8 @@
 import AssetItem from '@components/AssetsList/Item/Item';
-import { AssetPreviewVO, ThumbnailVO } from '@domiTypes/asset';
+import { ThumbnailVO } from '@domiTypes/asset';
 import { AssetEditFieldStates, ThumbnailLocalVO } from '@domiTypes/assetEdit';
 import style from '@styles/admin/edit.module.scss';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type Props = {
     fields: AssetEditFieldStates
