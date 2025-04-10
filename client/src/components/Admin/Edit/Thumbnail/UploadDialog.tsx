@@ -14,8 +14,16 @@ type Props = {
 
 export default function AdminEditThumbnailUploadDialog({ show, onClose, onAdd }: Props) {
     const [ screen, setScreen ] = useState<'select' | 'youtube'>('select');
+    const [ closeBlock, setCloseBlock ] = useState(false);
     const fileRef = useRef<HTMLInputElement>(null);
     const { openPopup } = usePopupStore();
+
+    const handleClose = function() {
+        if (closeBlock) return;
+
+        if (onClose)
+            onClose();
+    }
 
     const handleSelectImage = function() {
         fileRef.current?.click();
@@ -65,9 +73,20 @@ export default function AdminEditThumbnailUploadDialog({ show, onClose, onAdd }:
         setScreen('select');
     }
 
-    return <Dialog title="썸네일 업로드" show={show} className={style.thumbnailUploadDialog} onClose={onClose}>
+    const handleYoutubeStarting = function() {
+        setCloseBlock(true);
+    }
+
+    const handleYoutubeUpload = function(image: ThumbnailLocalVO) {
+        setCloseBlock(false);
+        
+        if (onAdd)
+            onAdd([image]);
+    }
+
+    return <Dialog title="썸네일 업로드" show={show} className={style.thumbnailUploadDialog} onClose={handleClose}>
         {screen === 'select' && <AdminEditThumbnailUploadDialogSelect onSelectImage={handleSelectImage} onSelectYoutube={handleSelectYoutube} />}
-        {screen === 'youtube' && <AdminEditThumbnailUploadDialogYoutube onBack={handleBackScreen} />}
+        {screen === 'youtube' && <AdminEditThumbnailUploadDialogYoutube onBack={handleBackScreen} onUploading={handleYoutubeStarting} onAdd={handleYoutubeUpload} />}
 
         {/* 이미지 파일 넣는곳 */}
         <input type="file" style={{ display: "none" }} ref={fileRef} onChange={handleChangeInputFile} accept='image/*' multiple />
