@@ -55,12 +55,27 @@ export default function AssetsListItemThumbnail({ id: assetId, images }: Props) 
 
         // 로딩 ㄱㄱ
         loadPageRef.current.add(nextPage);
+
+        // 이미 있는지 확인즁
+        const startIdx = nextPage * PAGE_ONE_AMOUNT;
+        let allLoaded = true;
+        for (let i = startIdx; i < Math.min(images.size, startIdx + PAGE_ONE_AMOUNT); i++) {
+            const image = loadedImages[i];
+            
+            if (!image) {
+                allLoaded = false;
+                break;
+            }
+        }
+        
+        if (allLoaded)
+            return; // 이미 다 불러와져 있넹
+
         const result = await request<PageThumbnailVO>(`asset/${assetId}/preview`, { params: { page: nextPage } });
 
         // 로드 도중에 바뀐듯
         if (aliveRef.current !== id) return;
         
-        const startIdx = nextPage * PAGE_ONE_AMOUNT;
         setLoadedImages(prev => {
             const copyData = { ...prev };
             result.data.images.forEach((v, i) => copyData[startIdx + i] = v);
