@@ -69,6 +69,6 @@ export default function AdminAssetEdit() {
 
     return <main className={`${baseStyle.screen} ${style.screen}`}>
         <AdminEditContent fields={fieldStates} updated={isDifferent} />
-        <AdminEditSide />
+        <AdminEditSide fields={fieldStates} />
     </main>
 }
