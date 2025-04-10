@@ -21,7 +21,12 @@ export default function AdminEditGalleryItem({ data, onMove, onRemove }: Props) 
         let alive = true;
 
         if (data.local) {
-            if (!data.contentFile) return;
+            let fileEntity = data.contentFile;
+        
+            if (data.type === "Youtube")
+                fileEntity=  data.previewFile;
+
+            if (!fileEntity) return;
 
             // 파일 직접 열어서 보깅
             const reader = new FileReader();
@@ -32,7 +37,7 @@ export default function AdminEditGalleryItem({ data, onMove, onRemove }: Props) 
                     setImageURL(reader.result);
             }
             
-            reader.readAsDataURL(data.contentFile);
+            reader.readAsDataURL(fileEntity);
 
         } else {
             setImageURL(getThumbnailURL(data.type === 'Youtube' ? data.previewUrl : data.contentUrl));
