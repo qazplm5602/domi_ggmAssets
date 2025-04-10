@@ -4,6 +4,8 @@ import leftArrow from '@assets/icons/ic-round-arrow-right.svg';
 import deleteIcon from '@assets/icons/ic-baseline-delete.svg';
 import { ThumbnailLocalVO } from '@domiTypes/assetEdit';
 import { getThumbnailURL } from '@utils/file';
+import { useEffect, useState } from 'react';
+import SkeletonLoadBox from '@components/SkeletonLoader/SkeletonLoader';
 
 type Props = {
     data: ThumbnailLocalVO,
@@ -12,13 +14,42 @@ type Props = {
 }
 
 export default function AdminEditGalleryItem({ data, onMove, onRemove }: Props) {
+    const [ imageURL, setImageURL ] = useState<string | null>(null);
+
+    useEffect(() => {
+        setImageURL(null);
+        let alive = true;
+
+        if (data.local) {
+            if (!data.contentFile) return;
+
+            // 파일 직접 열어서 보깅
+            const reader = new FileReader();
+            reader.onload = function() {
+                if (!alive || reader.error) return;
+
+                if (typeof reader.result === "string")
+                    setImageURL(reader.result);
+            }
+            
+            reader.readAsDataURL(data.contentFile);
+
+        } else {
+            setImageURL(getThumbnailURL(data.type === 'Youtube' ? data.previewUrl : data.contentUrl));
+        }
+
+        return () => {
+            alive = false;
+        }
+    }, [ data ]);
+
     const handleMove = function(left: boolean) {
         if (onMove)
             onMove(left);
     }
     
-    return <div className={style.box}>
-        <img src={getThumbnailURL(data.type === 'Youtube' ? data.previewUrl : data.contentUrl)} alt="preview image" className={style.preview} />
+    return <div className={`${style.box} ${style.loading}`}>
+        {imageURL ? <img src={imageURL} alt="preview image" className={style.preview} /> : <SkeletonLoadBox className={style.preview} />}
 
         {/* 관리 그거 */}
         <div className={style.option}>

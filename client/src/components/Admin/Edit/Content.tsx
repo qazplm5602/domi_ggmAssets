@@ -1,4 +1,4 @@
-import { AssetEditFieldStates } from "@domiTypes/assetEdit";
+import { AssetEditFieldStates, ThumbnailLocalVO } from "@domiTypes/assetEdit";
 import AdminEditCategoryField from "../Field/Category/CategoryField";
 import AdminEditCompatibilityField from "../Field/Compatibility/CompatibilityField";
 import AdminField from "../Field/Field";
@@ -36,6 +36,10 @@ export default function AdminEditContent({ fields, updated }: Props) {
     
     const handleOpenImageUpload = () => setImageUploadPopup(true);
     const handleCloseImageUpload = () => setImageUploadPopup(false);
+    const handleAddImages = function(images: ThumbnailLocalVO[]) {
+        fields.images[1]([ ...images, ...fields.images[0] ]);
+        handleCloseImageUpload();
+    }
 
     const handleCategoryChange = function(categoryId: number) {
         // -999는 분류되지 않음 이지롱~~~~
@@ -72,6 +76,6 @@ export default function AdminEditContent({ fields, updated }: Props) {
 
         <AdminEditCategorySelectDialog show={categorySelectPopup} onClose={handleCloseCategorySelect} onSelect={handleCategoryChange} />
         <AdminEditCategoryAutoFieldDialog />
-        <AdminEditThumbnailUploadDialog show={imageUploadPopup} onClose={handleCloseImageUpload} />
+        <AdminEditThumbnailUploadDialog show={imageUploadPopup} onClose={handleCloseImageUpload} onAdd={handleAddImages} />
     </section>
 }

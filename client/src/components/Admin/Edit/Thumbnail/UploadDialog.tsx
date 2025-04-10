@@ -4,13 +4,15 @@ import AdminEditThumbnailUploadDialogSelect from './Select';
 import AdminEditThumbnailUploadDialogYoutube from './Youtube';
 import { useRef, useState } from 'react';
 import { usePopupStore } from '@components/Popup/store';
+import { ThumbnailLocalVO } from '@domiTypes/assetEdit';
 
 type Props = {
     show: boolean,
-    onClose?: () => void
+    onClose?: () => void,
+    onAdd?: (images: ThumbnailLocalVO[]) => void
 }
 
-export default function AdminEditThumbnailUploadDialog({ show, onClose }: Props) {
+export default function AdminEditThumbnailUploadDialog({ show, onClose, onAdd }: Props) {
     const [ screen, setScreen ] = useState<'select' | 'youtube'>('select');
     const fileRef = useRef<HTMLInputElement>(null);
     const { openPopup } = usePopupStore();
@@ -21,9 +23,10 @@ export default function AdminEditThumbnailUploadDialog({ show, onClose }: Props)
     
     const handleChangeInputFile = function(e: React.ChangeEvent<HTMLInputElement>) {
         const files = e.target.files;
-        if (!files) return; // 머가 없는디
+        if (!files) return; // 머가 없는디 
         
         let verify = true;
+        const images: ThumbnailLocalVO[] = [];
 
         // 여러 파일 지원
         for (let i = 0; i < files.length; i++) {
@@ -34,6 +37,15 @@ export default function AdminEditThumbnailUploadDialog({ show, onClose }: Props)
                 verify = false;
                 break;
             }
+
+            images.push({
+                type: 'Image',
+                local: true,
+                contentUrl: '',
+                previewUrl: '',
+                contentFile: file,
+                previewFile: undefined
+            });
         }
 
         if (!verify) {
@@ -41,7 +53,8 @@ export default function AdminEditThumbnailUploadDialog({ show, onClose }: Props)
             return;
         }
 
-        console.log(files);
+        if (onAdd)
+            onAdd(images);
     }
     
     const handleSelectYoutube = function() {
