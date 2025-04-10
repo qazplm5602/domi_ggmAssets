@@ -15,7 +15,9 @@ export default function AdminEditPreviewAsset({ fields }: Props) {
         let alive = true;
 
         // 미리 되어있는건 넣기
-        const alreadyImages: (ThumbnailLocalVO | undefined)[] = [ ...fields.images[0] ];
+        const imageThumbnails = fields.images[0].filter(v => v.type === 'Image');
+
+        const alreadyImages: (ThumbnailLocalVO | undefined)[] = [ ...imageThumbnails ];
         alreadyImages.forEach((v, idx) => {
             if (v?.local)
                 alreadyImages[idx] = undefined;
@@ -23,8 +25,7 @@ export default function AdminEditPreviewAsset({ fields }: Props) {
 
         setLoadedImages(alreadyImages);
         
-        fields.images[0]
-            .filter(v => v.type === 'Image')
+        imageThumbnails
             .forEach((v, idx) => {
                 if (!v.local || !v.previewFile) return;
                 
