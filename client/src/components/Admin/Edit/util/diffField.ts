@@ -45,6 +45,22 @@ export function hasAssetEditFieldUpdated(fields: AssetEditFieldStates, origin: A
         }
     }
 
+    // 썸네일 비교
+    if (fields.images[0].length !== origin.images.length) // 갯수가 다름
+        return true;
+
+    for (let i = 0; i < origin.images.length; i++) {
+        const currentThumbnail = fields.images[0][i];
+        const originThumbnail = origin.images[i];
+
+        // 서버에 안올라가있으면 그냥 저장 해야하지롱
+        if (currentThumbnail.local)
+            return true;
+
+        if (currentThumbnail.type !== originThumbnail.type || currentThumbnail.contentUrl !== originThumbnail.contentUrl || currentThumbnail.previewUrl !== originThumbnail.previewUrl)
+            return true;
+    }
+
     return false;
 }
 
