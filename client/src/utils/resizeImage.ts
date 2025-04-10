@@ -1,7 +1,7 @@
 import Resizer from "react-image-file-resizer";
 
-export function resizeImage(file: File) {
-    return new Promise(resolve => {
+export function resizeImage(file: File): Promise<File> {
+    return new Promise((resolve, reject) => {
         Resizer.imageFileResizer(
             file,
             300,
@@ -10,7 +10,11 @@ export function resizeImage(file: File) {
             100,
             0,
             (uri) => {
-                resolve(uri);
+                if (uri instanceof File)
+                    resolve(uri);
+                else
+                    reject("왜 file 타입이 아님???");
+
             },
             "file"
         );

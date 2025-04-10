@@ -5,6 +5,7 @@ import AdminEditThumbnailUploadDialogYoutube from './Youtube';
 import { useRef, useState } from 'react';
 import { usePopupStore } from '@components/Popup/store';
 import { ThumbnailLocalVO } from '@domiTypes/assetEdit';
+import { resizeImage } from '@utils/resizeImage';
 
 type Props = {
     show: boolean,
@@ -28,8 +29,15 @@ export default function AdminEditThumbnailUploadDialog({ show, onClose, onAdd }:
     const handleSelectImage = function() {
         fileRef.current?.click();
     }
+
+    const imageCompress = async function(image: ThumbnailLocalVO) {
+        if (!image.contentFile) return;
+        
+        const resizedImage = await resizeImage(image.contentFile);
+        image.previewFile = resizedImage;
+    }
     
-    const handleChangeInputFile = function(e: React.ChangeEvent<HTMLInputElement>) {
+    const handleChangeInputFile = async function(e: React.ChangeEvent<HTMLInputElement>) {
         const files = e.target.files;
         if (!files) return; // 머가 없는디 
         
@@ -60,6 +68,13 @@ export default function AdminEditThumbnailUploadDialog({ show, onClose, onAdd }:
             openPopup("업로드 오류", "이미지 파일만 가능합니다.", [ { text: "확인", callback() {} } ]);
             return;
         }
+
+        // 이미지 압축 ㄱㄱㄱ
+        const waitList: Promise<void>[] = [];
+        images.forEach(v => waitList.push(imageCompress(v)));
+
+        // 기달...
+        await Promise.all(waitList);
 
         if (onAdd)
             onAdd(images);

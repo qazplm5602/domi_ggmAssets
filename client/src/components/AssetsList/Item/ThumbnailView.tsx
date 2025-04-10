@@ -7,5 +7,5 @@ type Props = {
 }
 
 export default function AssetsListItemThumbnailView({ thumbnail }: Props) {
-    return thumbnail ? <img src={getThumbnailURL(thumbnail.previewUrl)} alt="thumbnail" /> : <SkeletonLoadBox />;
+    return thumbnail ? <img src={thumbnail.previewUrl.startsWith("data:") ? thumbnail.previewUrl : getThumbnailURL(thumbnail.previewUrl)} alt="thumbnail" /> : <SkeletonLoadBox />;
 }
