@@ -46,11 +46,17 @@ export default function AdminAssetEdit() {
 
     const isDifferent = useMemo(() => originAsset !== null && hasAssetEditFieldUpdated(fieldStates, originAsset), [ originAsset, ...Object.values(fieldStates).map(v => v[0]) ]);
 
-    const handleSave = function() {
+    const [ saving, setSaving ] = useState(false);
+
+    const handleSave = async function() {
         const id = Number(assetId);
         if (isNaN(id)) return;
 
-        saveAdminEditAsset(id, fieldStates, [ originAsset, setOriginAsset ]);
+        setSaving(true);
+        
+        await saveAdminEditAsset(id, fieldStates, [ originAsset, setOriginAsset ]);
+        
+        setSaving(false);
     }
 
     useEffect(() => {
@@ -74,6 +80,6 @@ export default function AdminAssetEdit() {
     return <main className={`${baseStyle.screen} ${style.screen}`}>
         <AdminEditContent fields={fieldStates} updated={isDifferent} onSave={handleSave} />
         <AdminEditSide fields={fieldStates} />
-        <AdminAssetEditSaveLoading />
+        {saving && <AdminAssetEditSaveLoading />}
     </main>
 }

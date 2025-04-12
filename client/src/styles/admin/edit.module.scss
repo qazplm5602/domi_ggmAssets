@@ -538,3 +538,48 @@
         }
     }
 }
+
+.saveLoading {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba($color: #000000, $alpha: 0.6);
+    backdrop-filter: blur(5px);
+
+    z-index: 9;
+    
+    & > .box {
+        position: absolute;
+
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        display: flex;
+        flex-direction: column;
+
+        align-items: center;
+
+        color: $color-white;
+
+        & > .spinner {
+            margin-bottom: 15px;
+        }
+
+        & > h1 {
+            font-size: 30px;
+        }
+
+        & > span {
+            font-size: 14px;
+            font-weight: 400;
+            
+            color: $color-textSupporting;
+        }
+    }
+}
