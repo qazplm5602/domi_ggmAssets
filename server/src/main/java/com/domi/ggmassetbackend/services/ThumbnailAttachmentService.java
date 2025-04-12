@@ -33,6 +33,7 @@ public class ThumbnailAttachmentService {
         ThumbnailAttachment result = thumbnailAttachmentRepository.findById(id).orElseThrow(() -> new ThumbnailException(ThumbnailException.Type.NOT_FOUND_ATTACHMENT));
         thumbnailAttachmentRepository.delete(result);
 
+
         return result;
     }
 }

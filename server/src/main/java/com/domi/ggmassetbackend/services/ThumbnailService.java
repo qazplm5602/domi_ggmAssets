@@ -129,6 +129,18 @@ public class ThumbnailService {
         return thumbnailRepository.findById(id).orElseThrow(() -> new ThumbnailException(ThumbnailException.Type.NOT_FOUND));
     }
 
+    Thumbnail getThumbnailByIdWithLock(UUID id) {
+        return thumbnailRepository.findByIdWithLock(id).orElseThrow(() -> new ThumbnailException(ThumbnailException.Type.NOT_FOUND));
+    }
+
+    void setThumbnailContentUrl(UUID id, String url) {
+        thumbnailRepository.updateContentUrl(id, url);
+    }
+
+    void setThumbnailPreviewUrl(UUID id, String url) {
+        thumbnailRepository.updatePreviewUrl(id, url);
+    }
+
     Thumbnail save(Thumbnail thumbnail) {
         return thumbnailRepository.save(thumbnail);
     }

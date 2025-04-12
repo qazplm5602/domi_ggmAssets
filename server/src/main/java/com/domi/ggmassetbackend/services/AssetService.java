@@ -11,6 +11,8 @@ import com.domi.ggmassetbackend.data.vo.ThumbnailVO;
 import com.domi.ggmassetbackend.exceptions.AssetException;
 import com.domi.ggmassetbackend.repositories.AssetRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +20,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -205,6 +208,7 @@ public class AssetService {
 
             for (ThumbnailVO vo : images) {
                 Thumbnail thumbnail = new Thumbnail(null, vo.getType(), vo.getContentUrl(), vo.getPreviewUrl());
+                originImages.add(thumbnail);
 
                 if (vo.getContentUrl() == null) {
                     ThumbnailAttachment attachment = thumbnailAttachmentService.add(thumbnail, false);
@@ -218,24 +222,20 @@ public class AssetService {
             }
         }
 
-        Asset updatedAsset = assetRepository.save(asset);
-        return updatedAsset;
+        return assetRepository.save(asset);
     }
 
     @Transactional
     public void uploadThumbnail(UUID handleId, MultipartFile file) throws IOException {
-//        thumbnailService.getThumbnailById(handleId);
         ThumbnailAttachment thumbnailAttachment = thumbnailAttachmentService.getOnceById(handleId);
         Thumbnail thumbnail = thumbnailAttachment.getThumbnail();
 
         String fileId = fileService.createFile(FileCategory.Thumbnail, file);
 
         if (thumbnailAttachment.isPreview()) {
-            thumbnail.setPreviewUrl(fileId);
+            thumbnailService.setThumbnailPreviewUrl(thumbnail.getId(), fileId);
         } else {
-            thumbnail.setContentUrl(fileId);
+            thumbnailService.setThumbnailContentUrl(thumbnail.getId(), fileId);
         }
-
-        thumbnailService.save(thumbnail);
     }
 }
