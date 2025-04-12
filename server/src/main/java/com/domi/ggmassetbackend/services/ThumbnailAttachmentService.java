@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -21,7 +22,7 @@ public class ThumbnailAttachmentService {
         return thumbnailAttachmentRepository.save(result);
     }
 
-    public void invalidate(Thumbnail thumbnail) {
-        thumbnailAttachmentRepository.deleteByThumbnail(thumbnail);
+    public void invalidate(List<Thumbnail> thumbnail) {
+        thumbnailAttachmentRepository.deleteByThumbnailIn(thumbnail);
     }
 }

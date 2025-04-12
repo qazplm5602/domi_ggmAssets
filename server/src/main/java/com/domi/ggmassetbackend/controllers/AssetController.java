@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -69,7 +70,10 @@ public class AssetController {
     }
 
     @PostMapping("/admin/edit")
-    void editAsset(@RequestBody @Valid AssetEditFormDTO form) {
-        assetService.updateAsset(form);
+    List<String> editAsset(@RequestBody @Valid AssetEditFormDTO form) {
+        List<String> attachmentIds = new ArrayList<>();
+        assetService.updateAsset(form, attachmentIds);
+
+        return attachmentIds;
     }
 }

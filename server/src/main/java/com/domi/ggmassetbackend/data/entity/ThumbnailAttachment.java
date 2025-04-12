@@ -25,7 +25,7 @@ public class ThumbnailAttachment {
     @Column(columnDefinition = "VARCHAR(128)")
     private UUID id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Thumbnail thumbnail;
     private boolean preview;

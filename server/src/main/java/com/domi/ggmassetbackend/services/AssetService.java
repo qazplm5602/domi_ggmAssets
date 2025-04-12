@@ -3,12 +3,10 @@ package com.domi.ggmassetbackend.services;
 import com.domi.ggmassetbackend.data.dto.AssetEditFormDTO;
 import com.domi.ggmassetbackend.data.dto.AssetSearchParamDTO;
 import com.domi.ggmassetbackend.data.dto.AssetUploadFormDTO;
-import com.domi.ggmassetbackend.data.entity.Asset;
-import com.domi.ggmassetbackend.data.entity.Category;
-import com.domi.ggmassetbackend.data.entity.Compatibility;
-import com.domi.ggmassetbackend.data.entity.Thumbnail;
+import com.domi.ggmassetbackend.data.entity.*;
 import com.domi.ggmassetbackend.data.enums.PublishPlatform;
 import com.domi.ggmassetbackend.data.vo.CompatibilityVO;
+import com.domi.ggmassetbackend.data.vo.ThumbnailVO;
 import com.domi.ggmassetbackend.exceptions.AssetException;
 import com.domi.ggmassetbackend.repositories.AssetRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,9 +22,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 @RequiredArgsConstructor
 @Service
@@ -35,6 +31,7 @@ public class AssetService {
     private final CategoryService categoryService;
     private final StorePlatformService storePlatformService;
     private final ThumbnailService thumbnailService;
+    private final ThumbnailAttachmentService thumbnailAttachmentService;
 
     public Asset getAssetById(int id) {
         return assetRepository.findById(id).orElseThrow(() -> new AssetException(AssetException.Type.NOT_FOUND));
@@ -108,8 +105,8 @@ public class AssetService {
         return assetRepository.save(newAsset);
     }
 
-//    @Transactional
-    public Asset updateAsset(AssetEditFormDTO form) {
+    @Transactional
+    public Asset updateAsset(AssetEditFormDTO form, List<String> attachmentIds) {
         Asset asset = getAssetById(form.getId());
 
         if (form.getTitle() != null) {
@@ -188,7 +185,33 @@ public class AssetService {
             asset.setCategory(entity);
         }
 
-        // 이미지는 아직...
+        List<ThumbnailVO> images = form.getImages();
+        if (images != null) {
+            List<Thumbnail> originImages = asset.getImages();
+
+            if (originImages == null) {
+                originImages = new ArrayList<>();
+                asset.setImages(originImages);
+            } else {
+                thumbnailAttachmentService.invalidate(originImages);
+            }
+
+            originImages.clear();
+
+            for (ThumbnailVO vo : images) {
+                Thumbnail thumbnail = new Thumbnail(null, vo.getType(), vo.getContentUrl(), vo.getPreviewUrl());
+
+                if (vo.getContentUrl() == null) {
+                    ThumbnailAttachment attachment = thumbnailAttachmentService.add(thumbnail, false);
+                    attachmentIds.add(String.valueOf(attachment.getId()));
+                }
+
+                if (vo.getPreviewUrl() == null) {
+                    ThumbnailAttachment attachment = thumbnailAttachmentService.add(thumbnail, true);
+                    attachmentIds.add(String.valueOf(attachment.getId()));
+                }
+            }
+        }
 
         Asset updatedAsset = assetRepository.save(asset);
         return updatedAsset;

@@ -26,5 +26,5 @@ public class AssetEditFormDTO {
     String publishAt;
     List<CompatibilityVO> supports;
     Integer category;
-    List<ThumbnailVO> thumbnail;
+    List<ThumbnailVO> images;
 }
