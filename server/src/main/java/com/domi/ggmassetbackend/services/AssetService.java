@@ -6,6 +6,7 @@ import com.domi.ggmassetbackend.data.dto.AssetUploadFormDTO;
 import com.domi.ggmassetbackend.data.entity.*;
 import com.domi.ggmassetbackend.data.enums.FileCategory;
 import com.domi.ggmassetbackend.data.enums.PublishPlatform;
+import com.domi.ggmassetbackend.data.enums.ThumbnailType;
 import com.domi.ggmassetbackend.data.vo.CompatibilityVO;
 import com.domi.ggmassetbackend.data.vo.ThumbnailVO;
 import com.domi.ggmassetbackend.exceptions.AssetException;
@@ -205,7 +206,7 @@ public class AssetService {
             }
 
             for (Thumbnail vo : originImages) {
-                if (vo.getContentUrl() != null)
+                if (vo.getContentUrl() != null && vo.getType() == ThumbnailType.Image)
                     needRemoveFiles.add(vo.getContentUrl());
                 if (vo.getPreviewUrl() != null)
                     needRemoveFiles.add(vo.getPreviewUrl());
