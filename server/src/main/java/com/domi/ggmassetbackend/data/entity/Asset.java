@@ -36,7 +36,8 @@ public class Asset {
     @ManyToOne
     private Category category;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "asset_id")
     private List<Compatibility> supports;
 
     @OneToMany(cascade = CascadeType.PERSIST)

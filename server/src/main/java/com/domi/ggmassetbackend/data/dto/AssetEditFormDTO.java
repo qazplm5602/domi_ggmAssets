@@ -11,7 +11,7 @@ import java.util.List;
 public class AssetEditFormDTO {
     int id;
 
-    @NotBlank
+//    @NotBlank
     String title;
 
     String shortDesc;

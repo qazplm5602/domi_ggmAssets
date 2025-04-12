@@ -2,6 +2,7 @@ import { AssetAllVO, AssetBaseVO, AssetEditFormDTO, ThumbnailVO } from "@domiTyp
 import { AssetEditFieldStates } from "@domiTypes/assetEdit";
 import { ReactState } from "@domiTypes/react";
 import { getAssetEditFieldUpdatedKeys } from "./diffField";
+import { request } from "@utils/request";
 
 export async function saveAdminEditAsset(assetId: number, fields: AssetEditFieldStates, [ origin, setOrigin ]: ReactState<AssetAllVO | null>) {
     if (origin === null) return;
@@ -84,5 +85,6 @@ export async function saveAdminEditAsset(assetId: number, fields: AssetEditField
         // ...
     }
 
-    console.log(body);
+    const response = await request("asset/admin/edit", { method: "POST", data: body });
+    
 }

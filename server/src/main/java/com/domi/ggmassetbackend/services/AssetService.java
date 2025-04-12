@@ -108,8 +108,8 @@ public class AssetService {
         return assetRepository.save(newAsset);
     }
 
-    @Transactional
-    public void updateAsset(AssetEditFormDTO form) {
+//    @Transactional
+    public Asset updateAsset(AssetEditFormDTO form) {
         Asset asset = getAssetById(form.getId());
 
         if (form.getTitle() != null) {
@@ -165,14 +165,17 @@ public class AssetService {
 
         List<CompatibilityVO> supports = form.getSupports();
         if (supports != null) {
-            List<Compatibility> entitys = new ArrayList<>();
-
-            for (CompatibilityVO vo : supports) {
-                Compatibility entity = new Compatibility(null, vo.getVersion(), vo.isBuiltIn(), vo.isUrp(), vo.isHdrp());
-                entitys.add(entity);
+            List<Compatibility> compatibilityList = asset.getSupports();
+            if (compatibilityList == null) {
+                compatibilityList = new ArrayList<>();
+                asset.setSupports(compatibilityList);
             }
 
-            asset.setSupports(entitys.isEmpty() ? null : entitys);
+            compatibilityList.clear();
+
+            for (CompatibilityVO vo : supports) {
+                compatibilityList.add(new Compatibility(null, vo.getVersion(), vo.isBuiltIn(), vo.isUrp(), vo.isHdrp()));
+            }
         }
 
         Integer category = form.getCategory();
@@ -187,6 +190,7 @@ public class AssetService {
 
         // 이미지는 아직...
 
-        assetRepository.save(asset);
+        Asset updatedAsset = assetRepository.save(asset);
+        return updatedAsset;
     }
 }
