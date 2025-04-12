@@ -9,6 +9,7 @@ import com.domi.ggmassetbackend.data.enums.PublishPlatform;
 import com.domi.ggmassetbackend.data.vo.CompatibilityVO;
 import com.domi.ggmassetbackend.data.vo.ThumbnailVO;
 import com.domi.ggmassetbackend.exceptions.AssetException;
+import com.domi.ggmassetbackend.exceptions.DomiException;
 import com.domi.ggmassetbackend.repositories.AssetRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -27,9 +28,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -196,12 +195,20 @@ public class AssetService {
         List<ThumbnailVO> images = form.getImages();
         if (images != null) {
             List<Thumbnail> originImages = asset.getImages();
+            Set<String> needRemoveFiles = new HashSet<>();
 
             if (originImages == null) {
                 originImages = new ArrayList<>();
                 asset.setImages(originImages);
             } else {
                 thumbnailAttachmentService.invalidate(originImages);
+            }
+
+            for (Thumbnail vo : originImages) {
+                if (vo.getContentUrl() != null)
+                    needRemoveFiles.add(vo.getContentUrl());
+                if (vo.getPreviewUrl() != null)
+                    needRemoveFiles.add(vo.getPreviewUrl());
             }
 
             originImages.clear();
@@ -213,13 +220,22 @@ public class AssetService {
                 if (vo.getContentUrl() == null) {
                     ThumbnailAttachment attachment = thumbnailAttachmentService.add(thumbnail, false);
                     attachmentIds.add(String.valueOf(attachment.getId()));
+                } else {
+                    needRemoveFiles.remove(vo.getContentUrl());
                 }
 
                 if (vo.getPreviewUrl() == null) {
                     ThumbnailAttachment attachment = thumbnailAttachmentService.add(thumbnail, true);
                     attachmentIds.add(String.valueOf(attachment.getId()));
+                } else {
+                    needRemoveFiles.remove(vo.getPreviewUrl());
                 }
             }
+
+            // 이제 사용 안하는건 삭제 할꺼잉
+            try {
+                needRemoveFiles.forEach(v -> fileService.deleteFile(FileCategory.Thumbnail, v));
+            } catch (DomiException ignored) {}
         }
 
         return assetRepository.save(asset);
