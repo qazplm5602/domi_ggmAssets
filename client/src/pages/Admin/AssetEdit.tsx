@@ -8,18 +8,15 @@ import { AssetAllVO, AssetBaseVO, CompatibilityVO } from '@domiTypes/asset';
 import { hasAssetEditFieldUpdated } from '@components/Admin/Edit/util/diffField';
 import { useParams } from 'react-router-dom';
 import { adminAssetEditLoad } from '@components/Admin/Edit/util/loadAsset';
+import AdminAssetEditSaveLoading from '@components/Admin/Edit/SaveLoading';
+import { saveAdminEditAsset } from '@components/Admin/Edit/util/save';
 
 export default function AdminAssetEdit() {
     const titleState = useState("");
     const fileLinkState = useState("");
     const storeLinkState = useState("");
     const versionState = useState("");
-    // 카테고리는 어케하지
-    // 플랫폼 어카지
-    // 제작자 어카지
     const createAtState = useState("");
-    // 이미지 필드 어카지
-    // 호환성 어카지
     const shortDescState = useState("");
     const descriptionState = useState("");
     const artistState = useState("");
@@ -49,6 +46,13 @@ export default function AdminAssetEdit() {
 
     const isDifferent = useMemo(() => originAsset !== null && hasAssetEditFieldUpdated(fieldStates, originAsset), [ originAsset, ...Object.values(fieldStates).map(v => v[0]) ]);
 
+    const handleSave = function() {
+        const id = Number(assetId);
+        if (isNaN(id)) return;
+
+        saveAdminEditAsset(id, fieldStates, [ originAsset, setOriginAsset ]);
+    }
+
     useEffect(() => {
         if (!assetId) return;
 
@@ -68,7 +72,8 @@ export default function AdminAssetEdit() {
     }
 
     return <main className={`${baseStyle.screen} ${style.screen}`}>
-        <AdminEditContent fields={fieldStates} updated={isDifferent} />
+        <AdminEditContent fields={fieldStates} updated={isDifferent} onSave={handleSave} />
         <AdminEditSide fields={fieldStates} />
+        <AdminAssetEditSaveLoading />
     </main>
 }

@@ -29,6 +29,12 @@
         & > .save {
             font-size: 14px;
             background-color: $color-primary;
+
+            &:disabled {
+                color: $color-textSupporting;
+                background-color: $color-misExtra;
+                cursor: initial;
+            }
         }
     }
 }

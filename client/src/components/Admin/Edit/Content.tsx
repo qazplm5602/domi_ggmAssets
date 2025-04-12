@@ -19,10 +19,11 @@ import AdminEditThumbnailUploadDialog from "./Thumbnail/UploadDialog";
 
 type Props = {
     fields: AssetEditFieldStates,
-    updated: boolean
+    updated: boolean,
+    onSave?: () => void
 }
 
-export default function AdminEditContent({ fields, updated }: Props) {
+export default function AdminEditContent({ fields, updated, onSave }: Props) {
     const storelinkPlatformState = useState<AssetBaseVO['platform']>(null);
     const [ categorySelectPopup, setCategorySelectPopup ] = useState(false);
     const [ imageUploadPopup, setImageUploadPopup ] = useState(false);
@@ -47,7 +48,7 @@ export default function AdminEditContent({ fields, updated }: Props) {
     }
 
     return <section className={style.content}>
-        <AdminEditHead updated={updated} />
+        <AdminEditHead updated={updated} onSave={onSave} />
 
         <AdminField title="제목" required={true} className={style.field}>
             <Input placeholder="제목을 입력하세요." autoValue={fields.title} />
