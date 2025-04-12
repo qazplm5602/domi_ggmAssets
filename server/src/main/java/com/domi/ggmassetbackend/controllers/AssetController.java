@@ -80,7 +80,7 @@ public class AssetController {
     }
 
     @PostMapping("/admin/thumbnail")
-    void uploadThumbnail(@RequestParam("id") UUID handleId, @RequestParam("file") MultipartFile file) {
+    void uploadThumbnail(@RequestParam("id") UUID handleId, @RequestParam("file") MultipartFile file) throws IOException {
         assetService.uploadThumbnail(handleId, file);
     }
 }

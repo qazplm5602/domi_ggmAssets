@@ -128,4 +128,8 @@ public class ThumbnailService {
     Thumbnail getThumbnailById(UUID id) {
         return thumbnailRepository.findById(id).orElseThrow(() -> new ThumbnailException(ThumbnailException.Type.NOT_FOUND));
     }
+
+    Thumbnail save(Thumbnail thumbnail) {
+        return thumbnailRepository.save(thumbnail);
+    }
 }

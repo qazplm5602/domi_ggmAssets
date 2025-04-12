@@ -4,6 +4,7 @@ import com.domi.ggmassetbackend.data.dto.AssetEditFormDTO;
 import com.domi.ggmassetbackend.data.dto.AssetSearchParamDTO;
 import com.domi.ggmassetbackend.data.dto.AssetUploadFormDTO;
 import com.domi.ggmassetbackend.data.entity.*;
+import com.domi.ggmassetbackend.data.enums.FileCategory;
 import com.domi.ggmassetbackend.data.enums.PublishPlatform;
 import com.domi.ggmassetbackend.data.vo.CompatibilityVO;
 import com.domi.ggmassetbackend.data.vo.ThumbnailVO;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -34,6 +36,7 @@ public class AssetService {
     private final StorePlatformService storePlatformService;
     private final ThumbnailService thumbnailService;
     private final ThumbnailAttachmentService thumbnailAttachmentService;
+    private final FileService fileService;
 
     public Asset getAssetById(int id) {
         return assetRepository.findById(id).orElseThrow(() -> new AssetException(AssetException.Type.NOT_FOUND));
@@ -219,7 +222,20 @@ public class AssetService {
         return updatedAsset;
     }
 
-    public void uploadThumbnail(UUID handleId, MultipartFile file) {
+    @Transactional
+    public void uploadThumbnail(UUID handleId, MultipartFile file) throws IOException {
 //        thumbnailService.getThumbnailById(handleId);
+        ThumbnailAttachment thumbnailAttachment = thumbnailAttachmentService.getOnceById(handleId);
+        Thumbnail thumbnail = thumbnailAttachment.getThumbnail();
+
+        String fileId = fileService.createFile(FileCategory.Thumbnail, file);
+
+        if (thumbnailAttachment.isPreview()) {
+            thumbnail.setPreviewUrl(fileId);
+        } else {
+            thumbnail.setContentUrl(fileId);
+        }
+
+        thumbnailService.save(thumbnail);
     }
 }

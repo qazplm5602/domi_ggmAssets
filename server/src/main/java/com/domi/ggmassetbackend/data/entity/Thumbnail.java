@@ -12,6 +12,7 @@ import java.util.UUID;
 import static jakarta.persistence.FetchType.LAZY;
 
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
