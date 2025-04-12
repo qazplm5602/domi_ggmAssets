@@ -3,6 +3,7 @@ import { AssetEditFieldStates } from "@domiTypes/assetEdit";
 import { ReactState } from "@domiTypes/react";
 import { getAssetEditFieldUpdatedKeys } from "./diffField";
 import { request } from "@utils/request";
+import { adminAssetEditLoad } from "./loadAsset";
 
 export async function saveAdminEditAsset(assetId: number, fields: AssetEditFieldStates, [ origin, setOrigin ]: ReactState<AssetAllVO | null>) {
     if (origin === null) return;
@@ -100,13 +101,13 @@ export async function saveAdminEditAsset(assetId: number, fields: AssetEditField
         const uploadKeys = response.data;
         
         if (uploadKeys.length !== sendImageFiles.length) {
-            throw new Error("전송 파일 갯수와 필요한 파일 갯수가 다릅니다.");
+            throw new Error("전송 파일 개수와 필요한 파일 개수가 다릅니다.");
         }
 
         await batchImageUpload(sendImageFiles, uploadKeys);
-
-        console.log("업로드 됨~~~");
     }
+
+    await adminAssetEditLoad(assetId.toString(), { alive: true }, fields, setOrigin);
 }
 
 const BATCH_MAX = 4; // 최대 4개 동시에 ㄱㄴ
