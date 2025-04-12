@@ -103,6 +103,56 @@ export async function saveAdminEditAsset(assetId: number, fields: AssetEditField
             throw new Error("전송 파일 갯수와 필요한 파일 갯수가 다릅니다.");
         }
 
-        console.log(sendImageFiles, uploadKeys);
+        await batchImageUpload(sendImageFiles, uploadKeys);
+
+        console.log("업로드 됨~~~");
     }
+}
+
+const BATCH_MAX = 4; // 최대 4개 동시에 ㄱㄴ
+
+function batchImageUpload(files: File[], handles: string[]): Promise<void> {
+    return new Promise(resolve => {
+        const status: { [ key: number ]: boolean } = {};
+
+        const runUpload = function(idx: number) {
+            status[idx] = false; // 로딩즁
+
+            const form = new FormData();
+            form.append("file", files[idx]);
+
+            request("asset/admin/thumbnail", { method: "POST", data: form, params: { id: handles[idx] } })
+            .finally(() => {
+                status[idx] = true;
+                finishUpload();
+            });
+        }
+        
+        const finishUpload = function() {
+            // 일 찾기 ㄱㄱㄱㄱ
+            let allFinished = true;
+            for (let i = 0; i < files.length; i++) {
+                if (status[i] === undefined) {
+                    runUpload(i);
+                    return;
+                }
+
+                if (status[i] === false)
+                    allFinished = false;
+            }
+
+            // 여기까지 왔다면 할 일이 없지롱
+            if (allFinished)
+                resolve(); // 다함 ㅅㄱ
+        }
+
+        if (files.length === 0) {
+            resolve(); // 할일이 없는데슝
+            return;
+        }
+
+        for (let i = 0; i < Math.min(files.length, BATCH_MAX); i++) {
+            runUpload(i);
+        }
+    });
 }
