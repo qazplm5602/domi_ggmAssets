@@ -49,3 +49,8 @@ export interface AssetSearchOption {
     amount: string,
     page: string
 }
+
+export interface AssetEditFormDTO extends Omit<Partial<AssetAllVO>, "images" | "category"> {
+    images? : Partial<ThumbnailVO>[],
+    category?: number
+}
