@@ -40,7 +40,8 @@ public class Asset {
     @JoinColumn(name = "asset_id")
     private List<Compatibility> supports;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "asset_id")
     private List<Thumbnail> images;
 
     @Enumerated(EnumType.STRING)
