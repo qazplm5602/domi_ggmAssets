@@ -8,7 +8,8 @@ export async function saveAdminEditAsset(assetId: number, fields: AssetEditField
     if (origin === null) return;
 
     const otherFields = new Set<keyof AssetEditFieldStates>(getAssetEditFieldUpdatedKeys(fields, origin) as (keyof AssetEditFieldStates)[]);
-    
+    const sendImageFiles: File[] = [];
+
     const body: AssetEditFormDTO = {
         id: assetId
     };
@@ -65,10 +66,16 @@ export async function saveAdminEditAsset(assetId: number, fields: AssetEditField
             let preview: string | undefined = thumbnail.previewUrl;
 
             if (thumbnail.local) {
-                if (thumbnail.type === 'Image')
+                if (thumbnail.type === 'Image') {
                     content = undefined;
+                    
+                    if (thumbnail.contentFile) // 여기 위치가 제일 ㄹ중요함 (안맞으면 서버랑 조짐)
+                        sendImageFiles.push(thumbnail.contentFile);
+                }
 
                 preview = undefined;
+                if (thumbnail.previewFile)
+                    sendImageFiles.push(thumbnail.previewFile);
             }
             
             result.push({
@@ -85,6 +92,17 @@ export async function saveAdminEditAsset(assetId: number, fields: AssetEditField
         // ...
     }
 
-    const response = await request("asset/admin/edit", { method: "POST", data: body });
+    const response = await request<string[]>("asset/admin/edit", { method: "POST", data: body });
     
+
+    // 이미지 보내야지ㅣㅣㅣㅣ
+    if (sendImageFiles.length > 0) {
+        const uploadKeys = response.data;
+        
+        if (uploadKeys.length !== sendImageFiles.length) {
+            throw new Error("전송 파일 갯수와 필요한 파일 갯수가 다릅니다.");
+        }
+
+        console.log(sendImageFiles, uploadKeys);
+    }
 }
