@@ -1,9 +1,14 @@
 package com.domi.ggmassetbackend.services;
 
+import com.domi.ggmassetbackend.data.dto.AssetEditFormDTO;
 import com.domi.ggmassetbackend.data.dto.AssetSearchParamDTO;
 import com.domi.ggmassetbackend.data.dto.AssetUploadFormDTO;
 import com.domi.ggmassetbackend.data.entity.Asset;
+import com.domi.ggmassetbackend.data.entity.Category;
+import com.domi.ggmassetbackend.data.entity.Compatibility;
 import com.domi.ggmassetbackend.data.entity.Thumbnail;
+import com.domi.ggmassetbackend.data.enums.PublishPlatform;
+import com.domi.ggmassetbackend.data.vo.CompatibilityVO;
 import com.domi.ggmassetbackend.exceptions.AssetException;
 import com.domi.ggmassetbackend.repositories.AssetRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,8 +18,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -98,5 +106,87 @@ public class AssetService {
 
         newAsset.setDownloadUrl(form.getDownload());
         return assetRepository.save(newAsset);
+    }
+
+    @Transactional
+    public void updateAsset(AssetEditFormDTO form) {
+        Asset asset = getAssetById(form.getId());
+
+        if (form.getTitle() != null) {
+            asset.setTitle(form.getTitle());
+        }
+
+        String shortDesc = form.getShortDesc();
+        if (shortDesc != null) {
+            asset.setShortDesc(shortDesc.isEmpty() ? null : shortDesc);
+        }
+
+        String description = form.getDescription();
+        if (description != null) {
+            asset.setDescription(description.isEmpty() ? null : description);
+        }
+
+        String downloadUrl = form.getDownloadUrl();
+        if (downloadUrl != null) {
+            asset.setDownloadUrl(downloadUrl);
+        }
+
+        String platformUrl = form.getPlatformUrl();
+        if (platformUrl != null) {
+            asset.setPlatformUrl(platformUrl.isEmpty() ? null : platformUrl);
+        }
+
+        String platform = form.getPlatform();
+        if (platform != null) {
+            PublishPlatform platformEnum = null;
+            if (!platform.isEmpty())
+                platformEnum = PublishPlatform.valueOf(platform);
+
+            asset.setPlatform(platformEnum);
+        }
+
+        String publisher = form.getPublisher();
+        if (publisher != null) {
+            asset.setPublisher(publisher.isEmpty() ? null : publisher);
+        }
+
+        String publishAt = form.getPublishAt();
+        if (publishAt != null) {
+            LocalDateTime time = null;
+
+            if (!publishAt.isEmpty()) {
+                DateTimeFormatter DATEFORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate ld = LocalDate.parse(publishAt, DATEFORMATTER);
+                time = LocalDateTime.of(ld, LocalDateTime.now().toLocalTime());
+            }
+
+            asset.setPublishAt(time);
+        }
+
+        List<CompatibilityVO> supports = form.getSupports();
+        if (supports != null) {
+            List<Compatibility> entitys = new ArrayList<>();
+
+            for (CompatibilityVO vo : supports) {
+                Compatibility entity = new Compatibility(null, vo.getVersion(), vo.isBuiltIn(), vo.isUrp(), vo.isHdrp());
+                entitys.add(entity);
+            }
+
+            asset.setSupports(entitys.isEmpty() ? null : entitys);
+        }
+
+        Integer category = form.getCategory();
+        if (category != null) {
+            Category entity = null;
+
+            if (category != -1)
+                entity = categoryService.getCategoryById(category);
+
+            asset.setCategory(entity);
+        }
+
+        // 이미지는 아직...
+
+        assetRepository.save(asset);
     }
 }

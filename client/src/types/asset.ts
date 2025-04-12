@@ -50,7 +50,8 @@ export interface AssetSearchOption {
     page: string
 }
 
-export interface AssetEditFormDTO extends Omit<Partial<AssetAllVO>, "images" | "category"> {
+export interface AssetEditFormDTO extends Omit<Partial<AssetAllVO>, "images" | "category" | "platform"> {
     images? : Partial<ThumbnailVO>[],
-    category?: number
+    category?: number,
+    platform?: AssetBaseVO['platform'] | ""
 }

@@ -1,5 +1,6 @@
 package com.domi.ggmassetbackend.controllers;
 
+import com.domi.ggmassetbackend.data.dto.AssetEditFormDTO;
 import com.domi.ggmassetbackend.data.dto.AssetSearchParamDTO;
 import com.domi.ggmassetbackend.data.dto.AssetUploadFormDTO;
 import com.domi.ggmassetbackend.data.entity.Asset;
@@ -65,5 +66,10 @@ public class AssetController {
     AssetAllVO getAssetAdminDetailById(@PathVariable int id) {
         Asset asset = assetService.getAssetById(id);
         return AssetAllVO.from(asset, categoryService);
+    }
+
+    @PostMapping("/admin/edit")
+    void editAsset(@RequestBody @Valid AssetEditFormDTO form) {
+        assetService.updateAsset(form);
     }
 }

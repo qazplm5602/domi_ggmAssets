@@ -1,4 +1,4 @@
-import { AssetAllVO, AssetEditFormDTO, ThumbnailVO } from "@domiTypes/asset";
+import { AssetAllVO, AssetBaseVO, AssetEditFormDTO, ThumbnailVO } from "@domiTypes/asset";
 import { AssetEditFieldStates } from "@domiTypes/assetEdit";
 import { ReactState } from "@domiTypes/react";
 import { getAssetEditFieldUpdatedKeys } from "./diffField";
@@ -33,8 +33,11 @@ export async function saveAdminEditAsset(assetId: number, fields: AssetEditField
     }
 
     if (otherFields.has("platform")) {
-        // 흠 platform 없애는건 어케하지
-        body.platform = fields.platform[0];
+        let platform: AssetBaseVO['platform'] | "" = fields.platform[0];
+        if (platform === null)
+            platform = "";
+
+        body.platform = platform;
     }
 
     if (otherFields.has("artist")) {
@@ -63,7 +66,7 @@ export async function saveAdminEditAsset(assetId: number, fields: AssetEditField
             if (thumbnail.local) {
                 if (thumbnail.type === 'Image')
                     content = undefined;
-                
+
                 preview = undefined;
             }
             
