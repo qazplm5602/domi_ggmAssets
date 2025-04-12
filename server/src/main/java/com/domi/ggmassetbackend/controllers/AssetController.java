@@ -15,11 +15,13 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @RequestMapping("/api/asset")
@@ -75,5 +77,10 @@ public class AssetController {
         assetService.updateAsset(form, attachmentIds);
 
         return attachmentIds;
+    }
+
+    @PostMapping("/admin/thumbnail")
+    void uploadThumbnail(@RequestParam("id") UUID handleId, @RequestParam("file") MultipartFile file) {
+        assetService.uploadThumbnail(handleId, file);
     }
 }

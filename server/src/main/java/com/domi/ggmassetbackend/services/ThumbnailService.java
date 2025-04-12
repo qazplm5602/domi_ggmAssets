@@ -3,6 +3,8 @@ package com.domi.ggmassetbackend.services;
 import com.domi.ggmassetbackend.data.entity.Thumbnail;
 import com.domi.ggmassetbackend.data.enums.FileCategory;
 import com.domi.ggmassetbackend.data.enums.ThumbnailType;
+import com.domi.ggmassetbackend.exceptions.ThumbnailException;
+import com.domi.ggmassetbackend.repositories.ThumbnailRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,6 +18,8 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
@@ -26,6 +30,7 @@ import java.util.concurrent.TimeUnit;
 public class ThumbnailService {
     private final int MAX_PROCESS_COUNT = 10; // 썸네일 최대 3개까지만 동시 처리
     private final FileService fileService;
+    private final ThumbnailRepository thumbnailRepository;
 
     public List<Thumbnail> imageSave(List<Thumbnail> thumbnails) throws InterruptedException {
         Semaphore semaphore = new Semaphore(MAX_PROCESS_COUNT);
@@ -118,5 +123,9 @@ public class ThumbnailService {
         }
 
         return fileName;
+    }
+
+    Thumbnail getThumbnailById(UUID id) {
+        return thumbnailRepository.findById(id).orElseThrow(() -> new ThumbnailException(ThumbnailException.Type.NOT_FOUND));
     }
 }

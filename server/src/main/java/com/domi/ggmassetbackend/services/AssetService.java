@@ -17,12 +17,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -215,5 +217,9 @@ public class AssetService {
 
         Asset updatedAsset = assetRepository.save(asset);
         return updatedAsset;
+    }
+
+    public void uploadThumbnail(UUID handleId, MultipartFile file) {
+//        thumbnailService.getThumbnailById(handleId);
     }
 }
