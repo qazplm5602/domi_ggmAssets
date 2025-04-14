@@ -31,6 +31,7 @@ public class AssetDetailVO extends AssetBaseVO {
 
         this.images = asset.getImages()
                 .stream()
+                .sorted((a, b) -> Integer.compare(a.getSort(), b.getSort()))
                 .map(ThumbnailVO::from)
                 .toList();
     }

@@ -29,4 +29,6 @@ public class Thumbnail {
 
     private String contentUrl;
     private String previewUrl;
+
+    private int sort;
 }

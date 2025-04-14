@@ -214,8 +214,10 @@ public class AssetService {
 
             originImages.clear();
 
+            int i = 0;
             for (ThumbnailVO vo : images) {
-                Thumbnail thumbnail = new Thumbnail(null, vo.getType(), vo.getContentUrl(), vo.getPreviewUrl());
+                int idx = i++;
+                Thumbnail thumbnail = new Thumbnail(null, vo.getType(), vo.getContentUrl(), vo.getPreviewUrl(), idx);
                 originImages.add(thumbnail);
 
                 if (vo.getContentUrl() == null) {

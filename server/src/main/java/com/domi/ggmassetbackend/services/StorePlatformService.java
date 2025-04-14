@@ -86,7 +86,7 @@ public class StorePlatformService {
             String content = imageJson.getString("contentUrl");
             String preview = imageJson.getString("previewUrl");
 
-            Thumbnail image = new Thumbnail(null, ThumbnailType.valueOf(type), content, preview);
+            Thumbnail image = new Thumbnail(null, ThumbnailType.valueOf(type), content, preview, i);
             images.add(image);
         }
 
