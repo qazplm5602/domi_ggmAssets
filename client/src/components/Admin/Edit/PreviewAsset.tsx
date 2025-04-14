@@ -3,12 +3,14 @@ import { ThumbnailVO } from '@domiTypes/asset';
 import { AssetEditFieldStates, ThumbnailLocalVO } from '@domiTypes/assetEdit';
 import style from '@styles/admin/edit.module.scss';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 type Props = {
     fields: AssetEditFieldStates
 }
 
 export default function AdminEditPreviewAsset({ fields }: Props) {
+    const { id: assetId } = useParams();
     const [ loadedImages, setLoadedImages ] = useState<(ThumbnailVO | undefined)[]>([]);
 
     const convertLocalToPublicThumbnail = function() {
@@ -59,7 +61,7 @@ export default function AdminEditPreviewAsset({ fields }: Props) {
     return <div className={style.previewAsset}>
         <AssetItem data={{
             category: null,
-            id: 0,
+            id: Number(assetId),
             platform: fields.platform[0],
             publisher: fields.artist[0],
             thumbnail: { size: loadedImages.length, images: loadedImages as ThumbnailVO[] },
