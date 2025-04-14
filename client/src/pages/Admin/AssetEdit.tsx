@@ -10,6 +10,7 @@ import { useParams } from 'react-router-dom';
 import { adminAssetEditLoad } from '@components/Admin/Edit/util/loadAsset';
 import AdminAssetEditSaveLoading from '@components/Admin/Edit/SaveLoading';
 import { saveAdminEditAsset } from '@components/Admin/Edit/util/save';
+import AdminAssetEditLoading from '@components/Admin/Edit/Loading';
 
 export default function AdminAssetEdit() {
     const titleState = useState("");
@@ -71,10 +72,8 @@ export default function AdminAssetEdit() {
         }
     }, [ assetId ]);
 
-    if (originAsset == null) {
-        return <main className={`${baseStyle.screen} ${style.screen}`}>
-            짜치는 로딩
-        </main>
+    if (originAsset === null) {
+        return <AdminAssetEditLoading />;
     }
 
     return <main className={`${baseStyle.screen} ${style.screen}`}>

@@ -63,6 +63,45 @@
     }
 }
 
+.loading {
+    & > .content {
+        & > .field {
+            width: 100%;
+            
+            & > .title {
+                width: 40%;
+                height: 25px;
+            }
+            & > .sub {
+                width: 20%;
+                height: 15px;
+
+                margin-top: 6px;
+            }
+            & > .input {
+                width: 100%;
+                height: 30px;
+                
+                margin-top: 15px;
+            }
+
+            margin-bottom: 20px;
+        }
+
+        & > .head > .interaction > .save {
+            width: 60px;
+            height: 35px;
+        }
+    }
+    & > .side {
+        & > .item {
+            width: 100%;
+            height: 300px;
+            border-radius: 10px;
+        }
+    }
+}
+
 .previewAsset {
     width: max-content;
 
