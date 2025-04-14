@@ -43,6 +43,14 @@ public class AssetController {
         return new PageContentVO<>(pageAssets.map(v -> AssetPreviewVO.from(v, categoryService)).toList(), pageAssets.getTotalPages());
     }
 
+    @GetMapping("/search/preview")
+    List<AssetSearchVO> getSearchAssetsByPreview(@RequestParam("v") String value) {
+        return assetService.wordsSearchAssets(value)
+                .stream()
+                .map(v -> AssetSearchVO.from(v, categoryService))
+                .toList();
+    }
+
     @GetMapping("/{id}/preview")
     ThumbnailPageVO getThumbnailById(@PathVariable int id, @RequestParam byte page) {
         Asset asset = assetService.getAssetById(id);

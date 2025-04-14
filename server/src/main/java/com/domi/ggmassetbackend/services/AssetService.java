@@ -79,6 +79,10 @@ public class AssetService {
         return assetRepository.findAll(specification, pageable);
     }
 
+    public List<Asset> wordsSearchAssets(String words) {
+        return assetRepository.findByTitleLike(String.format("%%%s%%", words));
+    }
+
     public int getCategoryCount(List<Integer> ids) {
         return assetRepository.countByCategoryIdIn(ids);
     }

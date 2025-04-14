@@ -18,4 +18,6 @@ public interface AssetRepository extends JpaRepository<Asset, Integer>, JpaSpeci
     @Modifying
     @Query("UPDATE Asset a SET a.category = NULL WHERE a.category.id IN :categorys")
     void updateCategoryCancel(@Param("categorys") List<Integer> categorys);
+
+    List<Asset> findByTitleLike(String title);
 }
