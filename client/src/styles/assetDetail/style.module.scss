@@ -95,10 +95,19 @@ $info-width: 350px;
             color: $color-textSupporting;
         }
 
-        & > div {
+        & > div, a {
             font-size: 14px;
             font-weight: 300;
             color: $color-white;
+        }
+
+        & > a {
+            color: $color-primary;
+            font-weight: 500;
+
+            &:hover {
+                text-decoration: underline;
+            }
         }
 
         &:not(:first-child) {
