@@ -16,6 +16,7 @@ public class AssetDetailVO extends AssetBaseVO {
     private LocalDateTime publishAt;
     private List<CompatibilityVO> supports;
     private List<ThumbnailVO> images;
+    private Integer fileSize;
 
     @Override
     public void assetDataInit(Asset asset, CategoryService categoryService) {
@@ -25,6 +26,7 @@ public class AssetDetailVO extends AssetBaseVO {
         this.description = asset.getDescription();
         this.publishAt = asset.getPublishAt();
         this.downloadUrl = asset.getDownloadUrl();
+        this.fileSize = asset.getFileSize();
 
         this.supports = asset.getSupports()
                 .stream()

@@ -32,7 +32,8 @@ export interface AssetDetailVO extends AssetBaseVO {
     supports: CompatibilityVO[],
     images: ThumbnailVO[],
     publishAt: string | null,
-    downloadUrl: string
+    downloadUrl: string,
+    fileSize: number | null
 }
 
 export interface AssetAllVO extends AssetDetailVO {

@@ -50,6 +50,8 @@ public class Asset {
     private String platformUrl;
     private String downloadUrl;
 
+    private Integer fileSize;
+
     private LocalDateTime publishAt;
 
     @CreatedDate
