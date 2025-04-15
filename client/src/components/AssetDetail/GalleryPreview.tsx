@@ -13,7 +13,7 @@ type Props = {
 
 export default function AssetDetailGalleryPreview({ thumbnail, onPrev, onNext }: Props) {
     return <div className={style.viewer}>
-        {thumbnail?.type !== "Youtube" ? <img src={thumbnail ? getThumbnailURL(thumbnail.contentUrl) : emptyBg} alt="thumbnail 1" /> : <iframe src={thumbnail.contentUrl} />}
+        {thumbnail?.type !== "Youtube" ? <img src={thumbnail ? getThumbnailURL(thumbnail.contentUrl) : emptyBg} alt="thumbnail 1" /> : <iframe src={thumbnail.contentUrl} allow='fullscreen' />}
         
         <AssetDetailGalleryArrow onClick={onPrev} />
         <AssetDetailGalleryArrow right={true} onClick={onNext} />
