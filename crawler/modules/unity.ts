@@ -110,4 +110,4 @@ const unityAssetDataLoadhandler: CrawlerCallbackType = async function(req) {
     };
 }
 
-registerPlatformHandler("unity", unityAssetDataLoadhandler);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+registerPlatformHandler("unity", unityAssetDataLoadhandler);

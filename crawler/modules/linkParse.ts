@@ -26,3 +26,8 @@ export function getIdByUnityStoreUrl(url: string) {
 
     return detectId;
 }
+
+// 주인장 도메인 가져오면서도 itchio 링크가 맞는지 확인 ㅁㄴㅇㄹ
+export function getItchioOwnerHost() {
+    
+}
