@@ -28,6 +28,20 @@ export function getIdByUnityStoreUrl(url: string) {
 }
 
 // 주인장 도메인 가져오면서도 itchio 링크가 맞는지 확인 ㅁㄴㅇㄹ
-export function getItchioOwnerHost() {
-    
+export function getItchioOwnerHost(link: string) {
+    const url = URL.parse(link);
+    const badError = new DomiError(400, "not itchio url");
+    // let host: string | null = null;
+
+    if (!url)
+        throw badError;
+
+    // 도메인이 itch io 가 아닌디
+    if (!url.host.endsWith('.itch.io'))
+        throw badError;
+
+    if (url.pathname === '/')
+        throw badError;
+
+    return url.host;
 }
