@@ -43,6 +43,13 @@ export interface AssetPreviewVO extends AssetBaseVO {
     thumbnail: PageThumbnailVO
 }
 
+export interface AssetSearchVO {
+    id: number,
+    title: string,
+    thumbnail: string | null
+    category: string[] | null
+}
+
 export interface AssetSearchOption {
     category: string,
     order: string,

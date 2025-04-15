@@ -29,7 +29,8 @@ public class AssetSearchVO {
             category = categoryService.getCategoryParents(asset.getCategory())
                     .stream()
                     .map(Category::getDisplayName)
-                    .toList();
+                    .toList()
+                    .reversed();
         }
     }
 
