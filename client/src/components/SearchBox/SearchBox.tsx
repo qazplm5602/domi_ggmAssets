@@ -21,13 +21,16 @@ export default function SearchBox({ className, autoValue: [ value, setValue ], a
     const handleInputChange = function(e: React.ChangeEvent<HTMLInputElement>) {
         setValue(e.target.value);
     }
+    const handleClear = function() {
+        setValue("");
+    }
     
     return <div className={`${style.box} ${className || ''}`}>
         <img src={searchIco} alt="search ico" />
         <input type="text" placeholder='검색' value={value} onChange={handleInputChange} onFocus={handleFocus} onBlur={handleBlur} />
 
-        <button className={style.clear}>
+        {value.length > 0 && <button className={style.clear} onClick={handleClear}>
             <img src={closeIco} alt="clear icon" />
-        </button>
+        </button>}
     </div>;
 }
