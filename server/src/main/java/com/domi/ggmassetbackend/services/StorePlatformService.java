@@ -74,6 +74,8 @@ public class StorePlatformService {
 
         asset.setPlatform(platform);
         asset.setPlatformUrl(url);
+
+        asset.setFileSize(assetData.getInt("size"));
         asset.setCreateAt(LocalDateTime.now());
 
         // 이미지 리스트

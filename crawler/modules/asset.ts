@@ -20,7 +20,8 @@ export interface AssetDTO {
     supports: CompatibilityVO[],
     images: ThumbnailVO[],
     publishAt: string,
-    category: string
+    category: string,
+    size: number
 }
 
 interface UnityStoreSrp {

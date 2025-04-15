@@ -106,6 +106,7 @@ const unityAssetDataLoadhandler: CrawlerCallbackType = async function(req) {
         images: images,
         version: product.currentVersion.name,
         category: product.category.longName,
+        size: Number(product.downloadSize)
     };
 }
 
