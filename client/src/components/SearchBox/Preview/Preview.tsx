@@ -52,6 +52,7 @@ export default function SearchPreview({ className, focus, search }: Props) {
 function Box({ className, data }: { className?: string, data: AssetSearchVO[] | null }) {
     return <motion.div className={`${style.preview} ${className || ''}`} initial={INIT_ANIM} animate={FINISH_ANIM} exit={INIT_ANIM} transition={TRANSITION_ANIM}>
         {data && data.map(v => <SearchPreviewBox key={v.id} data={v} />)}
+        {(data && data.length === 0) && <p className={style.alert}>검색 결과가 없습니다.</p>}
         {!data && <Spinner className={style.spinner} />}
     </motion.div>;
 }
