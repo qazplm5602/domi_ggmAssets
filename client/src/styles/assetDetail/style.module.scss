@@ -263,6 +263,13 @@ $info-width: 350px;
         color: $color-text;
         
         margin-top: 5px;
+
+        & > .viewer {
+            & a {
+                color: $color-primary;
+                font-weight: 400;
+            }
+        }
     }
 
     & .pre {

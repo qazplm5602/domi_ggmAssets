@@ -7,6 +7,6 @@ type Props = {
 
 export default function AssetDetailMoreFullDesc({ content }: Props) {
     return <AssetDetailMoreSection title="설명" className={`${style.default_words} ${style.pre}`}>
-        {content}
+        <div dangerouslySetInnerHTML={{ __html: content }} className={style.viewer}></div>
     </AssetDetailMoreSection>
 }
