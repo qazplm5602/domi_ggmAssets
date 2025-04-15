@@ -31,12 +31,12 @@ export interface AssetDetailVO extends AssetBaseVO {
     description: string,
     supports: CompatibilityVO[],
     images: ThumbnailVO[],
-    publishAt: string | null
+    publishAt: string | null,
+    downloadUrl: string
 }
 
 export interface AssetAllVO extends AssetDetailVO {
-    platformUrl: string | null,
-    downloadUrl: string
+    platformUrl: string | null
 }
 
 export interface AssetPreviewVO extends AssetBaseVO {

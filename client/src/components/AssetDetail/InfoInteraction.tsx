@@ -3,9 +3,13 @@ import style from '@styles/assetDetail/style.module.scss';
 
 import markIcon from '@assets/icons/ic-bookmark-line.svg';
 
-export default function AssetDetailInfoInteraction() {
+type Props = {
+    download: string
+}
+
+export default function AssetDetailInfoInteraction({ download }: Props) {
     return <section className={style.interactions}>
-        <button className={style.download}>다운로드</button>
+        <a className={style.download} href={download} target='_blank'>다운로드</a>
         <IconButton icon={markIcon} size={23} />
     </section>
 }

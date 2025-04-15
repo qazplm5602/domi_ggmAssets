@@ -7,14 +7,12 @@ import lombok.Getter;
 @Getter
 public class AssetAllVO extends AssetDetailVO {
     private String platformUrl;
-    private String downloadUrl;
 
     @Override
     public void assetDataInit(Asset asset, CategoryService categoryService) {
         super.assetDataInit(asset, categoryService);
 
         this.platformUrl = asset.getPlatformUrl();
-        this.downloadUrl = asset.getDownloadUrl();
     }
 
     public static AssetAllVO from(Asset asset, CategoryService categoryService) {

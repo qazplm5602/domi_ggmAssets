@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 public class AssetDetailVO extends AssetBaseVO {
     private String shortDesc;
     private String description;
+    private String downloadUrl;
     private LocalDateTime publishAt;
     private List<CompatibilityVO> supports;
     private List<ThumbnailVO> images;
@@ -23,6 +24,7 @@ public class AssetDetailVO extends AssetBaseVO {
         this.shortDesc = asset.getShortDesc();
         this.description = asset.getDescription();
         this.publishAt = asset.getPublishAt();
+        this.downloadUrl = asset.getDownloadUrl();
 
         this.supports = asset.getSupports()
                 .stream()
