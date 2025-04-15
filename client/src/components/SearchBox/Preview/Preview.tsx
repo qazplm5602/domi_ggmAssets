@@ -6,14 +6,18 @@ import Spinner from '@components/Spinner/Spinner';
 
 type Props = {
     className?: string,
-    show?: boolean
+    // show?: boolean,
+    focus: boolean,
+    search: string
 }
 
 const INIT_ANIM = { opacity: 0, translate: "-50% 0", scale: 0.95 };
 const FINISH_ANIM = { opacity: 1, translate: "-50% 0", scale: 1.0 };
 const TRANSITION_ANIM = { duration: 0.15 };
 
-export default function SearchPreview({ show, className }: Props) {
+export default function SearchPreview({ className, focus, search }: Props) {
+    const show = focus;
+    
     return <AnimatePresence>
         {show && <Box className={className} />}
     </AnimatePresence>;
