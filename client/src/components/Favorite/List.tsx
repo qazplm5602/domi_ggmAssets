@@ -19,6 +19,6 @@ export default function FavoriteSelectList({ list, selects, onSelect }: Props) {
         return <AssetsListLoadingContainer />;
 
     return <section className={originStyle.itemContainer}>
-        {list.map(v => <ItemSelectable key={v.id} select={selects.has(v.id)} data={v} onClick={() => handleAssetClick(v.id)} />)}
+        {list.map((v, i) => <ItemSelectable key={v.id} select={selects.has(v.id)} data={v} idx={i} onClick={() => handleAssetClick(v.id)} />)}
     </section>
 }

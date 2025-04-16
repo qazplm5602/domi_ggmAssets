@@ -47,6 +47,20 @@ export default function Favorite() {
         setSelectAssets(new Set( checked ? assets.map(v => v.id) : [] ));
     }
 
+    const emptySelectOff = function() {
+        if (!isSelecting || !assets || !selectAssets) return;
+
+        const newSelect = new Set<number>();
+        const currentIds = new Set(assets.map(v => v.id));
+        
+        selectAssets.forEach(v => {
+            if (currentIds.has(v))
+                newSelect.add(v);
+        });
+
+        setSelectAssets(newSelect);
+    }
+
     useEffect(() => {
         const aliveRef = { alive: true };
 
@@ -57,6 +71,8 @@ export default function Favorite() {
             aliveRef.alive = false;
         }
     }, [ ...Object.values(searchOptions) ]);
+
+    useEffect(emptySelectOff, [ assets ]);
 
     return <main className={originStyle.main}>
         {/* 카테고리 이런거 */}
