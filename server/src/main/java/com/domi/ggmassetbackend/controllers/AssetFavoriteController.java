@@ -6,10 +6,7 @@ import com.domi.ggmassetbackend.services.AssetFavoriteService;
 import com.domi.ggmassetbackend.services.AssetService;
 import com.domi.ggmassetbackend.services.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RequiredArgsConstructor
@@ -26,5 +23,13 @@ public class AssetFavoriteController {
         Asset asset = assetService.getAssetById(id);
 
         return assetFavoriteService.hasAssetFavorite(user, asset);
+    }
+
+    @PostMapping("/{id}")
+    void toggleFavorite(@PathVariable int id, @RequestBody boolean active) {
+        User user = userService.getCurrentUser();
+        Asset asset = assetService.getAssetById(id);
+
+        assetFavoriteService.setAssetFavorite(user, asset, active);
     }
 }
