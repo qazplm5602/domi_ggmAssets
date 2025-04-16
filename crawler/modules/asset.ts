@@ -12,16 +12,16 @@ export interface ThumbnailVO {
 }
 
 export interface AssetDTO {
-    id: number,
+    // id: number,
     title: string,
     desc: string,
-    shortDesc: string,
+    shortDesc: string | null,
     publisher: string,
     supports: CompatibilityVO[],
     images: ThumbnailVO[],
-    publishAt: string,
-    category: string,
-    size: number
+    publishAt: string | null,
+    category: string | null,
+    size: number | null
 }
 
 interface UnityStoreSrp {
