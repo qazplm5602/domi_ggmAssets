@@ -13,6 +13,9 @@ import { useEffect, useState } from "react";
 
 export default function Favorite() {
     const [ assets, setAssets ] = useState<AssetPreviewVO[] | null>(null);
+    const [ selectAssets, setSelectAssets ] = useState<Set<number> | null>(null);
+    const isSelecting = selectAssets !== null;
+
     const searchOptions =  useAssetSearchOption();
 
     const loadAssets = async function(aliveRef: AliveType) {
@@ -20,6 +23,10 @@ export default function Favorite() {
         if (!aliveRef.alive) return;
         
         setAssets(result.data.items);
+    }
+
+    const handleSelectClick = function() {
+        setSelectAssets(isSelecting ? null : new Set());
     }
 
     useEffect(() => {
@@ -39,14 +46,16 @@ export default function Favorite() {
 
         {/* 리스트 */}
         <article className={originStyle.content}>
-            <FavoriteHead />
-            <FavoriteSelectHead />
+            <FavoriteHead selecting={isSelecting} onSelect={handleSelectClick} />
+            {isSelecting && <FavoriteSelectHead />}
 
             {/* 선택 할때 */}
             {/* <FavoriteSelectList /> */}
 
             {/* 선택 안할때 */}
-            <FavoriteBaseList list={assets} />
+            {/* <FavoriteBaseList list={assets} /> */}
+
+            {isSelecting ? <FavoriteSelectList list={assets} selects={selectAssets} /> : <FavoriteBaseList list={assets} />}
         </article>
     </main>;
 }
