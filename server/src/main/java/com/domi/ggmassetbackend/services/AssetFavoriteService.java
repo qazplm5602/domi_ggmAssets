@@ -5,13 +5,18 @@ import com.domi.ggmassetbackend.data.entity.AssetFavorite;
 import com.domi.ggmassetbackend.data.entity.User;
 import com.domi.ggmassetbackend.exceptions.DomiException;
 import com.domi.ggmassetbackend.repositories.AssetFavoriteRepository;
+import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
 public class AssetFavoriteService {
+    private final UserService userService;
     private final AssetFavoriteRepository assetFavoriteRepository;
 
     public boolean hasAssetFavorite(User user, Asset asset) {
@@ -30,5 +35,14 @@ public class AssetFavoriteService {
             assetFavoriteRepository.save(assetFavorite);
         else
             assetFavoriteRepository.delete(assetFavorite);
+    }
+
+    public Specification<Asset> hasFavorite() {
+        User user = userService.getCurrentUser();
+        List<Integer> assetIds = assetFavoriteRepository.getFavoriteAssetIds(user);
+
+        return (root, query, cb) -> {
+            return root.get("id").in(assetIds);
+        };
     }
 }

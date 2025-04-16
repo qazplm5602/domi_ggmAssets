@@ -40,6 +40,7 @@ public class AssetService {
     private final ThumbnailService thumbnailService;
     private final ThumbnailAttachmentService thumbnailAttachmentService;
     private final FileService fileService;
+    private final AssetFavoriteService assetFavoriteService;
 
     public Asset getAssetById(int id) {
         return assetRepository.findById(id).orElseThrow(() -> new AssetException(AssetException.Type.NOT_FOUND));
@@ -61,6 +62,11 @@ public class AssetService {
         Specification<Asset> specification = Specification.allOf();
         if (option.getCategory() != null && !option.getCategory().isEmpty()) {
             specification = specification.and(categoryService.hasCategory(option.getCategory()));
+        }
+
+        // 찜찜한겅
+        if (option.getFavorite() != null && option.getFavorite()) {
+            specification = specification.and(assetFavoriteService.hasFavorite());
         }
 
         Sort sortOption = Sort.by(Sort.Direction.ASC, "title");

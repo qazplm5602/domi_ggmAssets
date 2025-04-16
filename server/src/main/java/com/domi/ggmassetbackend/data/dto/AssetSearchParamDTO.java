@@ -11,4 +11,5 @@ public class AssetSearchParamDTO {
     Integer order;
     Integer page;
     Boolean random;
+    Boolean favorite;
 }
