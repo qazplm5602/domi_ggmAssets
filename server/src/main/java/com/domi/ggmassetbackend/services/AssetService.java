@@ -64,11 +64,6 @@ public class AssetService {
             specification = specification.and(categoryService.hasCategory(option.getCategory()));
         }
 
-        // 찜찜한겅
-        if (option.getFavorite() != null && option.getFavorite()) {
-            specification = specification.and(assetFavoriteService.hasFavorite());
-        }
-
         Sort sortOption = Sort.by(Sort.Direction.ASC, "title");
         boolean isRandom = option.getRandom() != null && option.getRandom();
 
@@ -82,6 +77,14 @@ public class AssetService {
         }
 
         Pageable pageable = PageRequest.of(page, amount, sortOption);
+
+        // 찜찜한겅
+        boolean activeFavorite = option.getFavorite() != null && option.getFavorite();
+        if (activeFavorite) {
+            specification = specification.and(assetFavoriteService.hasFavorite());
+            pageable = Pageable.unpaged(); // 찜찜한 에셋은 안짤라도 됨
+        }
+
         return assetRepository.findAll(specification, pageable);
     }
 
