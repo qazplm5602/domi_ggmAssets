@@ -29,4 +29,6 @@ app.post("/asset/:platform", async function(req, res) {
     }
 });
 
+app.use("/thumbnail", express.static(String(process.env.IMAGE_PATH)));
+
 app.listen(process.env.API_PORT, () => console.log(`${process.env.API_PORT} listen!`));
