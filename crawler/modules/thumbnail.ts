@@ -2,7 +2,8 @@ import fs from 'fs/promises';
 import path from 'path';
 
 const folderPath = process.env.IMAGE_PATH || 'images/';
-const imageList = {};
+const expireTime = Number(process.env.IMAGE_EXPIRE) || 300;
+const imageList: { [key: string]: NodeJS.Timeout } = {};
 
 function generateRandomString(length: number): string {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -24,9 +25,15 @@ export async function addImage(file: File) {
         ext = file.name.substring(file.name.lastIndexOf('.'));
 
     const name = generateRandomString(10);
+    const fullName = name + ext;
 
-    const dir = path.join(path.resolve(), folderPath, name + ext);
-    fs.writeFile(dir, await file.bytes());
+    const dir = path.join(path.resolve(), folderPath, fullName);
+    await fs.writeFile(dir, await file.bytes());
 
-    return name + ext;
+    imageList[fullName] = setTimeout(() => {
+        fs.unlink(dir);
+        delete imageList[fullName];
+    }, expireTime * 1000);
+    
+    return fullName;
 }
