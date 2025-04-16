@@ -27,4 +27,5 @@ public class AssetEditFormDTO {
     List<CompatibilityVO> supports;
     Integer category;
     List<ThumbnailVO> images;
+    Integer fileSize;
 }

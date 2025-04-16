@@ -245,6 +245,11 @@ public class AssetService {
             } catch (DomiException ignored) {}
         }
 
+        Integer fileSize = form.getFileSize();
+        if (fileSize != null) {
+            asset.setFileSize(fileSize > 0 ? fileSize : null);
+        }
+
         return assetRepository.save(asset);
     }
 
