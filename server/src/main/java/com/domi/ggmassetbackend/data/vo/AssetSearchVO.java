@@ -7,6 +7,7 @@ import com.domi.ggmassetbackend.data.enums.ThumbnailType;
 import com.domi.ggmassetbackend.services.CategoryService;
 import lombok.Getter;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Getter
@@ -20,7 +21,10 @@ public class AssetSearchVO {
         id = asset.getId();
         title = asset.getTitle();
 
-        List<Thumbnail> images = asset.getImages().stream().filter(v -> v.getType() == ThumbnailType.Image).toList();
+        List<Thumbnail> images = asset.getImages().stream()
+                .filter(v -> v.getType() == ThumbnailType.Image)
+                .sorted(Comparator.comparing(Thumbnail::getSort))
+                .toList();
         if (!images.isEmpty()) {
             thumbnail = images.getFirst().getPreviewUrl();
         }

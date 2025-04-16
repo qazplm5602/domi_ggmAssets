@@ -7,7 +7,9 @@ import com.domi.ggmassetbackend.exceptions.DomiException;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 public class ThumbnailPageVO {
@@ -24,6 +26,7 @@ public class ThumbnailPageVO {
         List<Thumbnail> images = asset.getImages()
                 .stream()
                 .filter(v -> v.getType() == ThumbnailType.Image)
+                .sorted(Comparator.comparing(Thumbnail::getSort))
                 .toList();
 
         if (startIdx > images.size()) {
