@@ -21,6 +21,6 @@ export default function AssetDetailInfo({ data }: Props) {
         {/* <AssetDetailInfoText title='지원' value='웹사이트 방문' /> */}
         {admin && <AssetDetailInfoLink title='관리자' text='수정하기' href={`/admin/edit/${data.id}`} />}
 
-        <AssetDetailInfoInteraction download={data.downloadUrl} />
+        <AssetDetailInfoInteraction download={data.downloadUrl} assetId={data.id} />
     </motion.div>
 }
