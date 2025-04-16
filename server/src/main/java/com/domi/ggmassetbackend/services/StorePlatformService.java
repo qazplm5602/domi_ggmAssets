@@ -64,18 +64,24 @@ public class StorePlatformService {
         Asset asset = new Asset();
         asset.setTitle(assetData.getString("title"));
         asset.setDescription(assetData.getString("desc"));
-        asset.setShortDesc(assetData.getString("shortDesc"));
+
+        if (assetData.get("shortDesc") != JSONObject.NULL)
+            asset.setShortDesc(assetData.getString("shortDesc"));
 
         // 등록일 ㅁㄴㅇㄹ
-        String publishDate = assetData.getString("publishAt");
-        asset.setPublishAt(MiscUtils.convertStringToLocalDateTime(publishDate));
+        if (assetData.get("publishAt") != JSONObject.NULL) {
+            String publishDate = assetData.getString("publishAt");
+            asset.setPublishAt(MiscUtils.convertStringToLocalDateTime(publishDate));
+        }
 
         asset.setPublisher(assetData.getString("publisher"));
 
         asset.setPlatform(platform);
         asset.setPlatformUrl(url);
 
-        asset.setFileSize(assetData.getInt("size"));
+        if (assetData.get("size") != JSONObject.NULL)
+            asset.setFileSize(assetData.getInt("size"));
+
         asset.setCreateAt(LocalDateTime.now());
 
         // 이미지 리스트
@@ -113,8 +119,8 @@ public class StorePlatformService {
         asset.setSupports(supports);
 
         // 카테고리
-        String categoryListName = assetData.getString("category");
-        if (categoryListName != null) { // 카테고리가 없는거 일수도
+        if (assetData.get("category") != JSONObject.NULL) { // 카테고리가 없는거 일수도
+            String categoryListName = assetData.getString("category");
             String[] categoryNames = categoryListName.split("/");
             Category[] categories = new Category[categoryNames.length];
 
