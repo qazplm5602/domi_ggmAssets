@@ -1,11 +1,38 @@
-import AssetsListContainer from "@components/AssetsList/List";
+import { useAssetSearchOption } from "@components/AssetsList/hook";
 import SideSection from "@components/AssetsList/SideSection";
 import FavoriteHead from "@components/Favorite/Head";
 import FavoriteSelectList from "@components/Favorite/List";
+import FavoriteBaseList from "@components/Favorite/ListBase";
 import FavoriteSelectHead from "@components/Favorite/SelectHead";
+import { AliveType } from "@domiTypes/alive";
+import { AssetPreviewVO } from "@domiTypes/asset";
+import { PageContentVO } from "@domiTypes/page";
 import originStyle from '@styles/assetsList/style.module.scss';
+import { request } from "@utils/request";
+import { useEffect, useState } from "react";
 
 export default function Favorite() {
+    const [ assets, setAssets ] = useState<AssetPreviewVO[] | null>(null);
+    const searchOptions =  useAssetSearchOption();
+
+    const loadAssets = async function(aliveRef: AliveType) {
+        const result = await request<PageContentVO<AssetPreviewVO>>("asset/search", { params: { favorite: true, ...searchOptions } });
+        if (!aliveRef.alive) return;
+        
+        setAssets(result.data.items);
+    }
+
+    useEffect(() => {
+        const aliveRef = { alive: true };
+
+        setAssets(null);
+        loadAssets(aliveRef);
+
+        return () => {
+            aliveRef.alive = false;
+        }
+    }, [ ...Object.values(searchOptions) ]);
+
     return <main className={originStyle.main}>
         {/* 카테고리 이런거 */}
         <SideSection />
@@ -16,10 +43,10 @@ export default function Favorite() {
             <FavoriteSelectHead />
 
             {/* 선택 할때 */}
-            <FavoriteSelectList />
+            {/* <FavoriteSelectList /> */}
 
             {/* 선택 안할때 */}
-            <AssetsListContainer />
+            <FavoriteBaseList list={assets} />
         </article>
     </main>;
 }
