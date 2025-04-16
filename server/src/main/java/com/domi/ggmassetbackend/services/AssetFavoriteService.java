@@ -45,4 +45,8 @@ public class AssetFavoriteService {
             return root.get("id").in(assetIds);
         };
     }
+
+    public int deleteBulk(User user, List<Integer> assetIds) {
+        return assetFavoriteRepository.deleteByUserAndAssetIdIn(user, assetIds);
+    }
 }

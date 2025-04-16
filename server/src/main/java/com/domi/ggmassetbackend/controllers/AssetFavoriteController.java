@@ -5,8 +5,11 @@ import com.domi.ggmassetbackend.data.entity.User;
 import com.domi.ggmassetbackend.services.AssetFavoriteService;
 import com.domi.ggmassetbackend.services.AssetService;
 import com.domi.ggmassetbackend.services.UserService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -31,5 +34,12 @@ public class AssetFavoriteController {
         Asset asset = assetService.getAssetById(id);
 
         assetFavoriteService.setAssetFavorite(user, asset, active);
+    }
+
+    @Transactional
+    @DeleteMapping("/bulk")
+    int bulkRemove(@RequestBody List<Integer> ids) {
+        User user = userService.getCurrentUser();
+        return assetFavoriteService.deleteBulk(user, ids);
     }
 }
