@@ -49,7 +49,7 @@ export default function AssetsListContainer({ onChangeMaxPage }: Props) {
         return <AssetsListLoadingContainer />;
 
     return <section className={style.itemContainer}>
-        {data.items.map((v, i) => <AssetItemAnim key={v.title} idx={i + 1} data={v} />)}
+        {data.items.map((v, i) => <AssetItemAnim key={v.id} idx={i + 1} data={v} />)}
         {data.items.length === 0 && <div className={style.alert}>검색 결과가 없습니다.</div>}
     </section>;
 }
