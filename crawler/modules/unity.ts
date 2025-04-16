@@ -6,6 +6,7 @@ import { getIdByUnityStoreUrl } from "./linkParse.ts";
 
 const unityAssetDataLoadhandler: CrawlerCallbackType = async function(req) {
     const url = req.body?.url;
+    const host = req.header("host");
     
     if (!url) {
         throw new DomiError(400, "invalid url");
@@ -73,29 +74,42 @@ const unityAssetDataLoadhandler: CrawlerCallbackType = async function(req) {
     }
 
     // 이미지
+    const resizeProccessers: Promise<void>[] = [];
+    const registerImageResize = async function(thumbnail: ThumbnailVO, imageUrl: string) {
+        const fileName = await imageResizeSmall(imageUrl);
+        thumbnail.previewUrl = `http://${host}/thumbnail/${fileName}`;
+    }
+
     for (const element of product.images) {
-        let type: ThumbnailVO['type'] = 'Image';
+        // let type: ThumbnailVO['type'] = 'Image';
+
+        const image: ThumbnailVO = {
+            type: 'Image',
+            contentUrl: element.imageUrl,
+            previewUrl: element.thumbnailUrl
+        };
 
         switch (element.type) {
             case "screenshot":
                 // type = 'Image'; // 어차피 기본값이 image임
+                const waitHandler = registerImageResize(image, element.imageUrl);
+                resizeProccessers.push(waitHandler);
+
                 break;
             case 'youtube':
-                type = 'Youtube';
+                image.type = 'Youtube';
                 break;
 
             default:
                 continue; // 다른 type이면 안넣음 ㅅㄱ
         }
-        
-        images.push({
-            type,
-            contentUrl: element.imageUrl,
-            previewUrl: element.thumbnailUrl
-        });
-        
-        imageResizeSmall(element.imageUrl);
+
+        // imageResizeSmall(element.imageUrl);
+        images.push(image);
     }
+
+    // 모든 이미지가 다 리사이징 될때까지 ㄱㄷ
+    await Promise.all(resizeProccessers);
 
     // 내가 만든 데베에 맞게 함 ㅁㄴㅇㄹ
     return {
