@@ -29,6 +29,18 @@ export default function Favorite() {
         setSelectAssets(isSelecting ? null : new Set());
     }
 
+    const handleAssetSelect = function(id: number) {
+        if (selectAssets === null) return;
+        
+        if (selectAssets.has(id)) {
+            selectAssets.delete(id);
+        } else {
+            selectAssets.add(id);
+        }
+
+        setSelectAssets(new Set(Array.from(selectAssets)));
+    }
+
     useEffect(() => {
         const aliveRef = { alive: true };
 
@@ -47,7 +59,7 @@ export default function Favorite() {
         {/* 리스트 */}
         <article className={originStyle.content}>
             <FavoriteHead selecting={isSelecting} onSelect={handleSelectClick} />
-            {isSelecting && <FavoriteSelectHead />}
+            {isSelecting && <FavoriteSelectHead selects={selectAssets} />}
 
             {/* 선택 할때 */}
             {/* <FavoriteSelectList /> */}
@@ -55,7 +67,7 @@ export default function Favorite() {
             {/* 선택 안할때 */}
             {/* <FavoriteBaseList list={assets} /> */}
 
-            {isSelecting ? <FavoriteSelectList list={assets} selects={selectAssets} /> : <FavoriteBaseList list={assets} />}
+            {isSelecting ? <FavoriteSelectList list={assets} selects={selectAssets} onSelect={handleAssetSelect} /> : <FavoriteBaseList list={assets} />}
         </article>
     </main>;
 }

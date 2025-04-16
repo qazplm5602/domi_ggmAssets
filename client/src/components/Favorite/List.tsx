@@ -5,16 +5,20 @@ import AssetsListLoadingContainer from '@components/AssetsList/ListLoading';
 
 type Props = {
     list: AssetPreviewVO[] | null,
-    selects: Set<number>
+    selects: Set<number>,
+    onSelect?: (id: number) => void
 }
 
-export default function FavoriteSelectList({ list, selects }: Props) {
-
+export default function FavoriteSelectList({ list, selects, onSelect }: Props) {
+    const handleAssetClick = function(id: number) {
+        if (onSelect)
+            onSelect(id);
+    }
 
     if (list === null)
         return <AssetsListLoadingContainer />;
 
     return <section className={originStyle.itemContainer}>
-        {list.map(v => <ItemSelectable key={v.id} select={selects.has(v.id)} data={v} />)}
+        {list.map(v => <ItemSelectable key={v.id} select={selects.has(v.id)} data={v} onClick={() => handleAssetClick(v.id)} />)}
     </section>
 }
