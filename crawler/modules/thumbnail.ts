@@ -24,7 +24,12 @@ export async function addImage(file: File) {
     if (file.name.includes('.'))
         ext = file.name.substring(file.name.lastIndexOf('.'));
 
-    const name = generateRandomString(10);
+    let name = '';
+    while (name = generateRandomString(10)) {
+        if (!imageList[name + ext])
+            break; // 안겹친다 ~~~~
+    }
+
     const fullName = name + ext;
 
     const dir = path.join(path.resolve(), folderPath, fullName);
@@ -37,3 +42,11 @@ export async function addImage(file: File) {
     
     return fullName;
 }
+
+(async function() {
+    const dir = path.join(path.resolve(), folderPath);
+    console.log("starting clear...", dir);
+
+    const files = await fs.readdir(dir);
+    files.forEach(v => fs.unlink(path.join(dir, v)));
+})();
