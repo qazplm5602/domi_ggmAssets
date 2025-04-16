@@ -2,15 +2,20 @@ import Button from '@components/Buttons/Button';
 import style from '@styles/favorite/style.module.scss';
 import FavoriteSelectHeadCheck from './SelectHeadCheck';
 import { formatNumberWithCommas } from '@utils/misc';
+import { AssetPreviewVO } from '@domiTypes/asset';
 
 type Props = {
-    selects: Set<number>
+    selects: Set<number>,
+    assets: AssetPreviewVO[] | null,
+    onCheck?: (check: boolean) => void
 }
 
-export default function FavoriteSelectHead({ selects }: Props) {
+export default function FavoriteSelectHead({ selects, assets, onCheck }: Props) {
+    const allChecked = assets !== null &&  assets.length > 0 && selects.size === assets.length;
+
     return <section className={style.selectHead}>
         <article className={style.left}>
-            <FavoriteSelectHeadCheck />
+            <FavoriteSelectHeadCheck all={allChecked} active={allChecked || selects.size > 0} onChange={onCheck} />
             <div className={style.amount}>{formatNumberWithCommas(selects.size)}개 선택함</div>
         </article>
         

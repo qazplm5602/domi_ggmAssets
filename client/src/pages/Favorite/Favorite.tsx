@@ -41,6 +41,12 @@ export default function Favorite() {
         setSelectAssets(new Set(Array.from(selectAssets)));
     }
 
+    const handleCheck = function(checked: boolean) {
+        if (!assets) return;
+        
+        setSelectAssets(new Set( checked ? assets.map(v => v.id) : [] ));
+    }
+
     useEffect(() => {
         const aliveRef = { alive: true };
 
@@ -59,7 +65,7 @@ export default function Favorite() {
         {/* 리스트 */}
         <article className={originStyle.content}>
             <FavoriteHead selecting={isSelecting} onSelect={handleSelectClick} />
-            {isSelecting && <FavoriteSelectHead selects={selectAssets} />}
+            {isSelecting && <FavoriteSelectHead selects={selectAssets} assets={assets} onCheck={handleCheck} />}
 
             {/* 선택 할때 */}
             {/* <FavoriteSelectList /> */}
