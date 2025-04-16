@@ -25,6 +25,7 @@ export default function AdminAssetEdit() {
     const supportsState = useState<CompatibilityVO[]>([]);
     const categoryState = useState<number | null>(null);
     const imagesState = useState<ThumbnailLocalVO[]>([]);
+    const sizeState = useState("");
 
     const fieldStates: AssetEditFieldStates = {
         title: titleState,
@@ -38,7 +39,8 @@ export default function AdminAssetEdit() {
         platform: platformState,
         supports: supportsState,
         category: categoryState,
-        images: imagesState
+        images: imagesState,
+        fileSize: sizeState
     };
 
     ////// 원본 에셋

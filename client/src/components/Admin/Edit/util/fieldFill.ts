@@ -14,6 +14,7 @@ export function adminAssetFieldFill(asset: AssetAllVO, fields: AssetEditFieldSta
         local: false,
         ...v
     })));
+    fields.fileSize[1](asset.fileSize ? asset.fileSize.toString() : '');
 
 
     // 등록일

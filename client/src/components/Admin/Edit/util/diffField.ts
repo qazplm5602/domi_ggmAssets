@@ -51,7 +51,14 @@ const diffHandlers: { [K in keyof AssetEditFieldStates]: (fields: AssetEditField
         }
         return false;
     },
-    version: () => false // 버전은 아직 서버에 없엉
+    version: () => false, // 버전은 아직 서버에 없엉
+    fileSize: (fields, origin) => {
+        if ((fields.fileSize[0] === "" && origin.fileSize !== null) || (fields.fileSize[0] !== "" && origin.fileSize === null))
+            return true;
+
+
+        return Number(fields.fileSize[0]) !== Number(origin.fileSize);
+    }
 }
 
 export function hasAssetEditFieldUpdated(fields: AssetEditFieldStates, origin: AssetAllVO): boolean {

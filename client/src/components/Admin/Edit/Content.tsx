@@ -16,6 +16,7 @@ import { useState } from "react";
 import { AssetBaseVO } from "@domiTypes/asset";
 import Textarea from "../Inputs/Textarea";
 import AdminEditThumbnailUploadDialog from "./Thumbnail/UploadDialog";
+import AdminEditSizeField from "../Field/SizeField";
 
 type Props = {
     fields: AssetEditFieldStates,
@@ -57,6 +58,7 @@ export default function AdminEditContent({ fields, updated, onSave }: Props) {
         <AdminFileLinkField className={style.field} value={fields.fileLink} />
         <AdminStoreLinkField className={style.field} value={fields.storeLink} platform={storelinkPlatformState} />
         <VersionField className={style.field} value={fields.version} />
+        <AdminEditSizeField  className={style.field} value={fields.fileSize}  />
         <AdminEditCategoryField className={style.field} categoryId={fields.category[0]} onEdit={handleOpenCategorySelect} />
         <AdminEditPublisherField className={style.field} platform={fields.platform} artist={fields.artist} />
         

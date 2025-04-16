@@ -13,7 +13,8 @@ export interface AssetEditFieldStates {
     artist: ReactState<string>,
     supports: ReactState<CompatibilityVO[]>,
     category: ReactState<number | null>,
-    images: ReactState<ThumbnailLocalVO[]>
+    images: ReactState<ThumbnailLocalVO[]>,
+    fileSize: ReactState<string>
 }
 
 export interface ThumbnailLocalVO extends ThumbnailVO {

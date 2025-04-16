@@ -100,6 +100,11 @@ export async function saveAdminEditAsset(assetId: number, fields: AssetEditField
         // ...
     }
 
+    if (otherFields.has("fileSize")) {
+        const size = Number(fields.fileSize[0]);
+        body.fileSize = (fields.fileSize[0] === '' || isNaN(size)) ? 0 : size;
+    }
+
     const response = await request<string[]>("asset/admin/edit", { method: "POST", data: body });
     
 
