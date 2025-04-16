@@ -1,6 +1,7 @@
 import { CompatibilityVO, ThumbnailVO, UnityStoreProduct } from "./asset.ts";
 import { CrawlerCallbackType, registerPlatformHandler } from "./crawler.ts";
 import { DomiError } from "./error.ts";
+import { imageResizeSmall } from "./imageResize.ts";
 import { getIdByUnityStoreUrl } from "./linkParse.ts";
 
 const unityAssetDataLoadhandler: CrawlerCallbackType = async function(req) {
@@ -92,6 +93,8 @@ const unityAssetDataLoadhandler: CrawlerCallbackType = async function(req) {
             contentUrl: element.imageUrl,
             previewUrl: element.thumbnailUrl
         });
+        
+        imageResizeSmall(element.imageUrl);
     }
 
     // 내가 만든 데베에 맞게 함 ㅁㄴㅇㄹ
