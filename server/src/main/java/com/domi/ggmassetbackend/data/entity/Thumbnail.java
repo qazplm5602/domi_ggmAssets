@@ -24,6 +24,10 @@ public class Thumbnail {
     @Column(columnDefinition = "VARCHAR(128)")
     private UUID id;
 
+    @ManyToOne
+    @JoinColumn(name = "asset_id")
+    private Asset asset;
+
     @Enumerated(EnumType.STRING)
     private ThumbnailType type;
 

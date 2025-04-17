@@ -83,7 +83,7 @@ public class ThumbnailService {
             contentUrl = getImageByUrl(contentUrl);
         }
 
-        return new Thumbnail(null, thumbnail.getType(), contentUrl, previewUrl, thumbnail.getSort());
+        return new Thumbnail(null, thumbnail.getAsset(), thumbnail.getType(), contentUrl, previewUrl, thumbnail.getSort());
     }
 
     String getImageByUrl(String imageUrl) throws IOException, URISyntaxException {

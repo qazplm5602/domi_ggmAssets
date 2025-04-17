@@ -94,7 +94,7 @@ public class StorePlatformService {
             String content = imageJson.getString("contentUrl");
             String preview = imageJson.getString("previewUrl");
 
-            Thumbnail image = new Thumbnail(null, ThumbnailType.valueOf(type), content, preview, i);
+            Thumbnail image = new Thumbnail(null, asset, ThumbnailType.valueOf(type), content, preview, i);
             images.add(image);
         }
 
@@ -113,7 +113,7 @@ public class StorePlatformService {
             boolean urp = supportJson.getBoolean("urp");
             boolean hdrp = supportJson.getBoolean("hdrp");
 
-            supports.add(new Compatibility(null, version, builtIn, urp, hdrp));
+            supports.add(new Compatibility(null, asset, version, builtIn, urp, hdrp));
         }
 
         asset.setSupports(supports);

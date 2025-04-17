@@ -21,6 +21,10 @@ public class Compatibility {
     @Column(columnDefinition = "VARCHAR(128)")
     private UUID id;
 
+    @ManyToOne
+    @JoinColumn(name = "asset_id")
+    private Asset asset;
+
     private String version;
 
     private boolean builtIn;

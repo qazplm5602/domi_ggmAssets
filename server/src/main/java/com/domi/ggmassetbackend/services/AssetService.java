@@ -192,7 +192,7 @@ public class AssetService {
             compatibilityList.clear();
 
             for (CompatibilityVO vo : supports) {
-                compatibilityList.add(new Compatibility(null, vo.getVersion(), vo.isBuiltIn(), vo.isUrp(), vo.isHdrp()));
+                compatibilityList.add(new Compatibility(null, asset, vo.getVersion(), vo.isBuiltIn(), vo.isUrp(), vo.isHdrp()));
             }
         }
 
@@ -230,7 +230,7 @@ public class AssetService {
             int i = 0;
             for (ThumbnailVO vo : images) {
                 int idx = i++;
-                Thumbnail thumbnail = new Thumbnail(null, vo.getType(), vo.getContentUrl(), vo.getPreviewUrl(), idx);
+                Thumbnail thumbnail = new Thumbnail(null, asset, vo.getType(), vo.getContentUrl(), vo.getPreviewUrl(), idx);
                 originImages.add(thumbnail);
 
                 if (vo.getContentUrl() == null) {

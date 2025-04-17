@@ -36,12 +36,12 @@ public class Asset {
     @ManyToOne
     private Category category;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "asset_id")
+    @OneToMany(mappedBy = "asset", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JoinColumn(name = "asset_id")
     private List<Compatibility> supports;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "asset_id")
+    @OneToMany(mappedBy = "asset", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JoinColumn(name = "asset_id")
     private List<Thumbnail> images;
 
     @Enumerated(EnumType.STRING)
