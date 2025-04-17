@@ -275,4 +275,10 @@ public class AssetService {
             thumbnailService.setThumbnailContentUrl(thumbnail.getId(), fileId);
         }
     }
+
+    @Transactional
+    public void deleteAsset(int id) {
+        Asset asset = getAssetById(id);
+        assetRepository.delete(asset);
+    }
 }

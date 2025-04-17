@@ -91,4 +91,9 @@ public class AssetController {
     void uploadThumbnail(@RequestParam("id") UUID handleId, @RequestParam("file") MultipartFile file) throws IOException {
         assetService.uploadThumbnail(handleId, file);
     }
+
+    @DeleteMapping("/admin/{id}")
+    void deleteAsset(@PathVariable int id) {
+        assetService.deleteAsset(id);
+    }
 }
