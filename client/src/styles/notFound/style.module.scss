@@ -1,0 +1,27 @@
+@use '@styles/declare/_declare.scss' as *;
+
+.main {
+    height: calc(100dvh - 60px - 30px);
+
+    display: flex;
+    flex-direction: column;
+    
+    align-items: center;
+    justify-content: center;
+    
+    & > p {
+        color: $color-textSupporting;
+        font-size: 16px;
+
+        & > span {
+            font-size: 11px;
+            font-weight: 500;
+            color: $color-textShy;
+        }
+    }
+    
+    & > .home {
+        @include base_button;
+        margin-top: 15px;
+    }
+}

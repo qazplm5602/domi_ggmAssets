@@ -10,6 +10,7 @@ import AssetsList from "@pages/Assets/AssetsList";
 import Favorite from "@pages/Favorite/Favorite";
 import Home from "@pages/Home/Home";
 import Login from "@pages/Login/Login";
+import NotFound from "@pages/NotFound/NotFound";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 export default function App() {
@@ -28,6 +29,7 @@ export default function App() {
             <Route path="/admin/upload" element={<AdminUpload />} />
             <Route path="/admin/edit/:id" element={<AdminAssetEdit />} />
             <Route path="/admin/category" element={<AdminCategory />} />
+            <Route path="/*" element={<NotFound />} />
         </Routes>
     </BrowserRouter>;
 }
