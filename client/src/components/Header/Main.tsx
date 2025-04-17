@@ -5,7 +5,8 @@ import useLoginStore from '@components/LoginState/store';
 
 const MENU_LIST = [
     ["목록", "assets"],
-    ["나의 에셋", "domilove"]
+    ["나의 에셋", "domilove"],
+    ["관리", "admin"]
 ]
 
 export default function HeaderMain() {
@@ -17,11 +18,16 @@ export default function HeaderMain() {
         </Link>
 
         <article className={style.menus}>
-            {MENU_LIST.map(menu => <Link to={menu[1]}>{menu[0]}</Link>)}
-            {admin && <Link to="/admin">
-                <div className={style.admin}></div>
-                관리
-            </Link>}
+            {MENU_LIST.map(menu => {
+                const isAdmin = menu[1] === "admin";
+                if (isAdmin && !admin)
+                    return;
+
+                return <Link to={menu[1]} className={location.pathname.startsWith(`/${menu[1]}`) ? style.active : ''}>
+                    {isAdmin && <div className={style.admin}></div>}
+                    {menu[0]}
+                </Link>;
+            })}
         </article>
     </section>;
 }
