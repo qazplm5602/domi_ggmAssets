@@ -52,7 +52,7 @@ export default function FavoriteSelectHead({ selects, assets, onCheck, onRemove 
             return;
         }
 
-        console.log(response.data);
+        response.data.forEach(link => window.open(link, '_blank'));
     }
 
     const handleRemove = function() {
