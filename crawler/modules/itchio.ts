@@ -19,7 +19,29 @@ const itchioDataLoadHandler: CrawlerCallbackType = async function(req) {
     if (!title)
         throw new DomiError(500, "not found asset title.");
 
-    const desc = $(".formatted_description.user_formatted").html() || '';
+    // const desc = $(".formatted_description.user_formatted").html() || '';
+    let desc = '';
+    const $desc = $(".formatted_description.user_formatted");
+    
+    if ($desc.length > 0) {
+        // 유튭 임베드 보려면 버튼 눌러야 함 (그래서 바꿔치기 할꺼잉)
+        $desc.find("button.youtube_preload").each((i, el) => {
+            let embedUrl = $(el).attr("data-embed_code");
+            if (!embedUrl) return;
+
+            embedUrl = embedUrl.replace('height="281" width="1200"', '');
+
+            // $embed.removeAttr("width").removeAttr("height");
+            $(el).after(embedUrl);
+            $(el).remove();
+        });
+
+        const content = $desc.html();
+        if (content)
+            desc = content;
+    }
+
+
     const shortDesc = $("meta[property=\"og:description\"]").attr("content") || null;
     const publisher = $(".on_follow > .full_label").text().substring(("Follow ").length) || '';
     const images: ThumbnailVO[] = [];

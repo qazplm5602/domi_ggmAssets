@@ -279,6 +279,11 @@ $info-width: 350px;
             & img {
                 max-width: 100%;
             }
+            & iframe {
+                aspect-ratio: 16 / 9;
+                width: 600px;
+                max-width: 100%;
+            }
         }
     }
 
