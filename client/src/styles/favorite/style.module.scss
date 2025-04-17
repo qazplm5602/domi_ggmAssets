@@ -61,6 +61,13 @@
     & .remove {
         background-color: $color-alert;
     }
+
+    & button:disabled {
+        background-color: $color-misExtra;
+        color: $color-textSupporting;
+        font-weight: 500;
+        cursor: initial;
+    }
 }
 
 .selectable {

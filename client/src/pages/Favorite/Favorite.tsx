@@ -61,6 +61,13 @@ export default function Favorite() {
         setSelectAssets(newSelect);
     }
 
+    const handleAssetRemove = function() {
+        if (!assets || !selectAssets) return;
+        
+        const newAssets = assets.filter(v => !selectAssets.has(v.id));
+        setAssets(newAssets);
+    }
+
     useEffect(() => {
         const aliveRef = { alive: true };
 
@@ -81,7 +88,7 @@ export default function Favorite() {
         {/* 리스트 */}
         <article className={originStyle.content}>
             <FavoriteHead selecting={isSelecting} onSelect={handleSelectClick} />
-            {isSelecting && <FavoriteSelectHead selects={selectAssets} assets={assets} onCheck={handleCheck} />}
+            {isSelecting && <FavoriteSelectHead selects={selectAssets} assets={assets} onCheck={handleCheck} onRemove={handleAssetRemove} />}
 
             {/* 선택 할때 */}
             {/* <FavoriteSelectList /> */}
