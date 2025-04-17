@@ -44,6 +44,8 @@
 .preview {
     width: 500px;
     height: auto;
+    max-height: calc(100dvh - 60px);
+    overflow: auto;
     
     border-radius: 5px;
     background-color: $color-misExtra;
