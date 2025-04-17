@@ -31,14 +31,16 @@ export default function Favorite() {
 
     const handleAssetSelect = function(id: number) {
         if (selectAssets === null) return;
+
+        const newSelects = new Set(Array.from(selectAssets))
         
-        if (selectAssets.has(id)) {
-            selectAssets.delete(id);
+        if (newSelects.has(id)) {
+            newSelects.delete(id);
         } else {
-            selectAssets.add(id);
+            newSelects.add(id);
         }
 
-        setSelectAssets(new Set(Array.from(selectAssets)));
+        setSelectAssets(newSelects);
     }
 
     const handleCheck = function(checked: boolean) {
