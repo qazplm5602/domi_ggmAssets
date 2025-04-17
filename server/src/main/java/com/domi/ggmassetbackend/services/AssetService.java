@@ -281,4 +281,8 @@ public class AssetService {
         Asset asset = getAssetById(id);
         assetRepository.delete(asset);
     }
+
+    public List<String> getDownloadUrlsByIds(List<Integer> ids) {
+        return assetRepository.getDownloadUrlsByIds(ids);
+    }
 }

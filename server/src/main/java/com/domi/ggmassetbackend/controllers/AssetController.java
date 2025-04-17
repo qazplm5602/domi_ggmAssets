@@ -57,6 +57,11 @@ public class AssetController {
         return ThumbnailPageVO.from(asset, page);
     }
 
+    @PostMapping("/download/bulk")
+    List<String> getDownloadUrls(@RequestBody List<Integer> ids) {
+        return assetService.getDownloadUrlsByIds(ids);
+    }
+
 //    @GetMapping("/test")
 //    Asset domiTest() throws InterruptedException {
 //        Asset asset = storePlatformService.fetchAssetFromStore(PublishPlatform.Unity, "https://assetstore.unity.com/packages/3d/environments/urban/hq-residential-house-48976");

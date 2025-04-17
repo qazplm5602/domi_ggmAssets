@@ -40,10 +40,32 @@ export default function FavoriteSelectHead({ selects, assets, onCheck, onRemove 
             onRemove();
     }
 
+    const openSelectAssets = async function() {
+        const selectList = Array.from(selects);
+        const response = await request<string[]>("asset/download/bulk", { method: "POST", data: selectList })
+        .catch(e => e as AxiosError);
+
+        if (response instanceof AxiosError) {
+            openPopup("오류", "오류가 발생하였습니다. 나중에 다시 시도하세요.", [
+                { text: "취소", callback: closePopup }
+            ]);
+            return;
+        }
+
+        console.log(response.data);
+    }
+
     const handleRemove = function() {
         openPopup("삭제하시겠어요?", <p>찜한 에셋 {formatNumberWithCommas(selects.size)}개를 삭제하시겠습니까?</p>, [
                 { text: "삭제", color: "#D44760", callback: removeSelectAssets },
                 { text: "취소", callback: closePopup }
+        ]);
+    }
+
+    const handleDownload = function() {
+        openPopup("다운로드 링크를 여시겠어요?", <p>{formatNumberWithCommas(selects.size)}개 에셋 다운로드 링크가 새탭으로 열립니다.</p>, [
+            { text: "열기", color: "#3283D5", callback: openSelectAssets },
+            { text: "취소", callback: closePopup }
         ]);
     }
     
@@ -54,7 +76,7 @@ export default function FavoriteSelectHead({ selects, assets, onCheck, onRemove 
         </article>
         
         <article className={style.right}>
-            <Button className={style.download}>다운로드</Button>
+            <Button className={style.download} onClick={handleDownload}>다운로드</Button>
             <Button className={style.remove} onClick={handleRemove} disabled={removeLoading}>삭제</Button>
         </article>
     </section>

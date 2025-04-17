@@ -20,4 +20,7 @@ public interface AssetRepository extends JpaRepository<Asset, Integer>, JpaSpeci
     void updateCategoryCancel(@Param("categorys") List<Integer> categorys);
 
     List<Asset> findByTitleLike(String title);
+
+    @Query("SELECT a.downloadUrl FROM Asset a WHERE a.id IN :ids")
+    List<String> getDownloadUrlsByIds(@Param("ids") List<Integer> ids);
 }
