@@ -2,9 +2,9 @@ type Props = {
     autoValue?: [ any, React.Dispatch<React.SetStateAction<any>> ]
 }
 
-export default function Textarea({ className, autoValue, value, onChange, ...props }: Props & React.InputHTMLAttributes<HTMLInputElement>) {
+export default function Textarea({ className, autoValue, value, onChange, ...props }: Props & React.InputHTMLAttributes<HTMLTextAreaElement>) {
     const realVal = autoValue ? autoValue[0] : value;
-    const handleChange: React.ChangeEventHandler<HTMLInputElement> = function(e) {
+    const handleChange: React.ChangeEventHandler<HTMLTextAreaElement> = function(e) {
         if (onChange)
             onChange(e);
 
