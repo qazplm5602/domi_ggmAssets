@@ -16,7 +16,7 @@ pipeline {
             steps {
                 dir('server/src/main/resources') {
                     sh "mv application.properties application.properties.tmp"
-                    sh "echo -e \"spring.datasource.url=jdbc:h2:mem:db;DB_CLOSE_DELAY=-1\n spring.datasource.username=sa\n spring.datasource.password=sa\n domi.jwt.key=${JWT_KEY}\" > ./application.properties"
+                    sh "echo -e \"spring.datasource.url=jdbc:h2:mem:db;DB_CLOSE_DELAY=-1;NON_KEYWORDS=USER\n spring.datasource.username=sa\n spring.datasource.password=sa\n domi.allow.email.domain=ggh.goe.go.kr\n domi.jwt.access.expire = 3600\n domi.jwt.refresh.expire = 21600\n domi.files.path=/test\n domi.crawler.url=sa\n spring.security.oauth2.client.registration.google.client-id=domi\n domi.jwt.key=${JWT_KEY}\" > ./application.properties"
                 }
             }
         }
