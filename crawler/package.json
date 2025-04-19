@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --experimental-specifier-resolution=node --no-warnings --experimental-loader --require=dotenv/config ts-node/esm main.ts",
+    "start": "node --experimental-specifier-resolution=node --no-warnings --require=dotenv/config --experimental-loader ts-node/esm main.ts",
     "dev": "nodemon main.ts"
   },
   "keywords": [],
