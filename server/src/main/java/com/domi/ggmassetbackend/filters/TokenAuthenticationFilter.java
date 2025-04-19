@@ -60,6 +60,9 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         if (claims == null)
             claims = regenerateToken(request, response);
 
+        // 이래도 또 null 이면 그냥 안함 ㅅㄱ
+        if (claims == null)
+            return;
 
         // 리프레시 토큰은 재발급 하셔야지ㅣㅣㅣ
         Boolean isRefresh = (Boolean) claims.get("refresh");
@@ -84,7 +87,10 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         Cookie refreshCookie = Arrays.stream(request.getCookies())
                 .filter(cookie -> cookie.getName().equals("refreshToken"))
                 .findAny()
-                .orElseThrow(() -> needLoginException);
+                .orElse(null);
+
+        if (refreshCookie == null)
+            return null;
 
         Claims refreshClaims = parseTokenIgnoreExpire(refreshCookie.getValue());
         if (refreshClaims == null)
