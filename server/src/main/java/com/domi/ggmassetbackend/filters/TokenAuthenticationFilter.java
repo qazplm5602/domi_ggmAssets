@@ -2,6 +2,7 @@ package com.domi.ggmassetbackend.filters;
 
 import com.domi.ggmassetbackend.data.entity.PrincipalDetails;
 import com.domi.ggmassetbackend.data.entity.User;
+import com.domi.ggmassetbackend.exceptions.DomiException;
 import com.domi.ggmassetbackend.exceptions.TokenException;
 import com.domi.ggmassetbackend.exceptions.UserException;
 import com.domi.ggmassetbackend.services.JwtService;
@@ -23,6 +24,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -42,7 +44,6 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     }
     
     private void tokenCheck(HttpServletRequest request, HttpServletResponse response) {
-        Claims claims = null;
 
         // 에세스 토큰 가져오깅
         Cookie accessCookie = Arrays.stream(request.getCookies())
@@ -50,16 +51,10 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                 .findAny()
                 .orElse(null);
 
+        Claims claims = null;
 
-        try {
-            if (accessCookie != null)
-                claims = jwtService.parseToken(accessCookie.getValue());
-        } catch (TokenException e) {
-            if (e.getCode().equals("TOKEN3")) {
-//                claims = regenerateToken(request, response);
-            } else
-                throw e;
-        }
+        if (accessCookie != null)
+            claims = parseTokenIgnoreExpire(accessCookie.getValue());
 
         // 이래도 null 이면 에세스 토큰이 만료된듯
         if (claims == null)
@@ -84,12 +79,17 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private Claims regenerateToken(HttpServletRequest request, HttpServletResponse response) {
+        UserException needLoginException = new UserException(UserException.Type.NEED_LOGIN);
+
         Cookie refreshCookie = Arrays.stream(request.getCookies())
                 .filter(cookie -> cookie.getName().equals("refreshToken"))
                 .findAny()
-                .orElseThrow(() -> new UserException(UserException.Type.NEED_LOGIN));
+                .orElseThrow(() -> needLoginException);
 
-        Claims refreshClaims = jwtService.parseToken(refreshCookie.getValue());
+        Claims refreshClaims = parseTokenIgnoreExpire(refreshCookie.getValue());
+        if (refreshClaims == null)
+            throw needLoginException;
+
         String email = refreshClaims.getId();
 
         String token = jwtService.generateToken(email, false);
@@ -101,5 +101,16 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         response.addCookie(accessCookie);
 
         return jwtService.parseToken(token);
+    }
+
+    private Claims parseTokenIgnoreExpire(String token) {
+        try {
+            return jwtService.parseToken(token);
+        } catch (TokenException e) {
+            if (!Objects.equals(e.getCode(), "TOKEN3"))
+                throw e;
+        }
+
+        return null;
     }
 }
