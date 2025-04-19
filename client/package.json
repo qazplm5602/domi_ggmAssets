@@ -19,6 +19,7 @@
     "react-image-file-resizer": "^0.4.8",
     "react-router-dom": "^7.3.0",
     "sass": "^1.85.1",
+    "swr": "^2.3.3",
     "url-pattern": "^1.0.3",
     "zustand": "^5.0.3"
   },
