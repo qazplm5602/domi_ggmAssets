@@ -5,4 +5,4 @@
 
 npm i
 
-npm run start
+exec npm run start
