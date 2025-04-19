@@ -80,6 +80,14 @@ const unityAssetDataLoadhandler: CrawlerCallbackType = async function(req) {
         thumbnail.previewUrl = `http://${host}/thumbnail/${fileName}`;
     }
 
+    // 메인 이미지도 추가
+    const mainImage: ThumbnailVO = {
+        type: 'Image',
+        contentUrl: product.mainImage.big,
+        previewUrl: product.mainImage.small
+    };
+    images.push(mainImage);
+
     for (const element of product.images) {
         // let type: ThumbnailVO['type'] = 'Image';
 

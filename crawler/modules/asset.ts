@@ -53,6 +53,14 @@ interface UnityCategoy {
     longName: string
 }
 
+interface UnityMainImage {
+    big: string,
+    facebook: string,
+    icon: string,
+    icon75: string,
+    small: string
+}
+
 export interface UnityStoreProduct {
     id: string,
     name: string,
@@ -66,6 +74,7 @@ export interface UnityStoreProduct {
     category: UnityCategoy,
     firstPublishedDate: string,
     supportedUnityVersions: string[],
+    mainImage: UnityMainImage
     // state: string,
     // overlay: string,
     // overlayText: string
