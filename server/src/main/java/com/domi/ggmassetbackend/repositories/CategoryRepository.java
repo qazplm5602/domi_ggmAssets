@@ -2,11 +2,13 @@ package com.domi.ggmassetbackend.repositories;
 
 import com.domi.ggmassetbackend.data.entity.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
@@ -26,4 +28,10 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
     @Query("SELECT c FROM Category c ORDER BY RAND() LIMIT :amount")
     List<Category> findByRandom(@Param("amount") int amount);
+
+    @Modifying
+    @Query("UPDATE Category c SET c.parent = NULL WHERE c.id IN :ids")
+    void setCategorysParentCancel(List<Integer> ids);
+
+    Optional<Category> findByDisplayNameAndParent(String displayName, Category parent);
 }

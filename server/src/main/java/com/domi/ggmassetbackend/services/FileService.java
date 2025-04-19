@@ -11,7 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -28,8 +31,19 @@ public class FileService {
     }
 
     public String createFile(FileCategory category, MultipartFile file) throws IOException {
-        String id = MiscUtils.generateRandomStr(15, false);
         String originalFileName = file.getOriginalFilename();
+        String fileName = generateFileName(originalFileName);
+
+        String path = getFilePath(category, fileName);
+        File serverFile = new File(path);
+        file.transferTo(serverFile);
+
+        return fileName;
+    }
+
+    public String generateFileName(String originalFileName) {
+//        String id = MiscUtils.generateRandomStr(15, false);
+        String id = UUID.randomUUID().toString();
         String ext = "";
 
         // 확장자가 있음
@@ -37,11 +51,15 @@ public class FileService {
             ext = originalFileName.substring(originalFileName.lastIndexOf("."));
         }
 
-        String path = getFilePath(category, id + ext);
-        File serverFile = new File(path);
-        file.transferTo(serverFile);
-
         return id + ext;
+    }
+
+    public FileOutputStream getFileStream(FileCategory category, String fileName) {
+        try {
+            return new FileOutputStream(getFilePath(category, fileName));
+        } catch (FileNotFoundException e) {
+            throw new FileException(FileException.Type.NOT_FOUND_FILE);
+        }
     }
 
     public File getFile(FileCategory category, String fileName) {

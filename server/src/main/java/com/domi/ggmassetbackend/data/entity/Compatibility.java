@@ -1,10 +1,7 @@
 package com.domi.ggmassetbackend.data.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
@@ -12,6 +9,7 @@ import org.hibernate.type.SqlTypes;
 import java.util.UUID;
 
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,6 +20,10 @@ public class Compatibility {
     @JdbcTypeCode(SqlTypes.VARCHAR)
     @Column(columnDefinition = "VARCHAR(128)")
     private UUID id;
+
+    @ManyToOne
+    @JoinColumn(name = "asset_id")
+    private Asset asset;
 
     private String version;
 

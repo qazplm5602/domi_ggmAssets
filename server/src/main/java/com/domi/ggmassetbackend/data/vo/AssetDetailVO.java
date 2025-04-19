@@ -12,9 +12,11 @@ import java.util.stream.Collectors;
 public class AssetDetailVO extends AssetBaseVO {
     private String shortDesc;
     private String description;
+    private String downloadUrl;
     private LocalDateTime publishAt;
     private List<CompatibilityVO> supports;
     private List<ThumbnailVO> images;
+    private Integer fileSize;
 
     @Override
     public void assetDataInit(Asset asset, CategoryService categoryService) {
@@ -23,6 +25,8 @@ public class AssetDetailVO extends AssetBaseVO {
         this.shortDesc = asset.getShortDesc();
         this.description = asset.getDescription();
         this.publishAt = asset.getPublishAt();
+        this.downloadUrl = asset.getDownloadUrl();
+        this.fileSize = asset.getFileSize();
 
         this.supports = asset.getSupports()
                 .stream()
@@ -31,6 +35,7 @@ public class AssetDetailVO extends AssetBaseVO {
 
         this.images = asset.getImages()
                 .stream()
+                .sorted((a, b) -> Integer.compare(a.getSort(), b.getSort()))
                 .map(ThumbnailVO::from)
                 .toList();
     }

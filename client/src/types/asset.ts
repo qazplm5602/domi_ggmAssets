@@ -31,11 +31,24 @@ export interface AssetDetailVO extends AssetBaseVO {
     description: string,
     supports: CompatibilityVO[],
     images: ThumbnailVO[],
-    publishAt: string | null
+    publishAt: string | null,
+    downloadUrl: string,
+    fileSize: number | null
+}
+
+export interface AssetAllVO extends AssetDetailVO {
+    platformUrl: string | null
 }
 
 export interface AssetPreviewVO extends AssetBaseVO {
     thumbnail: PageThumbnailVO
+}
+
+export interface AssetSearchVO {
+    id: number,
+    title: string,
+    thumbnail: string | null
+    category: string[] | null
 }
 
 export interface AssetSearchOption {
@@ -43,4 +56,10 @@ export interface AssetSearchOption {
     order: string,
     amount: string,
     page: string
+}
+
+export interface AssetEditFormDTO extends Omit<Partial<AssetAllVO>, "images" | "category" | "platform"> {
+    images? : Partial<ThumbnailVO>[],
+    category?: number,
+    platform?: AssetBaseVO['platform'] | ""
 }

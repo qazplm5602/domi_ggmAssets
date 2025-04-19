@@ -1,13 +1,21 @@
+import { AssetSearchVO } from '@domiTypes/asset';
 import style from '@styles/searchBox/style.module.scss';
+import { getThumbnailURL } from '@utils/file';
 import { Link } from 'react-router-dom';
 
-export default function SearchPreviewBox() {
-    return <Link to="/asset/1">
+import emptyIcon from '@assets/empty-icon.webp';
+
+type Props = {
+    data: AssetSearchVO
+}
+
+export default function SearchPreviewBox({ data }: Props) {
+    return <Link to={`/asset/${data.id}`}>
         <div className={style.item}>
-            <img src="https://assetstorev1-prd-cdn.unity3d.com/key-image/080f519a-6d10-4d3e-b83f-31dd8b9e9319.jpg" alt="thumbnail" className={style.thumbnail} />
+            <img src={data.thumbnail ? getThumbnailURL(data.thumbnail) : emptyIcon} alt="thumbnail" className={style.thumbnail} />
             <div className={style.detail}>
-                <h3>Coast & Dunes Environment - Dynamic Nature</h3>
-                <p>3D / 모델</p>
+                <h3>{data.title}</h3>
+                <p>{data.category ? data.category.join(" / ") : "분류되지 않음"}</p>
             </div>
         </div>
     </Link>;

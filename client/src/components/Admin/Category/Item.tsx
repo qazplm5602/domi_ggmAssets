@@ -4,6 +4,8 @@ import { AdminCategoryContextType, CategoryOptionDTO } from '@domiTypes/category
 import { useContext, useEffect, useRef, useState } from 'react';
 import AdminCategoryItemEditContent from './ItemEdit';
 import { AdminCategoryContext } from './Context';
+import { usePopupStore } from '@components/Popup/store';
+import { formatNumberWithCommas } from '@utils/misc';
 
 type Props = {
     // edit?: boolean
@@ -15,6 +17,7 @@ export default function AdminCategoryItem({ category }: Props) {
     const { onChangeName, onAdd, onRemove } = useContext(AdminCategoryContext) as AdminCategoryContextType;
     const elementRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
+    const { openPopup } = usePopupStore();
 
     const handleEdit = function() {
         setEdit(true);
@@ -42,8 +45,15 @@ export default function AdminCategoryItem({ category }: Props) {
     }
     
     const handleRemove = function() {
-        // 이건 한번 확인 하고 삭제 해야함
-        onRemove(category.id);
+        const content =  <>
+            <p>{category.name} 카테고리에 등록된 에셋은 총 {formatNumberWithCommas(category.count)}개입니다.</p>
+            <p>삭제 시 해당 에셋들은 카테고리에서 제외되며, 하위 카테고리도 함께 삭제됩니다.</p>
+        </>;
+
+        openPopup("카테고리 삭제 확인", content, [
+            { text: "삭제", color: "#D44760", callback: () => onRemove(category.id) },
+            { text: "취소", callback() {} }
+        ]);
     }
     
     useEffect(() => {

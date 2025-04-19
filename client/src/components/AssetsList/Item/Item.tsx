@@ -7,7 +7,8 @@ import { AssetPreviewVO } from '@domiTypes/asset';
 
 type Props = {
     className?: string
-    data?: AssetPreviewVO
+    data?: AssetPreviewVO,
+    disableLink?: boolean
 }
 
 const TEST_MOCK_ITEM: AssetPreviewVO =  {
@@ -43,8 +44,8 @@ const TEST_MOCK_ITEM: AssetPreviewVO =  {
     }
 }
 
-export default function AssetItem({ className, data = TEST_MOCK_ITEM }: Props) {
-    return <Link to={`/asset/${data.id}`}>
+export default function AssetItem({ className, data = TEST_MOCK_ITEM, disableLink = false }: Props) {
+    return <Link to={disableLink ? '' : `/asset/${data.id}`}>
         <div className={`${style.item} ${className || ''}`}>
             <AssetsListItemThumbnail id={data.id} images={data.thumbnail} />
             <AssetItemDetail title={data.title} publisher={data.publisher} />

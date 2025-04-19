@@ -1,11 +1,15 @@
-import IconButton from '@components/Buttons/IconButton';
 import style from '@styles/assetDetail/style.module.scss';
+import AssetDetailInfoInteractionFavoriteBtn from './FavoriteBtn';
 
-import markIcon from '@assets/icons/ic-bookmark-line.svg';
 
-export default function AssetDetailInfoInteraction() {
+type Props = {
+    download: string,
+    assetId: number
+}
+
+export default function AssetDetailInfoInteraction({ download, assetId }: Props) {
     return <section className={style.interactions}>
-        <button className={style.download}>다운로드</button>
-        <IconButton icon={markIcon} size={23} />
+        <a className={style.download} href={download} target='_blank'>다운로드</a>
+        <AssetDetailInfoInteractionFavoriteBtn id={assetId} />
     </section>
 }

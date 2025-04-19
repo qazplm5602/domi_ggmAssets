@@ -19,13 +19,15 @@ public class Asset {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(nullable = false, unique = true)
-    private String uniqueId; // 이걸로 에셋 식별함
+    @Column(nullable = true, unique = true)
+    private String uniqueId; // 이걸로 에셋 식별함 (이제 안씀 아마도)
 
     @Column(nullable = false)
     private String title;
 
     private String shortDesc;
+
+    @Column(columnDefinition = "mediumtext")
     private String description;
 
     private String publisher;
@@ -34,10 +36,12 @@ public class Asset {
     @ManyToOne
     private Category category;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "asset", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JoinColumn(name = "asset_id")
     private List<Compatibility> supports;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "asset", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JoinColumn(name = "asset_id")
     private List<Thumbnail> images;
 
     @Enumerated(EnumType.STRING)
@@ -45,6 +49,9 @@ public class Asset {
 
     private String platformUrl;
     private String downloadUrl;
+
+    @Column(columnDefinition = "bigint")
+    private Integer fileSize;
 
     private LocalDateTime publishAt;
 

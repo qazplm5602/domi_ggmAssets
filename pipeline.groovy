@@ -105,5 +105,30 @@ pipeline {
                 )
             }
         }
+
+        stage('crawler apply') {
+            steps {
+                sshPublisher(
+                    failOnError: true,
+                    publishers: [
+                        sshPublisherDesc(
+                            configName: 'ggmAsset-crawler',
+                            verbose: true,
+                            transfers: [
+                                sshTransfer(
+                                    cleanRemote:false,
+                                    sourceFiles: 'crawler/',
+                                    removePrefix: 'crawler/',
+                                    remoteDirectory: '',
+                                ),
+                                sshTransfer(
+                                    execCommand: 'kill -SIGTERM 1'
+                                )
+                            ]
+                        )
+                    ]
+                )
+            }
+        }
     }
 }

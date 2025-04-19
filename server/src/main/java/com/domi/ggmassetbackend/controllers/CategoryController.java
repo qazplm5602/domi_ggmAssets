@@ -46,8 +46,22 @@ public class CategoryController {
     @DeleteMapping("/admin")
     @Transactional
     void removeCategory(@RequestBody int id) {
-        assetService.setCategoryCancel(categoryService.findSubCategoryIds(id));
-        categoryService.deleteCategory(id);
+        List<Integer> ids = categoryService.findSubCategoryIds(id);
+        assetService.setCategoryCancel(ids);
+
+        ids.sort(Integer::compareTo);
+        categoryService.deleteCategorys(ids.reversed());
+    }
+
+    @GetMapping("/admin/parents/{id}")
+    List<CategoryVO> getAdminCategoryParents(@PathVariable int id) {
+        Category target = categoryService.getCategoryById(id);
+        List<Category> categories = categoryService.getCategoryParents(target);
+
+        return categories.stream()
+                .map(CategoryVO::from)
+                .collect(Collectors.toList())
+                .reversed();
     }
 
     @PostMapping("/rename")

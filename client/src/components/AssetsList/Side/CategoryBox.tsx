@@ -19,7 +19,7 @@ type Props = {
 
 export default function AssetsListSideCategoryBox({ my, depth, list, idx = 1 }: Props) {
     const [ expand, setExpand ] = useState(false);
-    const myChildren = list.children[my];
+    const myChildren = my !== -1 ? list.children[my] : undefined;
     const myCategory = list.dict[my];
     const ID = `domi-category-check-${my}`;
     const { category } = useAssetSearchOption();

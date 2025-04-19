@@ -29,8 +29,37 @@
     }
 
     & > .send {
+        position: relative;
+
         font-size: 14px;
         background-color: $color-primary;
+
+        &:disabled {
+            color: $color-textSupporting;
+            background-color: $color-misExtra;
+            cursor: initial;
+        }
+        
+        & > .loading {
+            position: absolute;
+            
+            top: 50%;
+            left: -15px;
+            transform: translate(-100%, -50%);
+
+            width: max-content;
+
+            display: flex;
+            align-items: center;
+            // gap: 0 10px;
+
+            color: $color-textSupporting;
+            
+            & > .spinner {
+                scale: 0.3;
+                margin-right: -10px;
+            }
+        }
     }
 }
 

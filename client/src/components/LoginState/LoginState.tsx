@@ -1,44 +1,40 @@
 import { request } from "@utils/request";
 import { useEffect } from "react";
 import useLoginStore from "./store";
-import { AliveType } from "@domiTypes/alive";
 import { UserAdminDTO } from "@domiTypes/user";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
+import useSWR from 'swr';
+
+const fetcher = function(uri: string) {
+    return request<UserAdminDTO>(uri).then(res => res.data);
+}
 
 export default function LoginState() {
     const loginStore = useLoginStore();
     const { pathname } = useLocation();
     const navigate = useNavigate();
+    const { data, error, isLoading } = useSWR("user/@me", fetcher);
 
-    const onLoad = async function(aliveRef: AliveType) {
-        const result = await request<UserAdminDTO>('user/@me').catch(e => e as AxiosError);
-        if (!aliveRef.alive) return;
-
-        // 오류남
-        if (result instanceof AxiosError) {
-            if (result.status === 401) {
-                loginStore.setFail(); // 로그인 실패패
-            }
-
+    useEffect(() => {
+        if (isLoading) {
+            loginStore.forceRefresh();
             return;
         }
 
-        const { data } = result;
-        loginStore.setLogin(data.email, data.name, data.admin);
-    }
+        if (error || !data) {
+            loginStore.setFail();
 
-    useEffect(() => {
-        if (!loginStore.loading) return;
-
-        const aliveRef = { alive: true };
-
-        onLoad(aliveRef);
-
-        return () => {
-            aliveRef.alive = false;
+            if (error instanceof AxiosError) {
+                // console.log(error, path.pathname);
+                // if (error.response?.data?.code === "TOKEN3") // 이거 만료임임
+                //     navigate("/login");
+            }
+            return;
         }
-    }, [loginStore.loading]);
+
+        loginStore.setLogin(data.email, data.name, data.admin);
+    }, [ data, error, isLoading ]);
 
     // url 막기
     useEffect(() => {

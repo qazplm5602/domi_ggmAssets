@@ -1,5 +1,6 @@
 package com.domi.ggmassetbackend.configs;
 
+import com.domi.ggmassetbackend.filters.ExceptionHandlingFilter;
 import com.domi.ggmassetbackend.filters.LoginFailHandler;
 import com.domi.ggmassetbackend.filters.LoginSuccessHandler;
 import com.domi.ggmassetbackend.filters.TokenAuthenticationFilter;
@@ -26,6 +27,7 @@ public class SecurityConfig {
     private final LoginSuccessHandler loginSuccessHandler;
     private final LoginFailHandler LoginFailHandler;
     private final TokenAuthenticationFilter tokenAuthenticationFilter;
+    private final ExceptionHandlingFilter exceptionHandlingFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -57,6 +59,7 @@ public class SecurityConfig {
 
         // 권한 확인 하기 전에 토큰 인증해야 됨 !!!!!
         http.addFilterAfter(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(exceptionHandlingFilter, TokenAuthenticationFilter.class);
 
         http.authorizeHttpRequests(request ->
                 request
@@ -64,7 +67,9 @@ public class SecurityConfig {
 //                        .anyRequest().permitAll() // security 버그 ㅁㄴㅇㄹ
                         .requestMatchers("/api/domi").hasAnyRole("DOMI")
                         .requestMatchers("/api/asset/category/admin").hasAnyRole("TEACHER")
+                        .requestMatchers("/api/asset/category/admin/**").hasAnyRole("TEACHER")
                         .requestMatchers("/api/asset/category/rename").hasAnyRole("TEACHER")
+                        .requestMatchers("/api/asset/admin/**").hasAnyRole("TEACHER")
                         .requestMatchers("/error").permitAll()
                         .anyRequest().authenticated()
         );

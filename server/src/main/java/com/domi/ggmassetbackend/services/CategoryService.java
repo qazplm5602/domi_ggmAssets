@@ -84,6 +84,10 @@ public class CategoryService {
         return categoryRepository.findById(id).orElseThrow(() -> new CategoryException(CategoryException.Type.NOT_FOUND_USER));
     }
 
+    public Category getCategoryByNameAndParent(String name, Category category) {
+        return categoryRepository.findByDisplayNameAndParent(name, category).orElseThrow(() -> new CategoryException(CategoryException.Type.NOT_FOUND_USER));
+    }
+
     public void changeCategoryName(int id, String newName) {
         Category category = getCategoryById(id);
         category.setDisplayName(newName);
@@ -97,15 +101,19 @@ public class CategoryService {
             parentCategory = getCategoryById(form.getParentId());
         }
 
+        return createCategory(form.getName(), parentCategory);
+    }
+
+    public Category createCategory(String name, Category parent) {
         Category category = new Category();
-        category.setDisplayName(form.getName());
-        category.setParent(parentCategory);
+        category.setDisplayName(name);
+        category.setParent(parent);
 
         return categoryRepository.save(category);
     }
 
-    public void deleteCategory(int id) {
-        Category category = getCategoryById(id);
-        categoryRepository.delete(category);
+    public void deleteCategorys(List<Integer> ids) {
+        categoryRepository.setCategorysParentCancel(ids);
+        categoryRepository.deleteAllById(ids);
     }
 }

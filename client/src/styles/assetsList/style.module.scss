@@ -248,6 +248,7 @@ $size-padding: 20px;
         & > .category {
             color: $color-textSupporting;
             display: flex;
+            flex-wrap: wrap;
             gap: 0 5px;
 
             font-size: 13px;
