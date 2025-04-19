@@ -16,7 +16,7 @@ export default function AdminEditThumbnailUploadDialogSelect({ onSelectImage, on
         </button>
 
         <button onClick={onSelectYoutube}>
-            <img src={youtubeIcon} alt="picture" />
+            <img src={youtubeIcon} alt="youtube" />
             <h3>유튜브</h3>
         </button>
     </section>;
