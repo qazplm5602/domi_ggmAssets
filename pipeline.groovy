@@ -91,13 +91,13 @@ pipeline {
                             verbose: true,
                             transfers: [
                                 sshTransfer(
-                                    cleanRemote:false,
-                                    sourceFiles: 'client/dist',
-                                    removePrefix: 'client/dist',
+                                    cleanRemote:true,
+                                    sourceFiles: 'client/dist/',
+                                    removePrefix: 'client/dist/',
                                     remoteDirectory: '',
                                 ),
                                 sshTransfer(
-                                    execCommand: 'kill -SIGTERM 1'
+                                    execCommand: 'echo \'domi Hello!\''
                                 )
                             ]
                         )
