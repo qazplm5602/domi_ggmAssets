@@ -23,12 +23,11 @@ export default function LoginState() {
         }
 
         if (error || !data) {
-            loginStore.setFail();
-
             if (error instanceof AxiosError) {
-                // console.log(error, path.pathname);
-                // if (error.response?.data?.code === "TOKEN3") // 이거 만료임임
-                //     navigate("/login");
+                if (error.response?.data?.code === "USER1") // 이거 만료임임
+                    loginStore.setFail();
+                else
+                    loginStore.forceRefresh();
             }
             return;
         }
