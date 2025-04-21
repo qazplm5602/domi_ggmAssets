@@ -280,6 +280,15 @@ public class AssetService {
     public void deleteAsset(int id) {
         Asset asset = getAssetById(id);
         assetRepository.delete(asset);
+
+        // 이미지 지우깅
+        List<Thumbnail> thumbnails = asset.getImages();
+        for (Thumbnail thumbnail : thumbnails) {
+            if (thumbnail.getType() == ThumbnailType.Image)
+                fileService.deleteFileForce(FileCategory.Thumbnail, thumbnail.getContentUrl());
+
+            fileService.deleteFileForce(FileCategory.Thumbnail, thumbnail.getPreviewUrl());
+        }
     }
 
     public List<String> getDownloadUrlsByIds(List<Integer> ids) {
