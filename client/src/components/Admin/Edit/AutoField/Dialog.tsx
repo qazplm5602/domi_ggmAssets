@@ -5,21 +5,21 @@ import Dialog from "@components/Dialog/Dialog";
 import Button from '@components/Buttons/Button';
 import { useState } from 'react';
 import { AssetBaseVO } from '@domiTypes/asset';
-import AdminEditCategoryAutoFieldDialogOption from './Option';
+import AdminEditAutoFieldDialogOption from './Option';
 
 type Props = {
     show: boolean,
     onClose?: () => void
 }
 
-export default function AdminEditCategoryAutoFieldDialog({ show, onClose }: Props) {
+export default function AdminEditAutoFieldDialog({ show, onClose }: Props) {
     const [ link, setLink ] = useState("");
     const [ platform, setPlatform ] = useState<AssetBaseVO['platform']>(null);
 
     return <Dialog show={show} title="자동 채우기" className={style.autoFieldDialog} onClose={onClose}>
         <section className={style.container}>
             <AdminStoreLinkField className={style.field} value={[ link, setLink ]} platform={[ platform, setPlatform ]} />
-            <AdminEditCategoryAutoFieldDialogOption />
+            <AdminEditAutoFieldDialogOption />
         </section>
 
         <section className={style.interaction}>
