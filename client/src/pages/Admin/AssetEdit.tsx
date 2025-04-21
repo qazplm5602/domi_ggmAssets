@@ -12,6 +12,7 @@ import AdminAssetEditSaveLoading from '@components/Admin/Edit/SaveLoading';
 import { saveAdminEditAsset } from '@components/Admin/Edit/util/save';
 import AdminAssetEditLoading from '@components/Admin/Edit/Loading';
 import MetaTag from '@components/MetaTag/MetaTag';
+import AdminEditCategoryAutoFieldDialog from '@components/Admin/Edit/AutoField/Dialog';
 
 export default function AdminAssetEdit() {
     const titleState = useState("");
@@ -52,6 +53,11 @@ export default function AdminAssetEdit() {
 
     const [ saving, setSaving ] = useState(false);
 
+    const [ autoFieldPopup, setAutoFieldPopup ] = useState(false);
+
+    const handleOpenAutoField = () => setAutoFieldPopup(true);
+    const handleCloseAutoField = () => setAutoFieldPopup(false);
+    
     const handleSave = async function() {
         const id = Number(assetId);
         if (isNaN(id)) return;
@@ -82,7 +88,8 @@ export default function AdminAssetEdit() {
     return <main className={`${baseStyle.screen} ${style.screen}`}>
         <MetaTag title={`${originAsset ? `${originAsset.title} - ` : ''}에셋 수정`} />
         <AdminEditContent fields={fieldStates} updated={isDifferent} onSave={handleSave} />
-        <AdminEditSide fields={fieldStates} />
+        <AdminEditSide fields={fieldStates} onOpenAutoField={handleOpenAutoField} />
+        <AdminEditCategoryAutoFieldDialog show={autoFieldPopup} onClose={handleCloseAutoField} />
         {saving && <AdminAssetEditSaveLoading />}
     </main>
 }

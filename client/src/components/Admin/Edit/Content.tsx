@@ -78,7 +78,6 @@ export default function AdminEditContent({ fields, updated, onSave }: Props) {
         </AdminField>
 
         <AdminEditCategorySelectDialog show={categorySelectPopup} onClose={handleCloseCategorySelect} onSelect={handleCategoryChange} />
-        <AdminEditCategoryAutoFieldDialog />
         <AdminEditThumbnailUploadDialog show={imageUploadPopup} onClose={handleCloseImageUpload} onAdd={handleAddImages} />
     </section>
 }

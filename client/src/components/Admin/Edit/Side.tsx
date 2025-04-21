@@ -5,13 +5,14 @@ import { AssetEditFieldStates } from '@domiTypes/assetEdit';
 import AdminEditSideDangerZone from './DangerZone';
 
 type Props = {
-    fields: AssetEditFieldStates
+    fields: AssetEditFieldStates,
+    onOpenAutoField?: () => void
 }
 
-export default function AdminEditSide({ fields }: Props) {
+export default function AdminEditSide({ fields, onOpenAutoField }: Props) {
     return <aside className={style.side}>
         <AdminEditPreviewAsset fields={fields} />
-        <Button className={style.autoBtn}>자동 채우기</Button>
+        <Button className={style.autoBtn} onClick={onOpenAutoField}>자동 채우기</Button>
         <AdminEditSideDangerZone />
     </aside>;
 }
