@@ -6,6 +6,7 @@ import Button from '@components/Buttons/Button';
 import { useState } from 'react';
 import { AssetBaseVO } from '@domiTypes/asset';
 import AdminEditAutoFieldDialogOption from './Option';
+import { AutoFieldCheckState } from '@domiTypes/assetAutoField';
 
 type Props = {
     show: boolean,
@@ -15,6 +16,20 @@ type Props = {
 export default function AdminEditAutoFieldDialog({ show, onClose }: Props) {
     const [ link, setLink ] = useState("");
     const [ platform, setPlatform ] = useState<AssetBaseVO['platform']>(null);
+    const platformNotSupport = platform === null;
+
+    const checkStates: AutoFieldCheckState = {
+        title: useState(true),
+        fileSize: useState(true),
+        category: useState(true),
+        platform: useState(true),
+        publisher: useState(true),
+        publishAt: useState(true),
+        thumbnail: useState(true),
+        supports: useState(true),
+        shortDesc: useState(true),
+        description: useState(true)
+    };
 
     return <Dialog show={show} title="자동 채우기" className={style.autoFieldDialog} onClose={onClose}>
         <section className={style.container}>
@@ -23,8 +38,8 @@ export default function AdminEditAutoFieldDialog({ show, onClose }: Props) {
         </section>
 
         <section className={style.interaction}>
-            <div className={style.alert}>지원되지 않는 스토어 입니다.</div>
-            <Button className={style.startBtn}>시작</Button>
+            {platformNotSupport && <div className={style.alert}>지원되지 않는 스토어 입니다.</div>}
+            <Button className={style.startBtn} disabled={platformNotSupport}>시작</Button>
         </section>
     </Dialog>
 }

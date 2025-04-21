@@ -510,6 +510,14 @@
 
         & > .startBtn {
             margin-left: 10px;
+            background-color: $color-primary;
+
+            &:disabled {
+                background-color: $color-misExtra;
+                color: $color-textSupporting;
+                font-weight: 500;
+                cursor: initial;
+            }
         }
     }
 }
