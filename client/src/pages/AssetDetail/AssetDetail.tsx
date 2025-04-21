@@ -3,6 +3,7 @@ import AssetDetailHead from '@components/AssetDetail/Head';
 import AssetDetailLoading from '@components/AssetDetail/Loading';
 import AssetDetailMore from '@components/AssetDetail/More/MoreDetail';
 import AssetDetailPreviewContainer from '@components/AssetDetail/PreviewContainer';
+import MetaTag from '@components/MetaTag/MetaTag';
 import { AliveType } from '@domiTypes/alive';
 import { AssetDetailVO } from '@domiTypes/asset';
 import style from '@styles/assetDetail/style.module.scss';
@@ -35,6 +36,8 @@ export default function AssetDetail() {
         return <AssetDetailLoading />
 
     return <main>
+        <MetaTag title={`${data ? `${data.title} - ` : ''}에셋 정보`} />
+
         <AssetDetailBlurBG images={data.images} />
 
         <section className={style.main}>
