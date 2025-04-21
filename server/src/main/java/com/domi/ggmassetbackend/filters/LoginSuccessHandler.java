@@ -58,7 +58,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         response.addCookie(accessCookie);
         response.addCookie(refreshCookie);
 
-        response.sendRedirect("/login/process");
+        response.sendRedirect("/");
 
 //        LoginTokenDTO tokenData = new LoginTokenDTO(accessToken, refreshToken);
 //        String result = objectMapper.writeValueAsString(tokenData);
