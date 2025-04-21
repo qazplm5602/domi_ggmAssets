@@ -34,7 +34,7 @@ export default function AdminEditAutoFieldDialog({ show, onClose }: Props) {
     return <Dialog show={show} title="자동 채우기" className={style.autoFieldDialog} onClose={onClose}>
         <section className={style.container}>
             <AdminStoreLinkField className={style.field} value={[ link, setLink ]} platform={[ platform, setPlatform ]} />
-            <AdminEditAutoFieldDialogOption />
+            <AdminEditAutoFieldDialogOption checkStates={checkStates} />
         </section>
 
         <section className={style.interaction}>

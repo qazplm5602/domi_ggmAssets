@@ -1,8 +1,13 @@
 import CheckBoxContainer from '@components/CheckBox/Container';
 import style from '@styles/admin/edit.module.scss';
 import AdminEditAutoFieldDialogOptionRow from './Row';
+import { AutoFieldCheckState } from '@domiTypes/assetAutoField';
 
-export default function AdminEditAutoFieldDialogOption() {
+type Props = {
+    checkStates: AutoFieldCheckState
+}
+
+export default function AdminEditAutoFieldDialogOption({ checkStates }: Props) {
     return <article className={style.option}>
         <h3>옵션</h3>
 
@@ -10,6 +15,6 @@ export default function AdminEditAutoFieldDialogOption() {
             <CheckBoxContainer id='autoField-All' name='전체' />
         </section>
 
-        <AdminEditAutoFieldDialogOptionRow />
+        <AdminEditAutoFieldDialogOptionRow checkStates={checkStates} />
     </article>;
 }

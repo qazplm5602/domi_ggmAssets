@@ -30,11 +30,18 @@ checkNames.forEach((v, i) => {
     indexingRow[idx].push(v);
 });
 
+type Props = {
+    checkStates: AutoFieldCheckState
+}
 
-export default function AdminEditAutoFieldDialogOptionRow() {
+export default function AdminEditAutoFieldDialogOptionRow({ checkStates }: Props) {
+    const handleChangeCheck = function(e: React.ChangeEvent<HTMLInputElement>, id: keyof AutoFieldCheckState) {
+        checkStates[id][1](e.target.checked);
+    }
+
     return <section className={style.row}>
         {Object.values(indexingRow).map(v => <article>
-            {v.map(field => <CheckBoxContainer id={`autoField-${field[0]}`} name={field[1]} className={style.checkbox} />)}
+            {v.map(field => <CheckBoxContainer id={`autoField-${field[0]}`} name={field[1]} className={style.checkbox} checked={checkStates[field[0]][0]} onChange={e => handleChangeCheck(e, field[0])} />)}
         </article>)}
     </section>;
 }

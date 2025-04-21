@@ -7,8 +7,8 @@ type Props = {
 };
 
 export default function CheckBoxContainer({ id, name, className, ...props }: Props & Parameters<typeof CheckBox>['0']) {
-    return <div className={`${style.checkContainer} ${className || ''}`} {...props}>
-        <CheckBox id={id} />
+    return <div className={`${style.checkContainer} ${className || ''}`}>
+        <CheckBox id={id} {...props} />
         <label htmlFor={id} className={style.text}>{name}</label>
     </div>;
 }
