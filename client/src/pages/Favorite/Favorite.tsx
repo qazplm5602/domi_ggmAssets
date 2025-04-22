@@ -4,6 +4,7 @@ import FavoriteHead from "@components/Favorite/Head";
 import FavoriteSelectList from "@components/Favorite/List";
 import FavoriteBaseList from "@components/Favorite/ListBase";
 import FavoriteSelectHead from "@components/Favorite/SelectHead";
+import MetaTag from "@components/MetaTag/MetaTag";
 import { AliveType } from "@domiTypes/alive";
 import { AssetPreviewVO } from "@domiTypes/asset";
 import { PageContentVO } from "@domiTypes/page";
@@ -84,6 +85,8 @@ export default function Favorite() {
     useEffect(emptySelectOff, [ assets ]);
 
     return <main className={originStyle.main}>
+        <MetaTag title='찜찜한 에셋' />
+        
         {/* 카테고리 이런거 */}
         <SideSection />
 

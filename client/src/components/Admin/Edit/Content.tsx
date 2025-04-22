@@ -8,7 +8,6 @@ import AdminEditPublisherField from "../Field/PublisherField";
 import AdminStoreLinkField from "../Field/StoreLinkField";
 import VersionField from "../Field/VersionField";
 import Input from "../Inputs/Input";
-import AdminEditCategoryAutoFieldDialog from "./AutoField/Dialog";
 import AdminEditCategorySelectDialog from "./CategorySelect/CategorySelectDialog";
 import AdminEditHead from "./Head";
 import style from '@styles/admin/edit.module.scss';
@@ -78,7 +77,6 @@ export default function AdminEditContent({ fields, updated, onSave }: Props) {
         </AdminField>
 
         <AdminEditCategorySelectDialog show={categorySelectPopup} onClose={handleCloseCategorySelect} onSelect={handleCategoryChange} />
-        <AdminEditCategoryAutoFieldDialog />
         <AdminEditThumbnailUploadDialog show={imageUploadPopup} onClose={handleCloseImageUpload} onAdd={handleAddImages} />
     </section>
 }

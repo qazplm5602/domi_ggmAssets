@@ -10,6 +10,7 @@ import { AliveType } from '@domiTypes/alive';
 import { request } from '@utils/request';
 import { generateRandomNumber } from '@utils/misc';
 import { AdminCategoryContext } from '@components/Admin/Category/Context';
+import MetaTag from '@components/MetaTag/MetaTag';
 
 export default function AdminCategory() {
     const [ categoryList, setCategoryList ] = useState<CategoryOptionDTO[] | null>(null);
@@ -122,6 +123,8 @@ export default function AdminCategory() {
     useHandleAlive(onLoad, []);
 
     return <main className={style.screen}>
+        <MetaTag title='카테고리 관리' />
+
         <section className={baseStyle.head}>
             <h1>카테고리 관리</h1>
             <Button onClick={handleAddCategory}>추가</Button>

@@ -1,5 +1,6 @@
 package com.domi.ggmassetbackend.controllers;
 
+import com.domi.ggmassetbackend.data.dto.AssetAutoFieldDTO;
 import com.domi.ggmassetbackend.data.dto.AssetEditFormDTO;
 import com.domi.ggmassetbackend.data.dto.AssetSearchParamDTO;
 import com.domi.ggmassetbackend.data.dto.AssetUploadFormDTO;
@@ -100,5 +101,11 @@ public class AssetController {
     @DeleteMapping("/admin/{id}")
     void deleteAsset(@PathVariable int id) {
         assetService.deleteAsset(id);
+    }
+
+    @PostMapping("/admin/autofield")
+    void setAutoFieldAsset(@RequestParam("id") int id, @RequestBody @Valid AssetAutoFieldDTO form) throws InterruptedException {
+        Asset targetAsset = assetService.getAssetById(id);
+        assetService.updateAutoField(targetAsset, form);
     }
 }

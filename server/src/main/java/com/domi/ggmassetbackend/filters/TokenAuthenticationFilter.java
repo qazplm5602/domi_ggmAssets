@@ -46,10 +46,16 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     private void tokenCheck(HttpServletRequest request, HttpServletResponse response) {
 
         // 에세스 토큰 가져오깅
-        Cookie accessCookie = Arrays.stream(request.getCookies())
+        Cookie[] cookies = request.getCookies();
+        Cookie accessCookie = null;
+
+        if (cookies != null) {
+            accessCookie = Arrays.stream(cookies)
                 .filter(cookie -> cookie.getName().equals("accessToken"))
                 .findAny()
                 .orElse(null);
+        }
+
 
         Claims claims = null;
 
@@ -84,7 +90,11 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     private Claims regenerateToken(HttpServletRequest request, HttpServletResponse response) {
         UserException needLoginException = new UserException(UserException.Type.NEED_LOGIN);
 
-        Cookie refreshCookie = Arrays.stream(request.getCookies())
+        Cookie[] cookies = request.getCookies();
+        if (cookies == null)
+            return null;
+
+        Cookie refreshCookie = Arrays.stream(cookies)
                 .filter(cookie -> cookie.getName().equals("refreshToken"))
                 .findAny()
                 .orElse(null);

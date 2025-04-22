@@ -32,7 +32,7 @@ public class StorePlatformService {
 
     private final CategoryService categoryService;
 
-    @Transactional
+//    @Transactional
     public Asset fetchAssetFromStore(PublishPlatform platform, String url) {
         String platformId = convertAssetId(platform);
 

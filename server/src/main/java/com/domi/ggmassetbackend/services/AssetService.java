@@ -1,5 +1,6 @@
 package com.domi.ggmassetbackend.services;
 
+import com.domi.ggmassetbackend.data.dto.AssetAutoFieldDTO;
 import com.domi.ggmassetbackend.data.dto.AssetEditFormDTO;
 import com.domi.ggmassetbackend.data.dto.AssetSearchParamDTO;
 import com.domi.ggmassetbackend.data.dto.AssetUploadFormDTO;
@@ -124,6 +125,76 @@ public class AssetService {
 
         newAsset.setDownloadUrl(form.getDownload());
         return assetRepository.save(newAsset);
+    }
+
+    public void updateAutoField(Asset target, AssetAutoFieldDTO form) throws InterruptedException {
+        Asset fetchAsset = storePlatformService.fetchAssetFromStore(form.getStoreType(), form.getUrl());
+
+        if (form.isTitle()) {
+            target.setTitle(fetchAsset.getTitle());
+        }
+
+        if (form.isDescription()) {
+            target.setDescription(fetchAsset.getDescription());
+        }
+
+        if (form.isShortDesc()) {
+            target.setShortDesc(fetchAsset.getShortDesc());
+        }
+
+        if (form.isPlatform()) {
+            target.setPlatform(fetchAsset.getPlatform());
+        }
+        
+        if (form.isFileSize()) {
+            target.setFileSize(fetchAsset.getFileSize());
+        }
+        
+        if (form.isSupports()) {
+            // 리스트 자체가 바뀌면 큰일날꺼 같음
+            List<Compatibility> supports = target.getSupports();
+            supports.clear();
+
+            List<Compatibility> localSupports = fetchAsset.getSupports();
+            localSupports.forEach(v -> v.setAsset(target));
+
+            supports.addAll(localSupports);
+        }
+
+        if (form.isPublisher()) {
+            target.setPublisher(fetchAsset.getPublisher());
+        }
+
+        if (form.isPublishAt()) {
+            target.setPublishAt(fetchAsset.getPublishAt());
+        }
+
+        if (form.isThumbnail()) {
+            List<Thumbnail> images = target.getImages();
+
+            // 저장되어있는 이미지 삭제 ㄱㄱ
+            images.forEach(image -> {
+                if (image.getType() == ThumbnailType.Image)
+                    fileService.deleteFileForce(FileCategory.Thumbnail, image.getContentUrl());
+
+                fileService.deleteFileForce(FileCategory.Thumbnail, image.getPreviewUrl());
+            });
+
+            images.clear();
+
+            List<Thumbnail> localImages = thumbnailService.imageSave(fetchAsset.getImages());
+
+            // 에셋 타겟 바꿈
+            localImages.forEach(v -> v.setAsset(target));
+
+            images.addAll(localImages);
+        }
+
+        if (form.isCategory()) {
+            target.setCategory(fetchAsset.getCategory());
+        }
+
+        assetRepository.save(target);
     }
 
     @Transactional
@@ -280,6 +351,15 @@ public class AssetService {
     public void deleteAsset(int id) {
         Asset asset = getAssetById(id);
         assetRepository.delete(asset);
+
+        // 이미지 지우깅
+        List<Thumbnail> thumbnails = asset.getImages();
+        for (Thumbnail thumbnail : thumbnails) {
+            if (thumbnail.getType() == ThumbnailType.Image)
+                fileService.deleteFileForce(FileCategory.Thumbnail, thumbnail.getContentUrl());
+
+            fileService.deleteFileForce(FileCategory.Thumbnail, thumbnail.getPreviewUrl());
+        }
     }
 
     public List<String> getDownloadUrlsByIds(List<Integer> ids) {

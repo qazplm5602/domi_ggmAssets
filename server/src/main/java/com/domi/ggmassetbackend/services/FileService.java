@@ -80,6 +80,13 @@ public class FileService {
             throw new FileException(FileException.Type.ERROR_FILE_DELETE);
     }
 
+    public void deleteFileForce(FileCategory category, String fileName) {
+        try {
+            deleteFile(category, fileName);
+        } catch (RuntimeException ignored) {
+        }
+    }
+
     public FileCategory getCategory(String name) {
         String formatName = name.substring(0, 1).toUpperCase() + name.substring(1);
 

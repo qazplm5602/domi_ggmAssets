@@ -132,3 +132,15 @@
         background-color: $color-primary;
     }
 }
+
+.checkContainer {
+    display: flex;
+    align-items: center;
+
+    gap: 0 10px;
+
+    & > .text {
+        color: $color-white;
+        font-size: 14px;
+    }
+}

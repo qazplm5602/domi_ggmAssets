@@ -12,6 +12,7 @@ import { usePopupStore } from '@components/Popup/store';
 import { AxiosError } from 'axios';
 import { ErrorResponse } from '@domiTypes/request';
 import { useNavigate } from 'react-router-dom';
+import MetaTag from '@components/MetaTag/MetaTag';
 
 export default function AdminUpload() {
     const [ fileLink, setFileLink ] = useState("");
@@ -61,6 +62,8 @@ export default function AdminUpload() {
     }
 
     return <main className={`${baseStyle.small_screen} ${style.main}`}>
+        <MetaTag title='에셋 업로드' />
+
         <AdminHead className={style.head} />
         
         <AdminFileLinkField className={style.field} value={[fileLink, setFileLink]} />
