@@ -10,6 +10,7 @@ import { AssetAutoFieldDTO, AutoFieldCheckState } from '@domiTypes/assetAutoFiel
 import { request } from '@utils/request';
 import { useParams } from 'react-router-dom';
 import { ReactState } from '@domiTypes/react';
+import Spinner from '@components/Spinner/Spinner';
 
 type Props = {
     show: boolean,
@@ -77,6 +78,9 @@ export default function AdminEditAutoFieldDialog({ show, onClose, onRefresh }: P
         // 다 하면 새로고침 ㄱㄱ
         if (onRefresh)
             await onRefresh();
+
+        if (onClose)
+            onClose();
         
         setLoading(false);
     }
@@ -88,8 +92,9 @@ export default function AdminEditAutoFieldDialog({ show, onClose, onRefresh }: P
         </section>
 
         <section className={style.interaction}>
-            {errorText && <div className={style.alert}>{errorText}</div>}
-            <Button className={style.startBtn} disabled={errorText !== null} onClick={handleStart}>시작</Button>
+            {loading && <div className={`${style.alert} ${style.loading}`}><Spinner className={style.spinner} />다소 오래 걸릴 수 있습니다.</div>}
+            {errorText && !loading && <div className={style.alert}>{errorText}</div>}
+            <Button className={style.startBtn} disabled={errorText !== null || loading} onClick={handleStart}>시작</Button>
         </section>
     </Dialog>
 }

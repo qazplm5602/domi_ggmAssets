@@ -506,6 +506,8 @@
         & > .alert {
             font-size: 13px;
             color: $color-textSupporting;
+
+            margin-left: 10px;
         }
 
         & > .startBtn {
@@ -517,6 +519,18 @@
                 color: $color-textSupporting;
                 font-weight: 500;
                 cursor: initial;
+            }
+        }
+
+        & > .loading {
+            display: flex;
+            align-items: center;
+            
+            & > .spinner {
+                margin: -10px 0;
+                margin-right: -5px;
+
+                scale: 0.4;
             }
         }
     }
