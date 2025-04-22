@@ -155,7 +155,10 @@ public class AssetService {
             List<Compatibility> supports = target.getSupports();
             supports.clear();
 
-            supports.addAll(fetchAsset.getSupports());
+            List<Compatibility> localSupports = fetchAsset.getSupports();
+            localSupports.forEach(v -> v.setAsset(target));
+
+            supports.addAll(localSupports);
         }
 
         if (form.isPublisher()) {
@@ -166,7 +169,12 @@ public class AssetService {
             List<Thumbnail> images = target.getImages();
             images.clear();
 
-            images.addAll(thumbnailService.imageSave(fetchAsset.getImages()));
+            List<Thumbnail> localImages = thumbnailService.imageSave(fetchAsset.getImages());
+
+            // 에셋 타겟 바꿈
+            localImages.forEach(v -> v.setAsset(target));
+
+            images.addAll(localImages);
         }
 
         if (form.isCategory()) {

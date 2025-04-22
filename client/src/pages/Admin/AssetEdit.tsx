@@ -69,6 +69,11 @@ export default function AdminAssetEdit() {
         setSaving(false);
     }
 
+    const requestDataRefresh = async function() {
+        if (assetId)
+            await adminAssetEditLoad(assetId, { alive: true}, fieldStates, setOriginAsset);
+    }
+
     useEffect(() => {
         if (!assetId) return;
 
@@ -89,7 +94,7 @@ export default function AdminAssetEdit() {
         <MetaTag title={`${originAsset ? `${originAsset.title} - ` : ''}에셋 수정`} />
         <AdminEditContent fields={fieldStates} updated={isDifferent} onSave={handleSave} />
         <AdminEditSide fields={fieldStates} onOpenAutoField={handleOpenAutoField} />
-        <AdminEditAutoFieldDialog show={autoFieldPopup} onClose={handleCloseAutoField} />
+        <AdminEditAutoFieldDialog show={autoFieldPopup} onClose={handleCloseAutoField} onRefresh={requestDataRefresh} />
         {saving && <AdminAssetEditSaveLoading />}
     </main>
 }

@@ -13,10 +13,11 @@ import { ReactState } from '@domiTypes/react';
 
 type Props = {
     show: boolean,
-    onClose?: () => void
+    onClose?: () => void,
+    onRefresh?: () => Promise<void>
 }
 
-export default function AdminEditAutoFieldDialog({ show, onClose }: Props) {
+export default function AdminEditAutoFieldDialog({ show, onClose, onRefresh }: Props) {
     const [ link, setLink ] = useState("");
     const [ platform, setPlatform ] = useState<AssetBaseVO['platform']>(null);
     const platformNotSupport = platform === null;
@@ -71,7 +72,11 @@ export default function AdminEditAutoFieldDialog({ show, onClose }: Props) {
             body[id] = state[0];
         }
 
-        const result = await request("asset/admin/autofield", { params: { id: assetId }, data: body });
+        await request("asset/admin/autofield", { method: "POST", params: { id: assetId }, data: body });
+        
+        // 다 하면 새로고침 ㄱㄱ
+        if (onRefresh)
+            await onRefresh();
         
         setLoading(false);
     }
