@@ -3,7 +3,7 @@ type Props = {
 }
 
 export default function MetaTag({ title }: Props) {
-    const showTitle = `${title}${title ? ' | ' : ''}GGM에셋`;
+    const showTitle = `${title}${title ? ' | ' : ''}GGM 에셋`;
 
     return <>
         <title>{showTitle}</title>

@@ -12,6 +12,6 @@ export default function AssetDetailInfoStore({ platform }: Props) {
 
     return <div className={style.box}>
         <h3>스토어</h3>
-        {platform && <img src={getPlatformLogoURL(platform)} alt="store" />}
+        {platform && <img src={getPlatformLogoURL(platform)} alt="store" className={style.platform} />}
     </div>;
 }

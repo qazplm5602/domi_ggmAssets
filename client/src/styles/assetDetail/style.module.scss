@@ -88,6 +88,7 @@ $info-width: 350px;
         
         display: flex;
         justify-content: space-between;
+        align-items: center;
 
         & > h3 {
             font-size: 14px;
@@ -108,6 +109,10 @@ $info-width: 350px;
             &:hover {
                 text-decoration: underline;
             }
+        }
+
+        & > .platform {
+            height: 10px;
         }
 
         &:not(:first-child) {
@@ -218,7 +223,7 @@ $info-width: 350px;
         
         // 가로 스크롤
         flex-wrap: no-wrap;
-        overflow-x: scroll;
+        overflow-x: auto;
         overflow-y: hidden;
         
         & > .box {
