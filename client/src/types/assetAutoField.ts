@@ -12,3 +12,12 @@ export interface AutoFieldCheckState {
     shortDesc: ReactState<boolean>,
     description: ReactState<boolean>,
 }
+
+type AutoFieldCheck = {
+    [key in keyof AutoFieldCheckState]?: boolean;
+};
+
+export interface AssetAutoFieldDTO extends AutoFieldCheck {
+    url: string
+    storeType: string
+}
