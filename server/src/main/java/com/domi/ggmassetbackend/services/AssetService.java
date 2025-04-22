@@ -1,5 +1,6 @@
 package com.domi.ggmassetbackend.services;
 
+import com.domi.ggmassetbackend.data.dto.AssetAutoFieldDTO;
 import com.domi.ggmassetbackend.data.dto.AssetEditFormDTO;
 import com.domi.ggmassetbackend.data.dto.AssetSearchParamDTO;
 import com.domi.ggmassetbackend.data.dto.AssetUploadFormDTO;
@@ -124,6 +125,55 @@ public class AssetService {
 
         newAsset.setDownloadUrl(form.getDownload());
         return assetRepository.save(newAsset);
+    }
+
+    public void updateAutoField(Asset target, AssetAutoFieldDTO form) throws InterruptedException {
+        Asset fetchAsset = storePlatformService.fetchAssetFromStore(form.getStoreType(), form.getUrl());
+
+        if (form.isTitle()) {
+            target.setTitle(fetchAsset.getTitle());
+        }
+
+        if (form.isDescription()) {
+            target.setDescription(fetchAsset.getDescription());
+        }
+
+        if (form.isShortDesc()) {
+            target.setShortDesc(fetchAsset.getShortDesc());
+        }
+
+        if (form.isPlatform()) {
+            target.setPlatform(fetchAsset.getPlatform());
+        }
+        
+        if (form.isFileSize()) {
+            target.setFileSize(fetchAsset.getFileSize());
+        }
+        
+        if (form.isSupports()) {
+            // 리스트 자체가 바뀌면 큰일날꺼 같음
+            List<Compatibility> supports = target.getSupports();
+            supports.clear();
+
+            supports.addAll(fetchAsset.getSupports());
+        }
+
+        if (form.isPublisher()) {
+            target.setPublisher(fetchAsset.getPublisher());
+        }
+
+        if (form.isThumbnail()) {
+            List<Thumbnail> images = target.getImages();
+            images.clear();
+
+            images.addAll(thumbnailService.imageSave(fetchAsset.getImages()));
+        }
+
+        if (form.isCategory()) {
+            target.setCategory(fetchAsset.getCategory());
+        }
+
+        assetRepository.save(target);
     }
 
     @Transactional
