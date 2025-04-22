@@ -12,6 +12,7 @@ const checkNames: CheckNameType[] = [
     [ 'shortDesc', '간단한 설명' ],
     [ 'category', '카테고리' ],
     [ 'platform', '플랫폼' ],
+    [ 'publisher', '제작자' ],
     [ 'publishAt', '등록일' ],
     [ 'fileSize', '파일 크기' ],
     [ 'supports', '호환성' ],

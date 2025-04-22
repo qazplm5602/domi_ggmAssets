@@ -165,6 +165,10 @@ public class AssetService {
             target.setPublisher(fetchAsset.getPublisher());
         }
 
+        if (form.isPublishAt()) {
+            target.setPublishAt(fetchAsset.getPublishAt());
+        }
+
         if (form.isThumbnail()) {
             List<Thumbnail> images = target.getImages();
             images.clear();
