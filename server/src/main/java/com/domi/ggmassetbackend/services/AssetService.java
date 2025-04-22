@@ -171,6 +171,15 @@ public class AssetService {
 
         if (form.isThumbnail()) {
             List<Thumbnail> images = target.getImages();
+
+            // 저장되어있는 이미지 삭제 ㄱㄱ
+            images.forEach(image -> {
+                if (image.getType() == ThumbnailType.Image)
+                    fileService.deleteFileForce(FileCategory.Thumbnail, image.getContentUrl());
+
+                fileService.deleteFileForce(FileCategory.Thumbnail, image.getPreviewUrl());
+            });
+
             images.clear();
 
             List<Thumbnail> localImages = thumbnailService.imageSave(fetchAsset.getImages());
