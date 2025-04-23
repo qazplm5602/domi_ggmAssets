@@ -9,11 +9,11 @@ dotenv.config();
 const assets = JSON.parse(fs.readFileSync("./assets.json", { encoding: "utf-8" })) as AssetFileItem[];
 const BATCH_AMOUNT = Number(process.env.BATCH_AMOUNT) || 3;
 
-console.log("브라우저 생성중...");
-createBrowser().then(init);
+// console.log("브라우저 생성중...");
+// createBrowser().then(init);
 
 async function init() {
-    console.log("브라우저 생성 완료!");
+    // console.log("브라우저 생성 완료!");
 
     const maxPage = Math.ceil(assets.length / BATCH_AMOUNT);
 
@@ -31,3 +31,5 @@ async function init() {
         console.log("배치 처리 완료.");
     }
 }
+
+init();
