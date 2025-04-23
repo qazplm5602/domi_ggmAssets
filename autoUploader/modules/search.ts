@@ -1,7 +1,8 @@
 // import { getBrowser } from "./browser.ts";
 import * as cheerio from 'cheerio';
+import { AssetFileItem } from './asset.ts';
 
-export async function findStoreURL(name: string, acceptDomain: string): Promise<string | null> {
+export async function findStoreURL(name: string, platform: AssetFileItem['platform'], acceptDomain: string): Promise<string | null> {
     // const browser = getBrowser();
     // const page = await browser.newPage();
     // await page.goto("https://www.bing.com/search?q=asdf");
@@ -23,6 +24,14 @@ export async function findStoreURL(name: string, acceptDomain: string): Promise<
         if (!urlParse) return;
         
         if (urlParse.host.endsWith(acceptDomain)) {
+            console.log(`${name} check.`, url);
+
+            // itch io 결제 페이지는 제외 해야함ㅁㅁㅁㅁㅁ
+            if (platform === 'Itchio' && urlParse.pathname.split("/").length > 2) { // 경로가 왜 더 있냠
+                console.log(`${name} nope.`);
+                return;
+            }
+
             findUrl = url;
             return false; // each 그만~~~
         }

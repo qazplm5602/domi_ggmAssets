@@ -2,5 +2,5 @@ export interface AssetFileItem {
     id: string,
     name: string,
     domain: string,
-    platform: 'Unity'
+    platform: 'Unity' | 'Itchio'
 }
