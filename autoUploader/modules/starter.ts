@@ -9,6 +9,5 @@ export async function uploadStart(item: AssetFileItem) {
         return; // 머야 검색 결과에도 없네
     }
 
-    console.log(storeURL);
     await assetUpload(item, storeURL);
 }
