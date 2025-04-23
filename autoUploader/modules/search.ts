@@ -8,7 +8,8 @@ export async function findStoreURL(name: string, acceptDomain: string): Promise<
     // page.close();
 
     // 생각 해보니 bing 은 브라우저로 안열어도 됨 ㄷㄷ
-    const result = await fetch(`https://www.bing.com/search?q=${encodeURIComponent(name)}`);
+    const query = `q=${name}&pq=${name}`;
+    const result = await fetch(`https://www.bing.com/search?q=${encodeURI(query)}`, { headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Whale/4.31.304.16 Safari/537.36" } });
     const html = await result.text();
     const $ = cheerio.load(html);
 
