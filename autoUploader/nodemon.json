@@ -1,0 +1,6 @@
+{
+    "ext": "ts",
+    "execMap": {
+      "ts": "node --no-warnings=ExperimentalWarning --require=dotenv/config --loader ts-node/esm"
+    }
+}
