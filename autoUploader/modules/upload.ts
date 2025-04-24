@@ -17,7 +17,7 @@ export async function assetUpload(item: AssetFileItem, store: string) {
     const result = await fetch(UPLOAD_URL, { method: "POST", headers: { "Cookie": cookie, "Content-Type": "application/json" }, body: JSON.stringify(body) });
     
     if (result.status !== 200) {
-        console.log(`${item.id} 에셋 업로드 실패 (${result.status}).`);
+        console.log(`${item.id} 에셋 업로드 실패 (${result.status}) ${await result.text()}.`);
         return;
     }
 
