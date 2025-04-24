@@ -80,7 +80,7 @@ public class StorePlatformService {
         asset.setPlatformUrl(url);
 
         if (assetData.get("size") != JSONObject.NULL)
-            asset.setFileSize(assetData.getInt("size"));
+            asset.setFileSize(assetData.getLong("size"));
 
         asset.setCreateAt(LocalDateTime.now());
 
@@ -122,27 +122,8 @@ public class StorePlatformService {
         if (assetData.get("category") != JSONObject.NULL) { // 카테고리가 없는거 일수도
             String categoryListName = assetData.getString("category");
             String[] categoryNames = categoryListName.split("/");
-            Category[] categories = new Category[categoryNames.length];
 
-            for (int i = 0; i < categoryNames.length; i++) {
-                Category category = null;
-                Category parentCategory = (i == 0) ? null : categories[i - 1];
-
-                try {
-                    category = categoryService.getCategoryByNameAndParent(categoryNames[i], parentCategory);
-                } catch (CategoryException ignored) {}
-
-                // 잉 없네
-                if (category == null) {
-                    category = categoryService.createCategory(categoryNames[i], parentCategory);
-//                    category = new Category(0, categoryNames[i], parentCategory);
-                }
-
-                categories[i] = category;
-            }
-
-            // 마지막꺼임
-            asset.setCategory(categories[categories.length - 1]);
+            asset.setCategory(getLastCategoryOrCreate(categoryNames));
         }
 
 
@@ -154,5 +135,29 @@ public class StorePlatformService {
             case Itchio -> "itchio";
             case  Unity -> "unity";
         };
+    }
+
+    private synchronized Category getLastCategoryOrCreate(String[] categoryNames) {
+        Category[] categories = new Category[categoryNames.length];
+
+        for (int i = 0; i < categoryNames.length; i++) {
+            Category category = null;
+            Category parentCategory = (i == 0) ? null : categories[i - 1];
+
+            try {
+                category = categoryService.getCategoryByNameAndParent(categoryNames[i], parentCategory);
+            } catch (CategoryException ignored) {}
+
+            // 잉 없네
+            if (category == null) {
+                category = categoryService.createCategory(categoryNames[i], parentCategory);
+//                    category = new Category(0, categoryNames[i], parentCategory);
+            }
+
+            categories[i] = category;
+        }
+
+        // 마지막꺼임
+        return categories[categories.length - 1];
     }
 }

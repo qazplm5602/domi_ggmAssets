@@ -16,7 +16,7 @@ public class AssetDetailVO extends AssetBaseVO {
     private LocalDateTime publishAt;
     private List<CompatibilityVO> supports;
     private List<ThumbnailVO> images;
-    private Integer fileSize;
+    private Long fileSize;
 
     @Override
     public void assetDataInit(Asset asset, CategoryService categoryService) {

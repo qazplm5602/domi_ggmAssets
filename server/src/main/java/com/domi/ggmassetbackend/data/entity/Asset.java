@@ -47,11 +47,12 @@ public class Asset {
     @Enumerated(EnumType.STRING)
     private PublishPlatform platform;
 
+    @Column(length = 512)
     private String platformUrl;
     private String downloadUrl;
 
     @Column(columnDefinition = "bigint")
-    private Integer fileSize;
+    private Long fileSize;
 
     private LocalDateTime publishAt;
 
