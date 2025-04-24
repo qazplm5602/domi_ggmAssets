@@ -1,6 +1,8 @@
 // import { getBrowser } from "./browser.ts";
 import * as cheerio from 'cheerio';
 import { AssetFileItem } from './asset.ts';
+import fs from 'fs/promises';
+import path from 'path';
 
 export async function findStoreURL(name: string, platform: AssetFileItem['platform'], acceptDomain: string): Promise<string | null> {
     // const browser = getBrowser();
@@ -16,7 +18,7 @@ export async function findStoreURL(name: string, platform: AssetFileItem['platfo
 
     let findUrl: string | null = null;
 
-    $(".b_algo h2 > a").each((idx, el) => {
+    $(".b_algo h2 > a, .b_wpt_bl_bord h2 > a").each((idx, el) => {
         let url = $(el).attr("href");
         if (!url) return;
 
@@ -46,9 +48,12 @@ export async function findStoreURL(name: string, platform: AssetFileItem['platfo
         }
     });
 
-    // if (!findUrl)  {
-    //     console.log("검색 기록 없음", name, html);
-    // }
+    // 못찾으면 bing html 남김
+    if (!findUrl)  {
+        // console.log("검색 기록 없음", name, html);
+        const filePath = path.join(path.resolve(), "logs", `${name}.log`);
+        fs.writeFile(filePath, html, { encoding: "utf-8" });
+    }
 
     return findUrl;
 }
