@@ -47,6 +47,7 @@ public class Asset {
     @Enumerated(EnumType.STRING)
     private PublishPlatform platform;
 
+    @Column(length = 512)
     private String platformUrl;
     private String downloadUrl;
 

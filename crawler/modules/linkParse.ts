@@ -9,7 +9,7 @@ export function getIdByUnityStoreUrl(url: string) {
     }
 
     const uri = urlParse.pathname;
-    let detectId = Number(url.substring(url.lastIndexOf('-') + 1));
+    let detectId = Number(uri.substring(uri.lastIndexOf('-') + 1));
     
     // 이건 그냥 다른 URL 인듯
     if (isNaN(detectId)) {
