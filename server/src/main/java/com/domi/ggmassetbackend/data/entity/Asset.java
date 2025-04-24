@@ -52,7 +52,7 @@ public class Asset {
     private String downloadUrl;
 
     @Column(columnDefinition = "bigint")
-    private Integer fileSize;
+    private Long fileSize;
 
     private LocalDateTime publishAt;
 

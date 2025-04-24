@@ -325,7 +325,7 @@ public class AssetService {
             } catch (DomiException ignored) {}
         }
 
-        Integer fileSize = form.getFileSize();
+        Long fileSize = form.getFileSize();
         if (fileSize != null) {
             asset.setFileSize(fileSize > 0 ? fileSize : null);
         }

@@ -80,7 +80,7 @@ public class StorePlatformService {
         asset.setPlatformUrl(url);
 
         if (assetData.get("size") != JSONObject.NULL)
-            asset.setFileSize(assetData.getInt("size"));
+            asset.setFileSize(assetData.getLong("size"));
 
         asset.setCreateAt(LocalDateTime.now());
 
