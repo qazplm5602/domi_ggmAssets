@@ -141,6 +141,6 @@ export default function AssetsListItemThumbnail({ id: assetId, images }: Props) 
 
         <AssetsListThumbnailArrowButton onClick={handlePrev} disabled={currentIdx === 0} />
         <AssetsListThumbnailArrowButton onClick={handleNext} right={true} disabled={currentIdx >= images.size - 1} />
-        <AssetsListThumbnailPageAmount />
+        <AssetsListThumbnailPageAmount current={currentIdx + 1} max={images.size} />
     </section>
 }
