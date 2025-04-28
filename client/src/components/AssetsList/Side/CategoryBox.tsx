@@ -118,7 +118,7 @@ export default function AssetsListSideCategoryBox({ my, depth, list, idx = 1 }: 
             }
         }
 
-        setAssetSearchOption({ category: Array.from(nowCategorys).join(",") });
+        setAssetSearchOption({ category: Array.from(nowCategorys).join(","), page: '1' });
     }
 
     return <>
