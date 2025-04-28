@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import AssetsListItemThumbnailView from './ThumbnailView';
 import { generateRandomString } from '@utils/misc';
 import { request } from '@utils/request';
+import AssetsListThumbnailPageAmount from './PageAmount';
 
 type Props = {
     images: PageThumbnailVO,
@@ -140,5 +141,6 @@ export default function AssetsListItemThumbnail({ id: assetId, images }: Props) 
 
         <AssetsListThumbnailArrowButton onClick={handlePrev} disabled={currentIdx === 0} />
         <AssetsListThumbnailArrowButton onClick={handleNext} right={true} disabled={currentIdx >= images.size - 1} />
+        <AssetsListThumbnailPageAmount />
     </section>
 }
