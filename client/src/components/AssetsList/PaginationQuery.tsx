@@ -11,11 +11,11 @@ export default function AssetsListPaginationQuery({ max }: Props) {
     const setAssetParams = useSetAssetSearchOption();
 
     const handleChangePage = function(page: number) {
-        setAssetParams({ page: (page - 1).toString() });
+        setAssetParams({ page: page.toString() });
     }
 
     if (max === null)
         return <PrePagination current={Number(page) + 1} />;
     
-    return <Pagination current={Number(page) + 1} maxPage={max} onChangePage={handleChangePage} />
+    return <Pagination current={Number(page)} maxPage={max} onChangePage={handleChangePage} />
 }
