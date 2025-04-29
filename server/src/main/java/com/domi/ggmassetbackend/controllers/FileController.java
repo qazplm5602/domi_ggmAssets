@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 @RequiredArgsConstructor
 @RequestMapping("/files")
@@ -32,6 +34,7 @@ public class FileController {
         FileSystemResource resource = new FileSystemResource(file);
         return ResponseEntity.ok()
                 .headers(headers)
+                .cacheControl(CacheControl.maxAge(1, TimeUnit.DAYS))
                 .body(resource);
     }
 }

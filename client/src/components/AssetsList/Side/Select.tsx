@@ -18,7 +18,7 @@ export default function AssetsListSideSelect({ title, index, items }: Props) {
     const setSearchOption = useSetAssetSearchOption();
 
     const handleChangeValue = function(e: React.ChangeEvent<HTMLSelectElement>) {
-        setSearchOption({ [index]: e.target.value });
+        setSearchOption({ [index]: e.target.value, page: '1' });
     }
 
     return <section className={style.select}>

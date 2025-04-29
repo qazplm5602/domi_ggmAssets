@@ -17,7 +17,7 @@ export default function AssetsListContainer({ onChangeMaxPage }: Props) {
     const [ data, setData ] = useState<PageContentVO<AssetPreviewVO> | null>(null);
     
     const onLoad = async function(aliveRef: AliveType) {
-        const result = await request<PageContentVO<AssetPreviewVO>>("asset/search", { params: { amount, category, order, page } });
+        const result = await request<PageContentVO<AssetPreviewVO>>("asset/search", { params: { amount, category, order, page: Number(page) - 1 } });
         if (!aliveRef.alive) return;
 
         setData(result.data);
