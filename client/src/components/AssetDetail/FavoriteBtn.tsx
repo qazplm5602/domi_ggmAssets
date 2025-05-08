@@ -1,4 +1,5 @@
 import IconButton from '@components/Buttons/IconButton';
+import style from '@styles/assetDetail/style.module.scss';
 import { useEffect, useRef, useState } from 'react';
 
 import markLineIcon from '@assets/icons/ic-bookmark-line.svg';
@@ -47,5 +48,7 @@ export default function AssetDetailInfoInteractionFavoriteBtn({ id }: Props) {
         }
     }, [ id ]);
 
-    return <IconButton icon={active ? markFillIcon : markLineIcon} size={23} onClick={handleClick} />;
+    return <IconButton icon={active ? markFillIcon : markLineIcon} size={23} onClick={handleClick} className={style.favorite}>
+        <div className={style.tooltip}>찜{active ? '해제' : '하기'}</div>
+    </IconButton>;
 }
