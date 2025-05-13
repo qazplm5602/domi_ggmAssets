@@ -326,6 +326,19 @@
             border-color: transparent;
         }
     }
+
+    &.shortField {
+        gap: 0 22px;
+
+        & > h4 {
+            font-size: 13px;
+        }
+
+        & > input {
+            font-size: 12px;
+            padding: 5px;
+        }
+    }
 }
 
 .supportList {

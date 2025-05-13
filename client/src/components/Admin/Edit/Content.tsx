@@ -6,7 +6,6 @@ import AdminFileLinkField from "../Field/FileLinkField";
 import AdminEditImageField from "../Field/ImageField";
 import AdminEditPublisherField from "../Field/PublisherField";
 import AdminStoreLinkField from "../Field/StoreLinkField";
-import VersionField from "../Field/VersionField";
 import Input from "../Inputs/Input";
 import AdminEditCategorySelectDialog from "./CategorySelect/CategorySelectDialog";
 import AdminEditHead from "./Head";
@@ -16,6 +15,7 @@ import { AssetBaseVO } from "@domiTypes/asset";
 import Textarea from "../Inputs/Textarea";
 import AdminEditThumbnailUploadDialog from "./Thumbnail/UploadDialog";
 import AdminEditSizeField from "../Field/SizeField";
+import VersionEditField from "../Field/Version/EditField";
 
 type Props = {
     fields: AssetEditFieldStates,
@@ -56,7 +56,8 @@ export default function AdminEditContent({ fields, updated, onSave }: Props) {
 
         <AdminFileLinkField className={style.field} value={fields.fileLink} />
         <AdminStoreLinkField className={style.field} value={fields.storeLink} platform={storelinkPlatformState} />
-        <VersionField className={style.field} value={fields.version} />
+        {/* <VersionField className={style.field} value={fields.version} /> */}
+        <VersionEditField className={style.field} current={fields.fileVersion} latest={fields.storeVersion} />
         <AdminEditSizeField  className={style.field} value={fields.fileSize}  />
         <AdminEditCategoryField className={style.field} categoryId={fields.category[0]} onEdit={handleOpenCategorySelect} />
         <AdminEditPublisherField className={style.field} platform={fields.platform} artist={fields.artist} />

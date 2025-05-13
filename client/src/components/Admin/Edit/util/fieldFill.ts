@@ -10,6 +10,8 @@ export function adminAssetFieldFill(asset: AssetAllVO, fields: AssetEditFieldSta
     fields.platform[1](asset.platform);
     fields.artist[1](asset.publisher || '');
     fields.supports[1](asset.supports);
+    fields.fileVersion[1](asset.fileVersion || '');
+    fields.storeVersion[1](asset.storeVersion || '');
     fields.images[1](asset.images.map(v => ({
         local: false,
         ...v
