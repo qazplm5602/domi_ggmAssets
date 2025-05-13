@@ -2,10 +2,11 @@ import style from '@styles/admin/upload.module.scss';
 
 import AdminField from "./Field";
 import Input from "../Inputs/Input";
+import { ReactState } from '@domiTypes/react';
 
 type Props = {
     className?: string,
-    value: [ string, React.Dispatch<React.SetStateAction<string>> ]
+    value: ReactState<string>
 }
 
 export default function VersionField({ className, value }: Props) {
