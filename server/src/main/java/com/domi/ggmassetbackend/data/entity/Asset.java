@@ -54,6 +54,9 @@ public class Asset {
     @Column(columnDefinition = "bigint")
     private Long fileSize;
 
+    private String storeVersion;
+    private String fileVersion;
+
     private LocalDateTime publishAt;
 
     @CreatedDate
