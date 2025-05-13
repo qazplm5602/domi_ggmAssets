@@ -194,6 +194,10 @@ public class AssetService {
             target.setCategory(fetchAsset.getCategory());
         }
 
+        if (form.isVersion()) {
+            target.setStoreVersion(fetchAsset.getStoreVersion());
+        }
+
         assetRepository.save(target);
     }
 

@@ -11,6 +11,7 @@ export interface AutoFieldCheckState {
     supports: ReactState<boolean>,
     shortDesc: ReactState<boolean>,
     description: ReactState<boolean>,
+    version: ReactState<boolean>
 }
 
 type AutoFieldCheck = {
