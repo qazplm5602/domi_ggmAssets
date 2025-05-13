@@ -126,6 +126,9 @@ public class StorePlatformService {
             asset.setCategory(getLastCategoryOrCreate(categoryNames));
         }
 
+        // 버전
+        if (assetData.get("version") != JSONObject.NULL)
+            asset.setStoreVersion(assetData.getString("version"));
 
         return asset;
     }
