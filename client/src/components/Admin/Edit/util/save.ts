@@ -56,6 +56,14 @@ export async function saveAdminEditAsset(assetId: number, fields: AssetEditField
         body.supports = fields.supports[0];
     }
 
+    if (otherFields.has("fileVersion")) {
+        body.fileVersion = fields.fileVersion[0];
+    }
+
+    if (otherFields.has("storeVersion")) {
+        body.storeVersion = fields.storeVersion[0];
+    }
+
     if (otherFields.has("category")) {
         body.category = fields.category[0] || -1;
     }

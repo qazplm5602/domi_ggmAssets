@@ -271,6 +271,14 @@ public class AssetService {
             }
         }
 
+        String fileVersion = form.getFileVersion();
+        if (fileVersion != null)
+            asset.setFileVersion(fileVersion.isEmpty() ? null : fileVersion);
+
+        String storeVersion = form.getStoreVersion();
+        if (storeVersion != null)
+            asset.setStoreVersion(storeVersion.isEmpty() ? null : storeVersion);
+
         Integer category = form.getCategory();
         if (category != null) {
             Category entity = null;
