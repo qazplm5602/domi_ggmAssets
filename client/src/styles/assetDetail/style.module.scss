@@ -173,6 +173,31 @@ $info-width: 350px;
             }
         }
     }
+
+    & > .oldAlert {
+        display: flex;
+        gap: 0 8px;
+        
+        align-items: center;
+
+        padding: 8px 10px;
+        margin-top: 15px;
+        margin-bottom: -8px;
+        
+        background-color: rgba($color: $color-idle, $alpha: 0.1);
+        border: 1px solid rgba($color: $color-idle, $alpha: 0.5);
+        border-radius: 5px;
+
+        & > img {
+            width: 24px;
+        }
+
+        & > p {
+            font-size: 14px;
+            font-weight: 300;
+            color: $color-white;
+        }
+    }
 }
 
 .gallery {
