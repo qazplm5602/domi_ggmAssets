@@ -124,6 +124,10 @@ public class AssetService {
         }
 
         newAsset.setDownloadUrl(form.getDownload());
+        
+        if (!form.getVersion().isBlank())
+            newAsset.setFileVersion(form.getVersion());
+
         return assetRepository.save(newAsset);
     }
 
