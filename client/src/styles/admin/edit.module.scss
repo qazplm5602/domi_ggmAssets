@@ -341,6 +341,23 @@
     }
 }
 
+.oldAlert {
+    margin: 0 !important;
+    margin-top: 10px !important;
+
+    // width: max-content !important;
+    background-color: transparent !important;
+    // border: none !important;
+
+    & > p {
+        font-size: 13px !important;
+    }
+
+    & > img {
+        width: 20px !important;
+    }
+}
+
 .supportList {
     margin: 10px 0;
 
