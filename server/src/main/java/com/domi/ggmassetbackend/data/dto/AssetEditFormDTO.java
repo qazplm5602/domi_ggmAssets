@@ -28,4 +28,7 @@ public class AssetEditFormDTO {
     Integer category;
     List<ThumbnailVO> images;
     Long fileSize;
+
+    String fileVersion;
+    String storeVersion;
 }

@@ -28,6 +28,8 @@ export default function AdminAssetEdit() {
     const categoryState = useState<number | null>(null);
     const imagesState = useState<ThumbnailLocalVO[]>([]);
     const sizeState = useState("");
+    const fileVersion = useState("");
+    const storeVersion = useState("");
 
     const fieldStates: AssetEditFieldStates = {
         title: titleState,
@@ -42,7 +44,9 @@ export default function AdminAssetEdit() {
         supports: supportsState,
         category: categoryState,
         images: imagesState,
-        fileSize: sizeState
+        fileSize: sizeState,
+        fileVersion,
+        storeVersion
     };
 
     ////// 원본 에셋

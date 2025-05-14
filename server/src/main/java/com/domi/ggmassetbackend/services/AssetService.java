@@ -124,6 +124,10 @@ public class AssetService {
         }
 
         newAsset.setDownloadUrl(form.getDownload());
+        
+        if (!form.getVersion().isBlank())
+            newAsset.setFileVersion(form.getVersion());
+
         return assetRepository.save(newAsset);
     }
 
@@ -192,6 +196,10 @@ public class AssetService {
 
         if (form.isCategory()) {
             target.setCategory(fetchAsset.getCategory());
+        }
+
+        if (form.isVersion()) {
+            target.setStoreVersion(fetchAsset.getStoreVersion());
         }
 
         assetRepository.save(target);
@@ -266,6 +274,14 @@ public class AssetService {
                 compatibilityList.add(new Compatibility(null, asset, vo.getVersion(), vo.isBuiltIn(), vo.isUrp(), vo.isHdrp()));
             }
         }
+
+        String fileVersion = form.getFileVersion();
+        if (fileVersion != null)
+            asset.setFileVersion(fileVersion.isEmpty() ? null : fileVersion);
+
+        String storeVersion = form.getStoreVersion();
+        if (storeVersion != null)
+            asset.setStoreVersion(storeVersion.isEmpty() ? null : storeVersion);
 
         Integer category = form.getCategory();
         if (category != null) {

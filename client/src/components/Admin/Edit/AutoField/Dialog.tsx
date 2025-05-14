@@ -35,7 +35,8 @@ export default function AdminEditAutoFieldDialog({ show, onClose, onRefresh }: P
         thumbnail: useState(true),
         supports: useState(true),
         shortDesc: useState(true),
-        description: useState(true)
+        description: useState(true),
+        version: useState(true)
     };
 
     const errorText = useMemo(() => {

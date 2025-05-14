@@ -326,6 +326,36 @@
             border-color: transparent;
         }
     }
+
+    &.shortField {
+        gap: 0 22px;
+
+        & > h4 {
+            font-size: 13px;
+        }
+
+        & > input {
+            font-size: 12px;
+            padding: 5px;
+        }
+    }
+}
+
+.oldAlert {
+    margin: 0 !important;
+    margin-top: 10px !important;
+
+    // width: max-content !important;
+    background-color: transparent !important;
+    // border: none !important;
+
+    & > p {
+        font-size: 13px !important;
+    }
+
+    & > img {
+        width: 20px !important;
+    }
 }
 
 .supportList {

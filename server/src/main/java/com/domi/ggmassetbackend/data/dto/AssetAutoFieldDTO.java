@@ -20,4 +20,5 @@ public class AssetAutoFieldDTO {
     boolean supports;
     boolean shortDesc;
     boolean description;
+    boolean version;
 }

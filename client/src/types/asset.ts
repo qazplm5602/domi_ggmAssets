@@ -33,7 +33,9 @@ export interface AssetDetailVO extends AssetBaseVO {
     images: ThumbnailVO[],
     publishAt: string | null,
     downloadUrl: string,
-    fileSize: number | null
+    fileSize: number | null,
+    fileVersion: string | null,
+    storeVersion: string | null
 }
 
 export interface AssetAllVO extends AssetDetailVO {

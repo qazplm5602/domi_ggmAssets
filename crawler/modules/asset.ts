@@ -21,7 +21,8 @@ export interface AssetDTO {
     images: ThumbnailVO[],
     publishAt: string | null,
     category: string | null,
-    size: number | null
+    size: number | null,
+    version: string | null
 }
 
 interface UnityStoreSrp {

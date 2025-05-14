@@ -11,8 +11,9 @@
     }
 }
 
-.version > input {
+.version input {
     width: 180px;
+    flex-grow: 0;
 }
 
 .interaction {

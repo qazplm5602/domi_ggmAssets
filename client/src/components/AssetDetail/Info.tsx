@@ -8,6 +8,7 @@ import useLoginStore from '@components/LoginState/store';
 import AssetDetailInfoLink from './InfoLink';
 import { formatByteToUnit } from '@components/Admin/Edit/util/misc';
 import AssetDetailInfoStore from './InfoStore';
+import AssetDetailAlertVersion from './AlertVersion';
 
 type Props = {
     data: AssetDetailVO
@@ -23,6 +24,7 @@ export default function AssetDetailInfo({ data }: Props) {
         {/* <AssetDetailInfoText title='지원' value='웹사이트 방문' /> */}
         {admin && <AssetDetailInfoLink title='관리자' text='수정하기' href={`/admin/edit/${data.id}`} />}
 
+        {data.fileVersion && data.storeVersion && data.fileVersion !== data.storeVersion && <AssetDetailAlertVersion />}
         <AssetDetailInfoInteraction download={data.downloadUrl} assetId={data.id} />
     </motion.div>
 }

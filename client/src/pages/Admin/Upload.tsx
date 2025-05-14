@@ -3,7 +3,6 @@ import AdminHead from '@components/Admin/Head';
 import AdminStoreLinkField from '@components/Admin/Field/StoreLinkField';
 import baseStyle from '@styles/admin/style.module.scss';
 import style from '@styles/admin/upload.module.scss';
-import VersionField from '@components/Admin/Field/VersionField';
 import AdminUploadInteraction from '@components/Admin/UploadInteraction';
 import { useState } from 'react';
 import { AssetBaseVO } from '@domiTypes/asset';
@@ -13,6 +12,8 @@ import { AxiosError } from 'axios';
 import { ErrorResponse } from '@domiTypes/request';
 import { useNavigate } from 'react-router-dom';
 import MetaTag from '@components/MetaTag/MetaTag';
+import AdminVersionField from '@components/Admin/Field/Version/FieldSection';
+import VersionBaseInput from '@components/Admin/Field/Version/BaseInput';
 
 export default function AdminUpload() {
     const [ fileLink, setFileLink ] = useState("");
@@ -68,7 +69,9 @@ export default function AdminUpload() {
         
         <AdminFileLinkField className={style.field} value={[fileLink, setFileLink]} />
         <AdminStoreLinkField className={style.field} value={[storeLink, setStoreLink]} platform={[platform, setPlatform]} />
-        <VersionField className={style.field} value={[version, setVersion]} />
+        <AdminVersionField className={style.field}>
+            <VersionBaseInput autoValue={[version, setVersion]} />
+        </AdminVersionField>
 
         <AdminUploadInteraction warning={platform === null} loading={loading} onUpload={handleUpload} />
     </main>;

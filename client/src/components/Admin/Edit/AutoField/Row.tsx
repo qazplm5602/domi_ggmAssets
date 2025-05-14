@@ -16,7 +16,8 @@ const checkNames: CheckNameType[] = [
     [ 'publishAt', '등록일' ],
     [ 'fileSize', '파일 크기' ],
     [ 'supports', '호환성' ],
-    [ 'thumbnail', '썸네일' ]
+    [ 'thumbnail', '썸네일' ],
+    [ 'version', '버전' ]
 ];
 
 const indexingRow: CheckRowsItemType = {    

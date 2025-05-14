@@ -90,7 +90,8 @@ const itchioDataLoadHandler: CrawlerCallbackType = async function(req) {
         images,
         category: null,
         publishAt: null,
-        size: null
+        size: null,
+        version: null
     };
 }
 

@@ -58,7 +58,9 @@ const diffHandlers: { [K in keyof AssetEditFieldStates]: (fields: AssetEditField
 
 
         return Number(fields.fileSize[0]) !== Number(origin.fileSize);
-    }
+    },
+    fileVersion: (fields, origin) => !isOtherField(fields.fileVersion, origin.fileVersion),
+    storeVersion: (fields, origin) => !isOtherField(fields.storeVersion, origin.storeVersion),
 }
 
 export function hasAssetEditFieldUpdated(fields: AssetEditFieldStates, origin: AssetAllVO): boolean {
