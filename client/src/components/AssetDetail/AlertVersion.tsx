@@ -8,6 +8,6 @@ type Props = {
 export default function AssetDetailAlertVersion({ className }: Props) {
     return <div className={`${style.oldAlert} ${className || ''}`}>
         <img src={errorIco} alt="old version alert" />
-        <p>등록된 파일 버전이 최신이 아닙니다.</p>
+        <p>등록된 파일이 최신 버전이 아닙니다.</p>
     </div>;
 }
