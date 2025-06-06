@@ -3,10 +3,13 @@ import IconButton from '@components/Buttons/IconButton';
 import style from '@styles/assetsList/side.module.scss';
 
 import removeIcon from '@assets/icons/close.svg';
+import AssetsListSideTagColorPicker from './ColorPicker';
 
 export default function AssetsListSideTagItemEdit() {
     return <div className={`${style.tag} ${style.edit}`}>
-        <button className={style.color} />
+        <button className={style.color}>
+            {/* <AssetsListSideTagColorPicker /> */}
+        </button>
         <Input placeholder='태그 이름' />
         <IconButton icon={removeIcon} className={style.remove} />
     </div>;

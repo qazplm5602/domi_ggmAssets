@@ -198,6 +198,7 @@
         height: 25px;
 
         & > .color {
+            position: relative;
             width: 25px;
             height: 25px;
             
@@ -207,6 +208,31 @@
             background-color: #FF8800;
 
             flex-shrink: 0;
+
+            & > .colorPicker {
+                position: absolute;
+                display: flex;
+                gap: 0 10px;
+
+                top: 50%;
+                right: -3px;
+                transform: translate(100%, -50%);
+                
+                box-shadow: 0 0 10px rgba($color: #000000, $alpha: 0.3);
+                background-color: $color-mist;
+                padding: 10px 15px;
+                border-radius: 49px;
+
+                cursor: initial;
+
+                & > button {
+                    width: 16px;
+                    height: 16px;
+                    border-radius: 50%;
+
+                    border: none;
+                }
+            }
         }
 
         & > input {
