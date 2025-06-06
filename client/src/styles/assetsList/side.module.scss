@@ -159,11 +159,23 @@
     align-items: flex-start;
     justify-content: space-between;
     
-    & > .edit {
+    & > .interaction > button {
         @include base_button;
 
         font-size: 11px;
         padding: 5px 10px;
+
+        &:not(:first-child) {
+            margin-left: 5px;
+        }
+
+        &.cancel {
+            background-color: $color-alert;
+        }
+
+        &.save {
+            background-color: $color-primary;
+        }
     }
 }
 
