@@ -7,6 +7,7 @@ import { usePopupStore } from '@components/Popup/store';
 import { useState } from 'react';
 import { request } from '@utils/request';
 import { AxiosError } from 'axios';
+import FavoriteSelectHeadTagMenu from './Tag/Menu';
 
 type Props = {
     selects: Set<number>,
@@ -76,6 +77,10 @@ export default function FavoriteSelectHead({ selects, assets, onCheck, onRemove 
         </article>
         
         <article className={style.right}>
+            <Button className={style.tag}>
+                <p>태그</p>
+                <FavoriteSelectHeadTagMenu />
+            </Button>
             <Button className={style.download} onClick={handleDownload}>다운로드</Button>
             <Button className={style.remove} onClick={handleRemove} disabled={removeLoading}>삭제</Button>
         </article>

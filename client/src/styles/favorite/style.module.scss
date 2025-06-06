@@ -61,12 +61,78 @@
     & .remove {
         background-color: $color-alert;
     }
+    & .tag {
+        position: relative;
+        background-color: $color-idle;
+    }
 
     & button:disabled {
         background-color: $color-misExtra;
         color: $color-textSupporting;
         font-weight: 500;
         cursor: initial;
+    }
+
+    & .tagMenu {
+        position: absolute;
+        bottom: -5px;
+        left: 50%;
+        
+        transform: translate(-50%, 100%);
+
+        width: 150px;
+        height: auto;
+        padding: 13px;
+        
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba($color: #000000, $alpha: 0.3);
+        background-color: $color-mist;
+
+        cursor: initial;
+
+        z-index: 1;
+
+        & > .tag {
+            width: 100%;
+            padding: 0;
+
+            display: flex;
+            align-items: center;
+            gap: 0 8px;
+
+            background-color: transparent;
+            border: none;
+
+            font-size: 14px;
+            color: $color-white;
+
+            &:not(:first-child) {
+                margin-top: 9px;
+            }
+
+            & > .status {
+                $size: 20px;
+
+                flex-shrink: 0;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                
+                width: $size;
+                height: $size;
+                border-radius: 50%;
+
+                border: 1px solid;
+                border-color: transparent;
+                
+                background-color: #FF8800;
+
+                & > img {
+                    height: 2px;
+                }
+            }
+        }
     }
 }
 
