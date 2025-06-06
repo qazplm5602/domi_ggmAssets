@@ -189,4 +189,24 @@
     &:not(:first-child) {
         margin-top: 8px;
     }
+
+    &.edit {
+        display: flex;
+        height: 20px;
+
+        & > .color {
+            width: 20px;
+            height: 20px;
+            
+            border-radius: 4px;
+            background-color: #FF8800;
+
+            flex-shrink: 0;
+        }
+
+        & > input {
+            padding: 0;
+            flex-grow: 1;
+        }
+    }
 }
