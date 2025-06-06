@@ -1,4 +1,5 @@
 import { useAssetSearchOption } from "@components/AssetsList/hook";
+import AssetsListSideTagOption from "@components/AssetsList/Side/Tag/Option";
 import SideSection from "@components/AssetsList/SideSection";
 import FavoriteHead from "@components/Favorite/Head";
 import FavoriteSelectList from "@components/Favorite/List";
@@ -88,7 +89,7 @@ export default function Favorite() {
         <MetaTag title='찜찜한 에셋' />
         
         {/* 카테고리 이런거 */}
-        <SideSection />
+        <SideSection additional={<AssetsListSideTagOption />} />
 
         {/* 리스트 */}
         <article className={originStyle.content}>
