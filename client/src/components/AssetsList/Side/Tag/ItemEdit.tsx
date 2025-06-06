@@ -8,7 +8,7 @@ import AssetsListSideTagColorPicker from './ColorPicker';
 export default function AssetsListSideTagItemEdit() {
     return <div className={`${style.tag} ${style.edit}`}>
         <button className={style.color}>
-            {/* <AssetsListSideTagColorPicker /> */}
+            <AssetsListSideTagColorPicker show={false} />
         </button>
         <Input placeholder='태그 이름' />
         <IconButton icon={removeIcon} className={style.remove} />
