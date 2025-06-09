@@ -8,7 +8,14 @@ import AssetsListSideTagListEdit from './ListEdit';
 export default function AssetsListSideTagOption() {
     const [ edit, setEdit ] = useState(false);
 
-    return <AssetsListSideBox title={<AssetsListSideTagHead edit={edit} />} footer={edit && <AssetsListSideTagAddBtn />}>
+    const handleEditMode = function() {
+        setEdit(true);
+    }
+    const handleEditCancel = function() {
+        setEdit(false);
+    }
+
+    return <AssetsListSideBox title={<AssetsListSideTagHead edit={edit} onEdit={handleEditMode} onCancel={handleEditCancel} />} footer={edit && <AssetsListSideTagAddBtn />}>
         {edit ? <AssetsListSideTagListEdit /> : <AssetsListSideTagList />}
     </AssetsListSideBox>;
 }
