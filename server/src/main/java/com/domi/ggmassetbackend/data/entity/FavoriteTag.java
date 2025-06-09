@@ -2,7 +2,9 @@ package com.domi.ggmassetbackend.data.entity;
 
 import com.domi.ggmassetbackend.utils.GenerateShortId;
 import jakarta.persistence.*;
+import lombok.Data;
 
+@Data
 @Entity
 public class FavoriteTag {
     @Id
