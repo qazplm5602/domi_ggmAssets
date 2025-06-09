@@ -9,16 +9,21 @@ import { FavoriteTagVO } from '@domiTypes/favoriteTag';
 type Props = {
     data: FavoriteTagVO
     onChangeColor?: () => void,
-    onChangeName?: () => void,
+    onChangeName?: (value: string) => void,
     onRemove?: () => void,
 }
 
 export default function AssetsListSideTagItemEdit({ data, onChangeColor, onChangeName, onRemove }: Props) {
+    const handleInputChange = function(e: React.ChangeEvent<HTMLInputElement>) {
+        if (onChangeName)
+            onChangeName(e.target.value);
+    }
+
     return <div className={`${style.tag} ${style.edit}`}>
         <button className={style.color} style={{ backgroundColor: `#${data.color}` }}>
             <AssetsListSideTagColorPicker show={false} />
         </button>
-        <Input placeholder='태그 이름' value={data.name} />
+        <Input placeholder='태그 이름' value={data.name} onChange={handleInputChange} />
         <IconButton icon={removeIcon} className={style.remove} onClick={onRemove} />
     </div>;
 }
