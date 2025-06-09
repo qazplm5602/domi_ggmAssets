@@ -7,18 +7,23 @@ export default function AssetsListSideTagListEdit() {
     const [ originTags ] = useFavoriteTagList(); // 진짜 적용되어있는거
     const [ localTags, setLocalTags ] = useState<FavoriteTagVO[] | null>(null); // 이건 수정 사항
 
-    const handleChangeName = function(id: string, value: string) {
+    const setAttributeLocalTag = function(id: string, data: Partial<FavoriteTagVO>) {
         const itemIdx = localTags?.findIndex(v => v.id === id) ?? -1;
         if (itemIdx < 0 || !localTags) return; // 왜 없냐
 
-
         const newList = [ ...localTags ];
-
-        const item = { ...newList[itemIdx] };
-        item.name = value;
+        const item = { ...newList[itemIdx], ...data };
         
         newList.splice(itemIdx, 1, item);
         setLocalTags(newList);
+    }
+
+    const handleChangeName = function(id: string, value: string) {
+        setAttributeLocalTag(id, { name: value });
+    }
+
+    const handleChangeColor = function(id: string, color: string) {
+        setAttributeLocalTag(id, { color });
     }
 
     useEffect(() => {
@@ -32,6 +37,6 @@ export default function AssetsListSideTagListEdit() {
         return null;
 
     return <>
-        {localTags.map(v => <AssetsListSideTagItemEdit key={v.id} data={v} onChangeName={name => handleChangeName(v.id, name)} />)}
+        {localTags.map(v => <AssetsListSideTagItemEdit key={v.id} data={v} onChangeName={name => handleChangeName(v.id, name)} onChangeColor={color => handleChangeColor(v.id, color)} />)}
     </>;
 }
