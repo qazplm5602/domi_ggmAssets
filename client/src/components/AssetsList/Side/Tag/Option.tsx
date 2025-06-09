@@ -6,7 +6,7 @@ import { useState } from 'react';
 import AssetsListSideTagListEdit from './ListEdit';
 
 export default function AssetsListSideTagOption() {
-    const [ edit, setEdit ] = useState(true);
+    const [ edit, setEdit ] = useState(false);
 
     return <AssetsListSideBox title={<AssetsListSideTagHead edit={edit} />} footer={edit && <AssetsListSideTagAddBtn />}>
         {edit ? <AssetsListSideTagListEdit /> : <AssetsListSideTagList />}
