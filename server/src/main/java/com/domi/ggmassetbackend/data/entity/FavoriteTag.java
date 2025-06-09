@@ -1,14 +1,21 @@
 package com.domi.ggmassetbackend.data.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import org.hibernate.annotations.GenericGenerator;
+import com.domi.ggmassetbackend.utils.GenerateShortId;
+import jakarta.persistence.*;
 
 @Entity
 public class FavoriteTag {
     @Id
-    @GeneratedValue(generator = "short-id")
-    @GenericGenerator()
+    @GenerateShortId
     private String id;
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private User owner;
+
+    @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
+    private String color;
 }
