@@ -7,5 +7,6 @@ export interface FavoriteTagVO {
 
 export interface FavoriteTagContextData {
     tags: FavoriteTagVO[] | null,
-    setTags: React.Dispatch<React.SetStateAction<FavoriteTagVO[] | null>> | undefined
+    setTags: React.Dispatch<React.SetStateAction<FavoriteTagVO[] | null>> | undefined,
+    addCallRef: React.RefObject<(() => void) | null> | undefined
 }

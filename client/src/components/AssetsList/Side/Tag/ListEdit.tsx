@@ -1,11 +1,21 @@
-import { useFavoriteTagList } from "@components/Favorite/Tag/Context";
+import { favoriteTagContext, useFavoriteTagList } from "@components/Favorite/Tag/Context";
 import AssetsListSideTagItemEdit from "./ItemEdit";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FavoriteTagVO } from "@domiTypes/favoriteTag";
 
 export default function AssetsListSideTagListEdit() {
     const [ originTags ] = useFavoriteTagList(); // 진짜 적용되어있는거
     const [ localTags, setLocalTags ] = useState<FavoriteTagVO[] | null>(null); // 이건 수정 사항
+    const { addCallRef } = useContext(favoriteTagContext);
+    
+    if (!addCallRef)
+        throw new Error("아니 여기도 왜 Tag Providor이 없지???");
+
+    // 태그 추가 콜백
+    addCallRef.current = function() {
+        if (!localTags) return;
+        setLocalTags([ ...localTags, { id: "asd", color: "FF0000", name: "추강" } ]);
+    }
 
     const setAttributeLocalTag = function(id: string, data: Partial<FavoriteTagVO>) {
         const itemIdx = localTags?.findIndex(v => v.id === id) ?? -1;

@@ -1,12 +1,13 @@
 import { AliveType } from "@domiTypes/alive";
 import { FavoriteTagContextData, FavoriteTagVO } from "@domiTypes/favoriteTag";
 import { request } from "@utils/request";
-import { createContext, useContext, useEffect, useState } from "react"
+import { createContext, useContext, useEffect, useRef, useState } from "react"
 
 // Context API
 const contextDefaultValue: FavoriteTagContextData = {
     tags: null,
-    setTags: undefined
+    setTags: undefined,
+    addCallRef: undefined
 }
 export const favoriteTagContext = createContext<FavoriteTagContextData>(contextDefaultValue);
 
@@ -27,6 +28,7 @@ type Props = {
 
 export function FavoriteTagContextProvider({ children }: Props) {
     const [ tags, setTags ] = useState<FavoriteTagVO[] | null>(null);
+    const addCallRef = useRef<(() => void) | null>(null);
 
     const loadTags = async function(aliveRef: AliveType) {
         const result = await request<FavoriteTagVO[]>("asset/tag");
@@ -45,7 +47,7 @@ export function FavoriteTagContextProvider({ children }: Props) {
         }
     }, []);
 
-    return <favoriteTagContext.Provider value={{ tags, setTags }}>
+    return <favoriteTagContext.Provider value={{ tags, setTags, addCallRef }}>
         {children}
     </favoriteTagContext.Provider>;
 }
