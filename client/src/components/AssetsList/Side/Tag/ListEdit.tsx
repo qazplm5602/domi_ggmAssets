@@ -26,6 +26,16 @@ export default function AssetsListSideTagListEdit() {
         setAttributeLocalTag(id, { color });
     }
 
+    const handleRemoveItem = function(id: string) {
+        const itemIdx = localTags?.findIndex(v => v.id === id) ?? -1;
+        if (itemIdx < 0 || !localTags) return;
+        
+        const newList = [ ...localTags ];
+        newList.splice(itemIdx, 1);
+
+        setLocalTags(newList);
+    }
+
     useEffect(() => {
         // 로딩 끗!!!!!
         if (localTags === null && originTags !== null)
@@ -37,6 +47,6 @@ export default function AssetsListSideTagListEdit() {
         return null;
 
     return <>
-        {localTags.map(v => <AssetsListSideTagItemEdit key={v.id} data={v} onChangeName={name => handleChangeName(v.id, name)} onChangeColor={color => handleChangeColor(v.id, color)} />)}
+        {localTags.map(v => <AssetsListSideTagItemEdit key={v.id} data={v} onChangeName={name => handleChangeName(v.id, name)} onChangeColor={color => handleChangeColor(v.id, color)} onRemove={() => handleRemoveItem(v.id)} />)}
     </>;
 }
