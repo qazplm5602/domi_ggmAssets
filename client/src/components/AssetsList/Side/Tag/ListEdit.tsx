@@ -41,11 +41,19 @@ export default function AssetsListSideTagListEdit() {
                 const state = tagStateRef.current[id];
                 const item = indexedTags[id];
 
+                let name: string | undefined;
+                let color: string | undefined;
+
+                if (state !== "remove") {
+                    name = item.name;
+                    color = item.color;
+                }
+
                 return {
                     action: state,
                     id: (state !== "add") ? id : undefined,
-                    name: item.name,
-                    color: item.color
+                    name,
+                    color
                 }
             });
 

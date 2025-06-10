@@ -29,7 +29,7 @@ public class FavoriteTagController {
     }
 
     @PostMapping("")
-    void saveTags(@RequestBody List<FavoriteTagActionDTO> actions) {
-        favoriteTagService.applyFavoriteTags(actions);
+    List<String> saveTags(@RequestBody List<FavoriteTagActionDTO> actions) {
+        return favoriteTagService.applyFavoriteTags(actions);
     }
 }

@@ -9,7 +9,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @RequiredArgsConstructor
 @Service
@@ -27,8 +29,9 @@ public class FavoriteTagService {
     }
 
     @Transactional
-    public void applyFavoriteTags(List<FavoriteTagActionDTO> actions) {
+    public List<String> applyFavoriteTags(List<FavoriteTagActionDTO> actions) {
         User user = userService.getCurrentUser();
+        List<String> newItemIds = new ArrayList<>();
 
         for (FavoriteTagActionDTO action : actions) {
             FavoriteTag tag = null;
@@ -36,12 +39,12 @@ public class FavoriteTagService {
                 tag = getTag(action.getId());
 
                 // 권한 확인
-                if (tag.getOwner() != user)
+                if (tag.getOwner().getId() != user.getId())
                     throw new FavoriteTagException(FavoriteTagException.Type.OTHER_USER_TAG);
             }
 
             // 왜 tag가 없엉
-            if (action.getAction() != "add" && tag == null)
+            if (!Objects.equals(action.getAction(), "add") && tag == null)
                 throw new FavoriteTagException(FavoriteTagException.Type.INVALID_EDIT);
 
             String name = action.getName();
@@ -60,8 +63,7 @@ public class FavoriteTagService {
                     tag.setName(action.getName());
                     tag.setColor(action.getColor());
 
-                    // 이건 아직 생각중
-                    favoriteTagRepository.save(tag);
+                    newItemIds.add(favoriteTagRepository.save(tag).getId());
                     break;
                 case "remove":
                     favoriteTagRepository.delete(tag);
@@ -75,7 +77,11 @@ public class FavoriteTagService {
 
                     favoriteTagRepository.save(tag);
                     break;
+                default:
+                    throw new FavoriteTagException(FavoriteTagException.Type.INVALID_EDIT);
             }
         }
+
+        return newItemIds;
     }
 }
