@@ -8,7 +8,7 @@ import { favoriteTagContext } from '@components/Favorite/Tag/Context';
 
 export default function AssetsListSideTagOption() {
     const [ edit, setEdit ] = useState(false);
-    const { addCallRef } = useContext(favoriteTagContext);
+    const { addCallRef, saveCallRef } = useContext(favoriteTagContext);
 
     const handleEditMode = function() {
         setEdit(true);
@@ -17,6 +17,12 @@ export default function AssetsListSideTagOption() {
         setEdit(false);
     }
 
+    const handleEditSave = function() {
+        const cb = saveCallRef?.current;
+
+        if (cb)
+            cb();
+    }
     const handleAddItem = function() {
         const cb = addCallRef?.current;
 
@@ -24,7 +30,7 @@ export default function AssetsListSideTagOption() {
             cb();
     }
 
-    return <AssetsListSideBox title={<AssetsListSideTagHead edit={edit} onEdit={handleEditMode} onCancel={handleEditCancel} />} footer={edit && <AssetsListSideTagAddBtn onClick={handleAddItem} />}>
+    return <AssetsListSideBox title={<AssetsListSideTagHead edit={edit} onEdit={handleEditMode} onCancel={handleEditCancel} onSave={handleEditSave} />} footer={edit && <AssetsListSideTagAddBtn onClick={handleAddItem} />}>
         {edit ? <AssetsListSideTagListEdit /> : <AssetsListSideTagList />}
     </AssetsListSideBox>;
 }

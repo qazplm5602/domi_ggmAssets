@@ -3,10 +3,11 @@ import style from '@styles/assetsList/side.module.scss';
 type Props = {
     edit: boolean,
     onEdit?: () => void,
-    onCancel?: () => void
+    onCancel?: () => void,
+    onSave?: () => void
 }
 
-export default function AssetsListSideTagHead({ edit, onEdit, onCancel }: Props) {
+export default function AssetsListSideTagHead({ edit, onEdit, onCancel, onSave }: Props) {
     return <section className={style.tagHead}>
         <h1>태그</h1>
 
@@ -15,7 +16,7 @@ export default function AssetsListSideTagHead({ edit, onEdit, onCancel }: Props)
             {!edit && <button onClick={onEdit}>편집</button>}
 
             {/* 편집중임임 */}
-            {edit && <button className={style.save}>저장</button>}
+            {edit && <button className={style.save} onClick={onSave}>저장</button>}
             {edit && <button className={style.cancel} onClick={onCancel}>취소</button>}
         </article>
     </section>;

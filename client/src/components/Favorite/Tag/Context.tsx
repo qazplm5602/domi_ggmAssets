@@ -7,7 +7,8 @@ import { createContext, useContext, useEffect, useRef, useState } from "react"
 const contextDefaultValue: FavoriteTagContextData = {
     tags: null,
     setTags: undefined,
-    addCallRef: undefined
+    addCallRef: undefined,
+    saveCallRef: undefined
 }
 export const favoriteTagContext = createContext<FavoriteTagContextData>(contextDefaultValue);
 
@@ -29,6 +30,7 @@ type Props = {
 export function FavoriteTagContextProvider({ children }: Props) {
     const [ tags, setTags ] = useState<FavoriteTagVO[] | null>(null);
     const addCallRef = useRef<(() => void) | null>(null);
+    const saveCallRef = useRef<(() => void) | null>(null);
 
     const loadTags = async function(aliveRef: AliveType) {
         const result = await request<FavoriteTagVO[]>("asset/tag");
@@ -47,7 +49,7 @@ export function FavoriteTagContextProvider({ children }: Props) {
         }
     }, []);
 
-    return <favoriteTagContext.Provider value={{ tags, setTags, addCallRef }}>
+    return <favoriteTagContext.Provider value={{ tags, setTags, addCallRef, saveCallRef }}>
         {children}
     </favoriteTagContext.Provider>;
 }

@@ -9,10 +9,10 @@ type TagStateDict = { [key: string]: 'edit' | 'remove' | 'add' };
 export default function AssetsListSideTagListEdit() {
     const [ originTags ] = useFavoriteTagList(); // 진짜 적용되어있는거
     const [ localTags, setLocalTags ] = useState<FavoriteTagVO[] | null>(null); // 이건 수정 사항
-    const { addCallRef } = useContext(favoriteTagContext);
+    const { addCallRef, saveCallRef } = useContext(favoriteTagContext);
     const tagStateRef = useRef<TagStateDict>({});
     
-    if (!addCallRef)
+    if (!addCallRef || !saveCallRef)
         throw new Error("아니 여기도 왜 Tag Providor이 없지???");
 
     // 태그 추가 콜백
@@ -24,6 +24,10 @@ export default function AssetsListSideTagListEdit() {
         setLocalTags([ ...localTags, newItem ]);
 
         tagStateRef.current[id] = 'add';
+    }
+
+    saveCallRef.current = function() {
+        console.log(tagStateRef);
     }
 
     const setAttributeLocalTag = function(id: string, data: Partial<FavoriteTagVO>) {
@@ -56,7 +60,11 @@ export default function AssetsListSideTagListEdit() {
 
         setLocalTags(newList);
 
-        tagStateRef.current[id] = 'remove';
+        // 새거인데 지운거면 삭제 요청할 필요가 없지롱
+        if (tagStateRef.current[id] === "add")
+            delete tagStateRef.current[id];
+        else
+            tagStateRef.current[id] = 'remove';
     }
 
     useEffect(() => {
