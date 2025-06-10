@@ -8,7 +8,7 @@ import { request } from "@utils/request";
 type TagStateDict = { [key: string]: 'edit' | 'remove' | 'add' };
 
 export default function AssetsListSideTagListEdit() {
-    const [ originTags ] = useFavoriteTagList(); // 진짜 적용되어있는거
+    const [ originTags, setOriginTags ] = useFavoriteTagList(); // 진짜 적용되어있는거
     const [ localTags, setLocalTags ] = useState<FavoriteTagVO[] | null>(null); // 이건 수정 사항
     const { addCallRef, saveCallRef } = useContext(favoriteTagContext);
     const tagStateRef = useRef<TagStateDict>({});
@@ -32,8 +32,13 @@ export default function AssetsListSideTagListEdit() {
 
         // 인덱싱
         const indexedTags: FavoriteTagDict = {};
-        localTags.forEach(v => {
+        const indexDict: { [key: string]: number } = {};
+
+        const copyLocalTags = [ ...localTags ];
+
+        localTags.forEach((v, i) => {
             indexedTags[v.id] = v;
+            indexDict[v.id] = i;
         });
 
         const form = Object.keys(tagStateRef.current)
@@ -51,7 +56,7 @@ export default function AssetsListSideTagListEdit() {
 
                 return {
                     action: state,
-                    id: (state !== "add") ? id : undefined,
+                    id,
                     name,
                     color
                 }
@@ -59,7 +64,19 @@ export default function AssetsListSideTagListEdit() {
 
         if (form.length === 0) return; // 애초에 저장할게 없자나..
 
-        const result = await request<unknown>("asset/tag", { method: "POST", data: form });
+        const result = await request<string[]>("asset/tag", { method: "POST", data: form });
+        
+        // 서버에 반영 안된 아이템 인덱스들기름
+        form.filter(v => v.action === "add")
+            .forEach((v, i) => {
+                const idx = indexDict[v.id];
+                const serverId = result.data[i];
+                const newItem = { ...copyLocalTags[idx], id: serverId };
+
+                copyLocalTags.splice(idx, 1, newItem);
+            });
+
+        setOriginTags(copyLocalTags);
     }
 
     const setAttributeLocalTag = function(id: string, data: Partial<FavoriteTagVO>) {

@@ -35,7 +35,9 @@ public class FavoriteTagService {
 
         for (FavoriteTagActionDTO action : actions) {
             FavoriteTag tag = null;
-            if (action.getId() != null) {
+            boolean addAction = Objects.equals(action.getAction(), "add");
+
+            if (action.getId() != null && !addAction) {
                 tag = getTag(action.getId());
 
                 // 권한 확인
@@ -44,7 +46,7 @@ public class FavoriteTagService {
             }
 
             // 왜 tag가 없엉
-            if (!Objects.equals(action.getAction(), "add") && tag == null)
+            if (!addAction && tag == null)
                 throw new FavoriteTagException(FavoriteTagException.Type.INVALID_EDIT);
 
             String name = action.getName();
