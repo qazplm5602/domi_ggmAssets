@@ -1,8 +1,9 @@
 import { favoriteTagContext, useFavoriteTagList } from "@components/Favorite/Tag/Context";
 import AssetsListSideTagItemEdit from "./ItemEdit";
 import { useContext, useEffect, useRef, useState } from "react";
-import { FavoriteTagVO } from "@domiTypes/favoriteTag";
+import { FavoriteTagDict, FavoriteTagVO } from "@domiTypes/favoriteTag";
 import { generateRandomString } from "@utils/misc";
+import { request } from "@utils/request";
 
 type TagStateDict = { [key: string]: 'edit' | 'remove' | 'add' };
 
@@ -26,8 +27,31 @@ export default function AssetsListSideTagListEdit() {
         tagStateRef.current[id] = 'add';
     }
 
-    saveCallRef.current = function() {
-        console.log(tagStateRef);
+    saveCallRef.current = async function() {
+        if (!localTags) return;
+
+        // 인덱싱
+        const indexedTags: FavoriteTagDict = {};
+        localTags.forEach(v => {
+            indexedTags[v.id] = v;
+        });
+
+        const form = Object.keys(tagStateRef.current)
+            .map(id => {
+                const state = tagStateRef.current[id];
+                const item = indexedTags[id];
+
+                return {
+                    action: state,
+                    id: (state !== "add") ? id : undefined,
+                    name: item.name,
+                    color: item.color
+                }
+            });
+
+        if (form.length === 0) return; // 애초에 저장할게 없자나..
+
+        const result = await request<unknown>("asset/tag", { method: "POST", data: form });
     }
 
     const setAttributeLocalTag = function(id: string, data: Partial<FavoriteTagVO>) {

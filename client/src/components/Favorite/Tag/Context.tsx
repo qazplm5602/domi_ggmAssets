@@ -30,7 +30,7 @@ type Props = {
 export function FavoriteTagContextProvider({ children }: Props) {
     const [ tags, setTags ] = useState<FavoriteTagVO[] | null>(null);
     const addCallRef = useRef<(() => void) | null>(null);
-    const saveCallRef = useRef<(() => void) | null>(null);
+    const saveCallRef = useRef<(() => Promise<void>) | null>(null);
 
     const loadTags = async function(aliveRef: AliveType) {
         const result = await request<FavoriteTagVO[]>("asset/tag");

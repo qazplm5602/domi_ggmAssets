@@ -17,11 +17,18 @@ export default function AssetsListSideTagOption() {
         setEdit(false);
     }
 
-    const handleEditSave = function() {
+    const handleEditSave = async function() {
         const cb = saveCallRef?.current;
 
+        // 여기에서 잠금
+        
         if (cb)
-            cb();
+            await cb();
+        
+        
+        // 잠금 끝
+        // 그리고 닫기
+        handleEditCancel();
     }
     const handleAddItem = function() {
         const cb = addCallRef?.current;
