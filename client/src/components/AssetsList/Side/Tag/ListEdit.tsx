@@ -1,12 +1,16 @@
 import { favoriteTagContext, useFavoriteTagList } from "@components/Favorite/Tag/Context";
 import AssetsListSideTagItemEdit from "./ItemEdit";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { FavoriteTagVO } from "@domiTypes/favoriteTag";
+import { generateRandomString } from "@utils/misc";
+
+type TagStateDict = { [key: string]: 'edit' | 'remove' | 'add' };
 
 export default function AssetsListSideTagListEdit() {
     const [ originTags ] = useFavoriteTagList(); // 진짜 적용되어있는거
     const [ localTags, setLocalTags ] = useState<FavoriteTagVO[] | null>(null); // 이건 수정 사항
     const { addCallRef } = useContext(favoriteTagContext);
+    const tagStateRef = useRef<TagStateDict>({});
     
     if (!addCallRef)
         throw new Error("아니 여기도 왜 Tag Providor이 없지???");
@@ -14,7 +18,12 @@ export default function AssetsListSideTagListEdit() {
     // 태그 추가 콜백
     addCallRef.current = function() {
         if (!localTags) return;
-        setLocalTags([ ...localTags, { id: "asd", color: "FF0000", name: "추강" } ]);
+
+        const id = `${generateRandomString(10)}-new`;
+        const newItem = { id, color: "FF0000", name: "추강" };
+        setLocalTags([ ...localTags, newItem ]);
+
+        tagStateRef.current[id] = 'add';
     }
 
     const setAttributeLocalTag = function(id: string, data: Partial<FavoriteTagVO>) {
@@ -26,6 +35,8 @@ export default function AssetsListSideTagListEdit() {
         
         newList.splice(itemIdx, 1, item);
         setLocalTags(newList);
+
+        tagStateRef.current[id] = 'edit';
     }
 
     const handleChangeName = function(id: string, value: string) {
@@ -44,6 +55,8 @@ export default function AssetsListSideTagListEdit() {
         newList.splice(itemIdx, 1);
 
         setLocalTags(newList);
+
+        tagStateRef.current[id] = 'remove';
     }
 
     useEffect(() => {
