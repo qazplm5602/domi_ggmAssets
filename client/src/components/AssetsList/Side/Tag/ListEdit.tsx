@@ -89,7 +89,8 @@ export default function AssetsListSideTagListEdit() {
         newList.splice(itemIdx, 1, item);
         setLocalTags(newList);
 
-        tagStateRef.current[id] = 'edit';
+        if (tagStateRef.current[id] !== "add")
+            tagStateRef.current[id] = 'edit';
     }
 
     const handleChangeName = function(id: string, value: string) {
