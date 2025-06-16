@@ -1,12 +1,16 @@
 package com.domi.ggmassetbackend.services;
 
 import com.domi.ggmassetbackend.data.dto.FavoriteTagActionDTO;
+import com.domi.ggmassetbackend.data.entity.Asset;
+import com.domi.ggmassetbackend.data.entity.AssetFavoriteTag;
 import com.domi.ggmassetbackend.data.entity.FavoriteTag;
 import com.domi.ggmassetbackend.data.entity.User;
 import com.domi.ggmassetbackend.exceptions.FavoriteTagException;
+import com.domi.ggmassetbackend.repositories.AssetFavoriteTagRepository;
 import com.domi.ggmassetbackend.repositories.FavoriteTagRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,6 +22,7 @@ import java.util.Objects;
 public class FavoriteTagService {
     private final FavoriteTagRepository favoriteTagRepository;
     private final UserService userService;
+    private final AssetFavoriteTagRepository assetFavoriteTagRepository;
 
     public List<FavoriteTag> getFavoriteTagsByOwner(User owner) {
         return favoriteTagRepository.findByOwner(owner);
@@ -86,4 +91,18 @@ public class FavoriteTagService {
 
         return newItemIds;
     }
+
+    public List<Integer> getAssetIdsForTags(List<FavoriteTag> tags) {
+        List<AssetFavoriteTag> favoriteTags = assetFavoriteTagRepository.findByTagIn(tags);
+        return favoriteTags
+                .stream()
+                .map(v -> v.getFavorite().getAsset().getId())
+                .toList();
+    }
+
+//    public Specification<Asset> hasAssetTag() {
+//        return (root, query, cb) -> {
+//
+//        };
+//    }
 }

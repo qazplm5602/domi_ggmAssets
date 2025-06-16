@@ -49,4 +49,6 @@ public class AssetFavoriteService {
     public int deleteBulk(User user, List<Integer> assetIds) {
         return assetFavoriteRepository.deleteByUserAndAssetIdIn(user, assetIds);
     }
+
+
 }
