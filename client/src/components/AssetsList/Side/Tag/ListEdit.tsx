@@ -21,7 +21,7 @@ export default function AssetsListSideTagListEdit() {
         if (!localTags) return;
 
         const id = `${generateRandomString(10)}-new`;
-        const newItem = { id, color: "FF0000", name: "추강" };
+        const newItem = { id, color: "E05F42", name: "추강" };
         setLocalTags([ ...localTags, newItem ]);
 
         tagStateRef.current[id] = 'add';
