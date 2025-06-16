@@ -17,7 +17,8 @@ export function useAssetSearchOption(): AssetSearchOption {
         amount: getParams("amount", "16", true),
         category: getParams("category", ""),
         order: getParams("order", "0", true),
-        page: getParams("page", "1", true)
+        page: getParams("page", "1", true),
+        tag: getParams("tag", "")
     };
 }
 

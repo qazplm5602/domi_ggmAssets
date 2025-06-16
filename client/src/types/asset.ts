@@ -57,7 +57,8 @@ export interface AssetSearchOption {
     category: string,
     order: string,
     amount: string,
-    page: string
+    page: string,
+    tag: string
 }
 
 export interface AssetEditFormDTO extends Omit<Partial<AssetAllVO>, "images" | "category" | "platform"> {
