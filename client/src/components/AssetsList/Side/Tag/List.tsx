@@ -1,7 +1,7 @@
 import { useFavoriteTagList } from "@components/Favorite/Tag/Context";
 import AssetsListSideTagItem from "./Item";
 import { useAssetSearchOption, useSetAssetSearchOption } from "@components/AssetsList/hook";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 
 export default function AssetsListSideTagList() {
     const [ tags ] = useFavoriteTagList();
@@ -9,15 +9,32 @@ export default function AssetsListSideTagList() {
     const setSearchOption = useSetAssetSearchOption();
     const selectTags = useMemo(() => new Set(selectTagArray == '' ? [] : selectTagArray.split(",")), [ selectTagArray ]);
 
+    const saveSelectTag = function() {
+        const tagParam = Array.from(selectTags).join(",")
+        setSearchOption({ tag: tagParam });
+    }
+
     const handleTagToggle = function(id:string, active: boolean) {
         if (active)
             selectTags.add(id);
         else
             selectTags.delete(id);
 
-        const tagParam = Array.from(selectTags).join(",")
-        setSearchOption({ tag: tagParam });
+        saveSelectTag();
     }
+
+    // 태그 리스트 바뀜
+    useEffect(() => {
+        if (!tags) return;
+        
+        const indxedTags = new Set(tags.map(v => v.id));
+        Array.from(selectTags).forEach(id => {
+            if (!indxedTags.has(id)) { // 아니 이거 뭔 태그임;;
+                selectTags.delete(id);
+            }
+        });
+        saveSelectTag();
+    }, [ tags ]);
     
     if (!tags)
         return null; // 로딩즁...
