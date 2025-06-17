@@ -42,6 +42,7 @@ public class AssetService {
     private final ThumbnailAttachmentService thumbnailAttachmentService;
     private final FileService fileService;
     private final AssetFavoriteService assetFavoriteService;
+    private final FavoriteTagService favoriteTagService;
 
     public Asset getAssetById(int id) {
         return assetRepository.findById(id).orElseThrow(() -> new AssetException(AssetException.Type.NOT_FOUND));
@@ -84,6 +85,11 @@ public class AssetService {
         if (activeFavorite) {
             specification = specification.and(assetFavoriteService.hasFavorite());
             pageable = Pageable.unpaged(); // 찜찜한 에셋은 안짤라도 됨
+        }
+
+        boolean activeTag = option.getTag() != null && !option.getTag().isBlank();
+        if (activeTag) {
+            specification = specification.and(favoriteTagService.hasAssetMyTag(option.getTag()));
         }
 
         return assetRepository.findAll(specification, pageable);

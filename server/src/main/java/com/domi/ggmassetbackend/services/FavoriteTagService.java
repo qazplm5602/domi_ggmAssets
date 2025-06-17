@@ -14,6 +14,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,6 +32,17 @@ public class FavoriteTagService {
     public FavoriteTag getTag(String id) {
         return favoriteTagRepository.findById(id)
                 .orElseThrow(() -> new FavoriteTagException(FavoriteTagException.Type.NOT_FOUND));
+    }
+
+    public FavoriteTag getTagWithMyPermission(String id) {
+        User user = userService.getCurrentUser();
+        FavoriteTag favoriteTag = getTag(id);
+
+        if (user.getId() != favoriteTag.getOwner().getId()) {
+            throw new FavoriteTagException(FavoriteTagException.Type.OTHER_USER_TAG);
+        }
+
+        return favoriteTag;
     }
 
     @Transactional
@@ -100,9 +112,16 @@ public class FavoriteTagService {
                 .toList();
     }
 
-//    public Specification<Asset> hasAssetTag() {
-//        return (root, query, cb) -> {
-//
-//        };
-//    }
+    public Specification<Asset> hasAssetMyTag(String tagParam) {
+        List<FavoriteTag> tags = Arrays.stream(tagParam
+                .split(","))
+                .map(this::getTagWithMyPermission)
+                .toList();
+
+        List<Integer> assetIds = getAssetIdsForTags(tags);
+
+        return (root, query, cb) -> {
+            return root.get("id").in(assetIds);
+        };
+    }
 }

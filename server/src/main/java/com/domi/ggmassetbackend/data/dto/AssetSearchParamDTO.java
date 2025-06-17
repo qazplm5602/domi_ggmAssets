@@ -8,6 +8,7 @@ import lombok.Getter;
 public class AssetSearchParamDTO {
     Integer amount;
     String category;
+    String tag;
     Integer order;
     Integer page;
     Boolean random;
