@@ -20,6 +20,7 @@ export default function FavoriteSelectHead({ selects, assets, onCheck, onRemove 
     const allChecked = assets !== null &&  assets.length > 0 && selects.size === assets.length;
     const { openPopup, closePopup } = usePopupStore();
     const [ removeLoading, setRemoveLoading ] = useState(false);
+    const [ tagMenuShow, setTagMenuShow ] = useState(false);
 
     const removeSelectAssets = async function() {
         setRemoveLoading(true);
@@ -70,6 +71,14 @@ export default function FavoriteSelectHead({ selects, assets, onCheck, onRemove 
         ]);
     }
     
+    const handleTag = function(e: React.MouseEvent<HTMLElement>) {
+        e.stopPropagation();
+        setTagMenuShow(!tagMenuShow);
+    }
+    const handleTagClose = function() {
+        setTagMenuShow(false);
+    }
+
     return <section className={style.selectHead}>
         <article className={style.left}>
             <FavoriteSelectHeadCheck all={allChecked} active={allChecked || selects.size > 0} onChange={onCheck} />
@@ -77,9 +86,9 @@ export default function FavoriteSelectHead({ selects, assets, onCheck, onRemove 
         </article>
         
         <article className={style.right}>
-            <Button className={style.tag}>
+            <Button className={style.tag} onClick={handleTag}>
                 <p>태그</p>
-                <FavoriteSelectHeadTagMenu show={false} />
+                <FavoriteSelectHeadTagMenu show={tagMenuShow} onClose={handleTagClose} />
             </Button>
             <Button className={style.download} onClick={handleDownload}>다운로드</Button>
             <Button className={style.remove} onClick={handleRemove} disabled={removeLoading}>삭제</Button>

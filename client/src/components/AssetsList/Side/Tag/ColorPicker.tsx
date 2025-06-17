@@ -1,6 +1,7 @@
 import style from '@styles/assetsList/side.module.scss';
+import { useBodyClickEvent } from '@utils/hook';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 
 const ANIM = {
     enter: { opacity: 1, right: -3 },
@@ -40,12 +41,14 @@ export default function AssetsListSideTagColorPicker({ show, onSelect, onClose }
         handleBodyClick();
     }
 
-    useEffect(() => {
-        if (!show) return;
+    // useEffect(() => {
+    //     if (!show) return;
 
-        document.body.addEventListener("click", handleBodyClick);
-        return () => document.body.removeEventListener("click", handleBodyClick);
-    }, [ show ]);
+    //     document.body.addEventListener("click", handleBodyClick);
+    //     return () => document.body.removeEventListener("click", handleBodyClick);
+    // }, [ show ]);
+
+    useBodyClickEvent(handleBodyClick);
     
     return <AnimatePresence>
         {show && <motion.div className={style.colorPicker} initial={ANIM.exit} animate={ANIM.enter} exit={ANIM.exit} onClick={handleBoxClick}>
