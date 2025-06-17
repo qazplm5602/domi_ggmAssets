@@ -28,12 +28,16 @@ export default function AssetsListSideTagList() {
         if (!tags) return;
         
         const indxedTags = new Set(tags.map(v => v.id));
+        let changed = false;
         Array.from(selectTags).forEach(id => {
             if (!indxedTags.has(id)) { // 아니 이거 뭔 태그임;;
                 selectTags.delete(id);
+                changed = true;
             }
         });
-        saveSelectTag();
+
+        if (changed)
+            saveSelectTag();
     }, [ tags ]);
     
     if (!tags)
