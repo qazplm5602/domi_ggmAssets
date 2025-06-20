@@ -1,5 +1,6 @@
 package com.domi.ggmassetbackend.controllers;
 
+import com.domi.ggmassetbackend.data.assemblers.AssetAssembler;
 import com.domi.ggmassetbackend.data.dto.AssetAutoFieldDTO;
 import com.domi.ggmassetbackend.data.dto.AssetEditFormDTO;
 import com.domi.ggmassetbackend.data.dto.AssetSearchParamDTO;
@@ -30,18 +31,19 @@ import java.util.UUID;
 public class AssetController {
     private final AssetService assetService;
     private final CategoryService categoryService;
+    private final AssetAssembler assetAssembler;
 
     @GetMapping("/{id}/detail")
     AssetDetailVO getAssetById(@PathVariable int id) {
         Asset asset = assetService.getAssetById(id);
-        return AssetDetailVO.from(asset, categoryService);
+        return assetAssembler.toAssetVO(AssetDetailVO::new, asset);
     }
 
     @GetMapping("/search")
     PageContentVO<AssetPreviewVO> getAssetsBySearch(@ModelAttribute AssetSearchParamDTO option) {
         Page<Asset> pageAssets = assetService.searchAssets(option);
 
-        return new PageContentVO<>(pageAssets.map(v -> AssetPreviewVO.from(v, categoryService)).toList(), pageAssets.getTotalPages());
+        return new PageContentVO<>(pageAssets.map(v -> assetAssembler.toAssetVO(AssetPreviewVO::new, v)).toList(), pageAssets.getTotalPages());
     }
 
     @GetMapping("/search/preview")
@@ -82,7 +84,7 @@ public class AssetController {
     @GetMapping("/admin/{id}/detail")
     AssetAllVO getAssetAdminDetailById(@PathVariable int id) {
         Asset asset = assetService.getAssetById(id);
-        return AssetAllVO.from(asset, categoryService);
+        return assetAssembler.toAssetVO(AssetAllVO::new, asset);
     }
 
     @PostMapping("/admin/edit")

@@ -9,20 +9,8 @@ public class AssetAllVO extends AssetDetailVO {
     private String platformUrl;
 
     @Override
-    public void assetDataInit(Asset asset, CategoryService categoryService) {
-        super.assetDataInit(asset, categoryService);
-
+    public void assetDataInit(Asset asset) {
+        super.assetDataInit(asset);
         this.platformUrl = asset.getPlatformUrl();
-    }
-
-    public static AssetAllVO from(Asset asset, CategoryService categoryService) {
-        AssetAllVO result = new AssetAllVO();
-        result.assetDataInit(asset, categoryService);
-
-        return result;
-    }
-
-    public static AssetAllVO from(Asset asset) {
-        return from(asset, null);
     }
 }

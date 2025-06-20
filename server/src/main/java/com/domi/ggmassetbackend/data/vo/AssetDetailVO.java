@@ -21,8 +21,8 @@ public class AssetDetailVO extends AssetBaseVO {
     private String fileVersion;
 
     @Override
-    public void assetDataInit(Asset asset, CategoryService categoryService) {
-        super.assetDataInit(asset, categoryService);
+    public void assetDataInit(Asset asset) {
+        super.assetDataInit(asset);
 
         this.shortDesc = asset.getShortDesc();
         this.description = asset.getDescription();
@@ -42,15 +42,5 @@ public class AssetDetailVO extends AssetBaseVO {
                 .sorted((a, b) -> Integer.compare(a.getSort(), b.getSort()))
                 .map(ThumbnailVO::from)
                 .toList();
-    }
-
-    public static AssetDetailVO from(Asset asset) {
-        return from(asset, null);
-    }
-
-    public static AssetDetailVO from(Asset asset, CategoryService categoryService) {
-        AssetDetailVO result = new AssetDetailVO();
-        result.assetDataInit(asset, categoryService);
-        return result;
     }
 }
