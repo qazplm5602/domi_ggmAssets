@@ -16,6 +16,9 @@ public class AssetBaseVO {
     @Setter
     protected List<CategoryVO> category;
 
+    @Setter
+    protected List<FavoriteTagVO> tags;
+
     protected String title;
     protected String publisher;
     protected PublishPlatform platform;

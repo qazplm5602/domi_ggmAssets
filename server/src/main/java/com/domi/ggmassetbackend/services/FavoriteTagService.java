@@ -34,6 +34,15 @@ public class FavoriteTagService {
                 .orElseThrow(() -> new FavoriteTagException(FavoriteTagException.Type.NOT_FOUND));
     }
 
+    public List<FavoriteTag> getMyFavoriteTagsByAsset(Asset asset) {
+        User user = userService.getCurrentUser();
+
+        return assetFavoriteTagRepository.findByAssetAndUser(user, asset)
+                .stream()
+                .map(AssetFavoriteTag::getTag)
+                .toList();
+    }
+
     public FavoriteTag getTagWithMyPermission(String id) {
         User user = userService.getCurrentUser();
         FavoriteTag favoriteTag = getTag(id);
