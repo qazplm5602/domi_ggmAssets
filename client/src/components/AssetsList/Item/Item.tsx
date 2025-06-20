@@ -14,6 +14,7 @@ type Props = {
 const TEST_MOCK_ITEM: AssetPreviewVO =  {
     "id": 1,
     "category": null,
+    "tags": [],
     "title": "도미 에셋 ㅁㄴㅇㄹ",
     "publisher": "도미임",
     "platform": "Unity",

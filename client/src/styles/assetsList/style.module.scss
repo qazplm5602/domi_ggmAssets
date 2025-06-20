@@ -266,10 +266,38 @@ $size-padding: 20px;
         height: 0;
         flex-grow: 1;
 
-        & > .owner {
-            color: $color-textSupporting;
-            font-weight: 300;
-            font-size: 12px;
+        & > .sub {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            & > .owner {
+                color: $color-textSupporting;
+                font-weight: 300;
+                font-size: 12px;
+            }
+            & > .tags {
+                display: flex;
+
+                & > .item {
+                    $size: 12px;
+                    width: $size;
+                    height: $size;
+                    border-radius: 50%;
+
+                    background-color: $color-success;
+
+                    transition: margin-left 250ms;
+
+                    &:not(:first-child) {
+                        margin-left: -3px;
+                    }
+                }
+
+                &:hover > .item:not(:first-child) {
+                    margin-left: 5px;
+                }
+            }
         }
 
         & > h1 {

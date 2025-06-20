@@ -1,4 +1,5 @@
 import { CategoryVO } from "./category"
+import { FavoriteTagVO } from "./favoriteTag"
 
 export interface CompatibilityVO {
     version: string,
@@ -21,6 +22,7 @@ export interface PageThumbnailVO {
 export interface AssetBaseVO {
     id: number,
     category: CategoryVO[] | null,
+    tags: FavoriteTagVO[],
     title: string,
     publisher: string,
     platform: null | 'Unity' | 'Itchio'
