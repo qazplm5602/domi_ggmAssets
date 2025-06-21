@@ -1,11 +1,22 @@
 import style from '@styles/favorite/style.module.scss';
 import lineIcon from '@assets/icons/horizontal-line.svg';
 
-export default function FavoriteSelectHeadTagItem() {
+type Props = {
+    color: string,
+    name: string,
+    check: 'all' | 'empty' | 'half'
+}
+
+export default function FavoriteSelectHeadTagItem({ color, name, check }: Props) {
+    const checkStyle: React.CSSProperties = {
+        backgroundColor: (check !== "empty") ? `#${color}` : 'transparent',
+        borderColor: (check === "empty") ? `#${color}` : 'transparent',
+    }
+    
     return <button className={style.tag}>
-        <div className={style.status}>
-            <img src={lineIcon} alt="status line" draggable={false} />
+        <div className={style.status} style={checkStyle}>
+            {check === "half" && <img src={lineIcon} alt="status line" draggable={false} />}
         </div>
-        <p>테스트</p>
+        <p>{name}</p>
     </button>;
 }

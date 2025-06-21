@@ -2,6 +2,7 @@ import style from '@styles/favorite/style.module.scss';
 import FavoriteSelectHeadTagItem from './Item';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useBodyClickEvent } from '@utils/hook';
+import { useFavoriteTagList } from './Context';
 
 const ANIM = {
     enter: { opacity: 1, bottom: -5 },
@@ -15,6 +16,8 @@ type Props = {
 }
 
 export default function FavoriteSelectHeadTagMenu({ show = true, onClose }: Props) {
+    const [ tags ] = useFavoriteTagList();
+
     const handleBoxClick = function(e: React.MouseEvent<HTMLElement>) {
         e.stopPropagation();
     }
@@ -23,10 +26,7 @@ export default function FavoriteSelectHeadTagMenu({ show = true, onClose }: Prop
 
     return <AnimatePresence>
         {show && <motion.section className={style.tagMenu} initial={ANIM.exit} animate={ANIM.enter} exit={ANIM.exit} transition={ANIM.transition} onClick={handleBoxClick}>
-            <FavoriteSelectHeadTagItem />
-            <FavoriteSelectHeadTagItem />
-            <FavoriteSelectHeadTagItem />
-            <FavoriteSelectHeadTagItem />
+            {tags?.map(v => <FavoriteSelectHeadTagItem key={v.id} name={v.name} color={v.color} check='empty' />)}
         </motion.section>}
     </AnimatePresence>;
 }
