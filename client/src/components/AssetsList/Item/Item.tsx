@@ -49,7 +49,7 @@ export default function AssetItem({ className, data = TEST_MOCK_ITEM, disableLin
     return <Link to={disableLink ? '' : `/asset/${data.id}`}>
         <div className={`${style.item} ${className || ''}`}>
             <AssetsListItemThumbnail id={data.id} images={data.thumbnail} />
-            <AssetItemDetail title={data.title} publisher={data.publisher} />
+            <AssetItemDetail title={data.title} publisher={data.publisher} tags={data.tags} />
             <AssetItemInfo category={data.category} platform={data.platform} />
         </div>
     </Link>;

@@ -1,5 +1,12 @@
 import style from '@styles/assetsList/style.module.scss';
 
-export default function AssetItemDetailTag() {
-    return <div className={style.item}></div>;
+type Props = {
+    color: string,
+    name: string
+}
+
+export default function AssetItemDetailTag({ color, name }: Props) {
+    return <div className={style.item} style={{ backgroundColor: `#${color}` }}>
+        <div className={style.tooltip}>{name}</div>
+    </div>;
 }
