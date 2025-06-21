@@ -55,11 +55,16 @@ export default function FavoriteSelectHeadTagMenu({ show = true, assets, selects
         e.stopPropagation();
     }
 
+    const handleTagClick = async function(id: string) {
+        const isActive = selectStatus[id] !== "empty";
+
+    }
+
     useBodyClickEvent(onClose);
 
     return <AnimatePresence>
         {show && <motion.section className={style.tagMenu} initial={ANIM.exit} animate={ANIM.enter} exit={ANIM.exit} transition={ANIM.transition} onClick={handleBoxClick}>
-            {tags?.map(v => <FavoriteSelectHeadTagItem key={v.id} name={v.name} color={v.color} check={selectStatus[v.id] || 'empty'} />)}
+            {tags?.map(v => <FavoriteSelectHeadTagItem key={v.id} name={v.name} color={v.color} check={selectStatus[v.id] || 'empty'} onClick={() => handleTagClick(v.id)} />)}
         </motion.section>}
     </AnimatePresence>;
 }
