@@ -88,7 +88,7 @@ export default function FavoriteSelectHead({ selects, assets, onCheck, onRemove 
         <article className={style.right}>
             <Button className={style.tag} onClick={handleTag}>
                 <p>태그</p>
-                <FavoriteSelectHeadTagMenu show={tagMenuShow} onClose={handleTagClose} />
+                <FavoriteSelectHeadTagMenu show={tagMenuShow} onClose={handleTagClose} selects={selects} assets={assets} />
             </Button>
             <Button className={style.download} onClick={handleDownload}>다운로드</Button>
             <Button className={style.remove} onClick={handleRemove} disabled={removeLoading}>삭제</Button>
