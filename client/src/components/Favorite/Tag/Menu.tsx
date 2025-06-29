@@ -68,12 +68,20 @@ export default function FavoriteSelectHeadTagMenu({ show = true, assets, selects
 
     const handleTagClick = async function(id: string) {
         const isActive = selectStatus[id] !== "empty";
-        const includeIds = indexedData.tags[id];
+        // 해당 태그가 포함된 에셋Id들 (선택된 에셋들만)
+        const selectTagAssetIds = Array.from(indexedData.tags[id] || [])
+            .filter(id => selects.has(id));
+        const includeIds = new Set<number>(selectTagAssetIds);
 
         // 끌게 없는디
-        if (!isActive && !includeIds)
+        if (!isActive && includeIds.size === 0)
             return;
         
+        if (isActive) {
+            
+        } else {
+            
+        }
         // ... 이거 API 만들면 함
     }
 
