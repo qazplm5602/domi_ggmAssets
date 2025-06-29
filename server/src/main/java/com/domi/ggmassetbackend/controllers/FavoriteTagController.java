@@ -1,6 +1,7 @@
 package com.domi.ggmassetbackend.controllers;
 
 import com.domi.ggmassetbackend.data.dto.FavoriteTagActionDTO;
+import com.domi.ggmassetbackend.data.dto.FavoriteTagAssetsFieldDTO;
 import com.domi.ggmassetbackend.data.entity.FavoriteTag;
 import com.domi.ggmassetbackend.data.entity.User;
 import com.domi.ggmassetbackend.data.vo.FavoriteTagVO;
@@ -31,5 +32,15 @@ public class FavoriteTagController {
     @PostMapping("")
     List<String> saveTags(@RequestBody List<FavoriteTagActionDTO> actions) {
         return favoriteTagService.applyFavoriteTags(actions);
+    }
+
+    @PutMapping("")
+    void addTagAssets(@RequestBody FavoriteTagAssetsFieldDTO field) {
+        favoriteTagService.addFavoriteTagAssets(field);
+    }
+
+    @DeleteMapping("")
+    void removeTagAssets() {
+
     }
 }

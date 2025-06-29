@@ -50,5 +50,8 @@ public class AssetFavoriteService {
         return assetFavoriteRepository.deleteByUserAndAssetIdIn(user, assetIds);
     }
 
-
+    public AssetFavorite getAssetFavoriteByUserAndAssetId(User user, int id) {
+        return assetFavoriteRepository.findByUserAndAssetId(user, id)
+                .orElseThrow(() -> new DomiException("ASSET_FAVORITE0", "찜한 에셋이 아닙니다.", HttpStatus.NOT_FOUND));
+    }
 }

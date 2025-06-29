@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AssetFavoriteRepository extends JpaRepository<AssetFavorite, AssetFavoriteId> {
@@ -23,4 +24,7 @@ public interface AssetFavoriteRepository extends JpaRepository<AssetFavorite, As
 
     @Modifying
     int deleteByUserAndAssetIdIn(User user, List<Integer> assetIds);
+
+    @Query("SELECT a FROM AssetFavorite a WHERE a.user = :user AND a.asset.id = :id")
+    Optional<AssetFavorite> findByUserAndAssetId(@Param("user") User user, @Param("id") int id);
 }

@@ -1,11 +1,10 @@
 package com.domi.ggmassetbackend.services;
 
 import com.domi.ggmassetbackend.data.dto.FavoriteTagActionDTO;
-import com.domi.ggmassetbackend.data.entity.Asset;
-import com.domi.ggmassetbackend.data.entity.AssetFavoriteTag;
-import com.domi.ggmassetbackend.data.entity.FavoriteTag;
-import com.domi.ggmassetbackend.data.entity.User;
+import com.domi.ggmassetbackend.data.dto.FavoriteTagAssetsFieldDTO;
+import com.domi.ggmassetbackend.data.entity.*;
 import com.domi.ggmassetbackend.exceptions.FavoriteTagException;
+import com.domi.ggmassetbackend.repositories.AssetFavoriteRepository;
 import com.domi.ggmassetbackend.repositories.AssetFavoriteTagRepository;
 import com.domi.ggmassetbackend.repositories.FavoriteTagRepository;
 import jakarta.transaction.Transactional;
@@ -24,6 +23,7 @@ public class FavoriteTagService {
     private final FavoriteTagRepository favoriteTagRepository;
     private final UserService userService;
     private final AssetFavoriteTagRepository assetFavoriteTagRepository;
+    private final AssetFavoriteService assetFavoriteService;
 
     public List<FavoriteTag> getFavoriteTagsByOwner(User owner) {
         return favoriteTagRepository.findByOwner(owner);
@@ -132,5 +132,21 @@ public class FavoriteTagService {
         return (root, query, cb) -> {
             return root.get("id").in(assetIds);
         };
+    }
+
+    @Transactional
+    public void addFavoriteTagAssets(FavoriteTagAssetsFieldDTO field) {
+        User user = userService.getCurrentUser();
+        FavoriteTag tag = getTagWithMyPermission(field.getTag());
+
+        field.getAssets().forEach(assetId -> {
+            AssetFavorite assetFavorite = assetFavoriteService.getAssetFavoriteByUserAndAssetId(user, assetId);
+
+            AssetFavoriteTag favoriteAssetTag = new AssetFavoriteTag();
+            favoriteAssetTag.setFavorite(assetFavorite);
+            favoriteAssetTag.setTag(tag);
+
+            assetFavoriteTagRepository.save(favoriteAssetTag);
+        });
     }
 }
