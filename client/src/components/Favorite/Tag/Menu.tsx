@@ -24,13 +24,24 @@ type CheckType = Parameters<typeof FavoriteSelectHeadTagItem>['0']['check'];
 export default function FavoriteSelectHeadTagMenu({ show = true, assets, selects, onClose }: Props) {
     const [ tags ] = useFavoriteTagList();
 
-    const indexedAssets = useMemo(() => {
+    const indexedData = useMemo(() => {
         const result: { [key: number]: AssetPreviewVO } = {};
+        const tagDict: { [key: string]: Set<number> } = {};
+
         assets?.forEach(v => {
             result[v.id] = v;
+
+            // 태그 ㄱㄱ
+            v.tags.forEach(tag => {
+                let tagSet = tagDict[tag.id];
+                if (!tagSet)
+                    tagDict[tag.id] = new Set();
+
+                tagSet.add(v.id);
+            });
         });
         
-        return result;
+        return { asset: result, tags: tagDict };
     }, [ assets ]);
 
     const selectStatus = useMemo(() => {
@@ -38,7 +49,7 @@ export default function FavoriteSelectHeadTagMenu({ show = true, assets, selects
         const result: { [key: string]: CheckType } = {};
 
         selects.forEach(id => {
-            indexedAssets[id]?.tags.forEach(() => {
+            indexedData.asset[id]?.tags.forEach(() => {
                 const count = counts[id] || 0;
                 counts[id] = count + 1;
             });
@@ -48,7 +59,7 @@ export default function FavoriteSelectHeadTagMenu({ show = true, assets, selects
             result[id] = count === selects.size ? 'all' : 'half';
         }
         return result;
-    }, [ tags, indexedAssets, selects ]);
+    }, [ tags, indexedData, selects ]);
     
 
     const handleBoxClick = function(e: React.MouseEvent<HTMLElement>) {
@@ -57,7 +68,13 @@ export default function FavoriteSelectHeadTagMenu({ show = true, assets, selects
 
     const handleTagClick = async function(id: string) {
         const isActive = selectStatus[id] !== "empty";
+        const includeIds = indexedData.tags[id];
 
+        // 끌게 없는디
+        if (!isActive && !includeIds)
+            return;
+        
+        // ... 이거 API 만들면 함
     }
 
     useBodyClickEvent(onClose);
