@@ -4,6 +4,7 @@ import { createPortal } from "react-dom";
 import { useState } from "react";
 
 import style from "@styles/policy/style.module.scss";
+import { ResolvedValues } from "framer-motion";
 
 type Props = {
     openTriggerRef?: React.RefObject<(() => void) | null>
@@ -11,10 +12,16 @@ type Props = {
 
 export default function PolicyPrivacyLoginPopup({ openTriggerRef }: Props) {
     const [ show, setShow ] = useState(false);
+    const [ showContent, setShowContent ] = useState(false);
 
     // 닫기
     const handleClose = function() {
         setShow(false);
+    }
+
+    // 애니메이션 진행 중 (80% 시점에 콘텐츠 표시)
+    const handleAnimationUpdate = function(latest: ResolvedValues) {
+        setShowContent(Number(latest.opacity) >= 0.8);
     }
 
     // 핸들러 등록
@@ -23,9 +30,11 @@ export default function PolicyPrivacyLoginPopup({ openTriggerRef }: Props) {
     }
 
     return createPortal((
-        <Dialog show={show} title="개인정보처리방침" className={style.popup} onClose={handleClose}>
+        <Dialog show={show} title="개인정보처리방침" className={style.popup} onClose={handleClose} onUpdate={handleAnimationUpdate}>
             <h3 className={style.desc}>로그인 하기 전 아래의 약관 내용을 확인해주세요.</h3>
-            <PolicyPrivacyContent as="pre" className={style.content} />
+            <pre className={style.content}>
+                <PolicyPrivacyContent as="span" className={showContent ? '' : style.hide} />
+            </pre>
 
             {/* 버튼 목록 */}
             <section className={style.interaction}>

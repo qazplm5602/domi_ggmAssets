@@ -1,5 +1,5 @@
 import style from '@styles/dialog/style.module.scss';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, AnimationDefinition, ResolvedValues } from 'framer-motion';
 import DialogHead from './Head';
 
 type Props = {
@@ -7,14 +7,16 @@ type Props = {
     children?: React.ReactNode,
     show: boolean,
     title: string,
-    onClose?: () => void
+    onClose?: () => void,
+    onAnimationComplete?: (definition: AnimationDefinition) => void,
+    onUpdate?: (latest: ResolvedValues) => void
 }
 
 const ANIM_TRANSITION = {
     duration: 0.2
 }
 
-export default function Dialog({ title, show, className, onClose, children }: Props) {
+export default function Dialog({ title, show, className, onClose, onAnimationComplete, onUpdate, children }: Props) {
     const handleBackgroundClick = function() {
         if (onClose)
             onClose();
@@ -25,7 +27,7 @@ export default function Dialog({ title, show, className, onClose, children }: Pr
     }
 
     return <AnimatePresence>
-        {show && <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={ANIM_TRANSITION} className={style.blackBG} onClick={handleBackgroundClick}>
+        {show && <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={ANIM_TRANSITION} className={style.blackBG} onClick={handleBackgroundClick} onAnimationComplete={onAnimationComplete} onUpdate={onUpdate}>
             <motion.div initial={{ zoom: 0.9 }} animate={{ zoom: 1 }} exit={{ zoom: 0.9 }} transition={ANIM_TRANSITION} className={`${style.box} ${className || ''}`} onClick={handleBoxClick}>
                 <DialogHead title={title} onClose={handleBackgroundClick} />
                 {children}
