@@ -63,7 +63,7 @@
 
     // background-color: $color-mist;
     backdrop-filter: blur(10px);
-    background-color: rgba($color: $color-mist, $alpha: 0.7);
+    background-color: rgba($color: $color-mist, $alpha: 0.9);
     box-shadow: 0 0 30px rgba($color: #000000, $alpha: 0.3);
 
     z-index: 2;
@@ -99,11 +99,20 @@
         padding: 10px 20px;
         margin-top: 40px;
 
+        border: none;
         border-radius: 5px;
 
         & > img {
             height: 20px;
         }
+    }
+
+    & > .legacy {
+        color: $color-textSupporting;
+        font-size: 13px;
+        text-decoration: underline;
+        
+        margin-top: 10px;
     }
 
     & > .error {

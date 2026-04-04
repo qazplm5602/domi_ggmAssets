@@ -1,10 +1,7 @@
 import style from '@styles/login/style.module.scss';
 
-import googleLogo from '@assets/google-logo.webp';
-
 export default function LoginBoxGoogleBtn() {
-    return <a href="/oauth2/authorization/google" className={style.btn}>
-        <img src={googleLogo} alt="google logo" />
-        <div>Google 로그인</div>
+    return <a href="/oauth2/authorization/google" className={style.legacy}>
+        기존 Google 계정으로 로그인
     </a>
 }
