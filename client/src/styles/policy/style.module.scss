@@ -55,14 +55,16 @@
     }
     
     & > .interaction {
-        
         display: flex;
         justify-content: flex-end;
         gap: 8px;
 
+        & > a,
         & > button {
             @include base_button;
             font-size: 13px;
+
+            cursor: pointer;
 
             &.agree {
                 background-color: $color-primary;

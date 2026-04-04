@@ -14,6 +14,9 @@ export default function PolicyPrivacyLoginPopup({ openTriggerRef }: Props) {
     const [ show, setShow ] = useState(false);
     const [ showContent, setShowContent ] = useState(false);
 
+    // sso url
+    const loginURL = `${import.meta.env.VITE_OAUTH_GGM_URL}?redirect_uri=${encodeURIComponent(import.meta.env.VITE_OAUTH_GGM_REDIRECT_URL)}`;
+
     // 닫기
     const handleClose = function() {
         setShow(false);
@@ -38,7 +41,7 @@ export default function PolicyPrivacyLoginPopup({ openTriggerRef }: Props) {
 
             {/* 버튼 목록 */}
             <section className={style.interaction}>
-                <button className={style.agree}>이어서 하기</button>
+                <a className={style.agree} href={loginURL}>이어서 하기</a>
                 <button className={style.deny} onClick={handleClose}>안할래요</button>
             </section>
         </Dialog>
