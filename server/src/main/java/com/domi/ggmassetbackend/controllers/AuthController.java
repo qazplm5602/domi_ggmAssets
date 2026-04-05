@@ -1,5 +1,6 @@
 package com.domi.ggmassetbackend.controllers;
 
+import com.domi.ggmassetbackend.exceptions.AuthException;
 import com.domi.ggmassetbackend.services.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,7 +31,12 @@ public class AuthController {
             String token,
             HttpServletResponse response
     ) throws IOException {
-        authService.authenticateWithGgmToken(response, token);
+        try {
+            authService.authenticateWithGgmToken(response, token);
+        } catch (AuthException e) { // 오류 시 쿼리스트링으로 사유 리다이렉트
+            String errorMessage = e.getCode() + ": " + e.getMessage();
+            response.sendRedirect(String.format("/login?error=%s", URLEncoder.encode(errorMessage, StandardCharsets.UTF_8)));
+        }
     }
 
 }
