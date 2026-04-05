@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/auth")
@@ -24,10 +26,9 @@ public class AuthController {
             @NotEmpty
             @RequestParam("token")
             String token,
-            HttpServletRequest request,
             HttpServletResponse response
-    ) {
-        authService.authenticateWithGgmToken(request, response, token);
+    ) throws IOException {
+        authService.authenticateWithGgmToken(response, token);
     }
 
 }
