@@ -33,7 +33,8 @@ public class RequestAPI {
 
         int statusCode = connection.getResponseCode();
 
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        var stream = (statusCode >= 400) ? connection.getErrorStream() : connection.getInputStream();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));
         String inputLine;
         StringBuilder response = new StringBuilder();
 
