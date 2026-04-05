@@ -23,46 +23,11 @@ import java.io.IOException;
 @Component
 @RequiredArgsConstructor
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
-    private final JwtService jwtService;
     private final AuthService authService;
-//    private final ObjectMapper objectMapper = new ObjectMapper();
-
-    @Value("${domi.jwt.access.expire}")
-    private Long accessExpire;
-
-    @Value("${domi.jwt.refresh.expire}")
-    private Long refreshExpire;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-
-        // 토큰 만들기
         String email = authService.getUserByAuthentication(authentication).getEmail();
-        String accessToken = jwtService.generateToken(email, false);
-        String refreshToken = jwtService.generateToken(email, true);
-
-        Cookie accessCookie = new Cookie("accessToken", accessToken);
-        accessCookie.setMaxAge(Math.toIntExact(accessExpire));
-        accessCookie.setPath("/");
-//        accessCookie.setHttpOnly(true);
-//        accessCookie.setSecure(true);
-
-        Cookie refreshCookie = new Cookie("refreshToken", refreshToken);
-        refreshCookie.setMaxAge(Math.toIntExact(refreshExpire));
-        refreshCookie.setPath("/");
-//        refreshCookie.setHttpOnly(true);
-//        refreshCookie.setSecure(true);
-
-        response.addCookie(accessCookie);
-        response.addCookie(refreshCookie);
-
-        response.sendRedirect("/");
-
-//        LoginTokenDTO tokenData = new LoginTokenDTO(accessToken, refreshToken);
-//        String result = objectMapper.writeValueAsString(tokenData);
-
-//        response.getWriter().write(result);
+        authService.completeLogin(response, email);
     }
 }

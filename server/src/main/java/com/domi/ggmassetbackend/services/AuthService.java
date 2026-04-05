@@ -7,6 +7,7 @@ import com.domi.ggmassetbackend.exceptions.AuthException;
 import com.domi.ggmassetbackend.exceptions.DomiException;
 import com.domi.ggmassetbackend.filters.LoginSuccessHandler;
 import com.domi.ggmassetbackend.utils.RequestAPI;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,15 @@ import java.net.URISyntaxException;
 public class AuthService {
     @Value("${domi.ggm.verify.url}")
     private String ggmVerifyUrl;
+
+    @Value("${domi.jwt.access.expire}")
+    private Long accessExpire;
+
+    @Value("${domi.jwt.refresh.expire}")
+    private Long refreshExpire;
+
+    private final JwtService jwtService;
+
 
     public User getUserByAuthentication(Authentication authentication) {
         Object principalBoxing = authentication.getPrincipal();
@@ -67,5 +77,36 @@ public class AuthService {
         JSONObject ggmUser = authResult.getJSONObject("user");
 
         System.out.println(ggmUser);
+    }
+
+    public void completeLogin(HttpServletResponse response, String email) throws IOException {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        // 토큰 만들기
+        String accessToken = jwtService.generateToken(email, false);
+        String refreshToken = jwtService.generateToken(email, true);
+
+        Cookie accessCookie = new Cookie("accessToken", accessToken);
+        accessCookie.setMaxAge(Math.toIntExact(accessExpire));
+        accessCookie.setPath("/");
+//        accessCookie.setHttpOnly(true);
+//        accessCookie.setSecure(true);
+
+        Cookie refreshCookie = new Cookie("refreshToken", refreshToken);
+        refreshCookie.setMaxAge(Math.toIntExact(refreshExpire));
+        refreshCookie.setPath("/");
+//        refreshCookie.setHttpOnly(true);
+//        refreshCookie.setSecure(true);
+
+        response.addCookie(accessCookie);
+        response.addCookie(refreshCookie);
+
+        response.sendRedirect("/");
+
+//        LoginTokenDTO tokenData = new LoginTokenDTO(accessToken, refreshToken);
+//        String result = objectMapper.writeValueAsString(tokenData);
+
+//        response.getWriter().write(result);
     }
 }
