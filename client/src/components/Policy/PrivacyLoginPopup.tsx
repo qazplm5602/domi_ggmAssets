@@ -35,9 +35,9 @@ export default function PolicyPrivacyLoginPopup({ openTriggerRef }: Props) {
     return createPortal((
         <Dialog show={show} title="개인정보처리방침" className={style.popup} onClose={handleClose} onUpdate={handleAnimationUpdate}>
             <h3 className={style.desc}>로그인 하기 전 아래의 약관 내용을 확인해주세요.</h3>
-            <pre className={style.content}>
-                <PolicyPrivacyContent as="span" className={showContent ? '' : style.hide} />
-            </pre>
+            <div className={style.content}>
+                <PolicyPrivacyContent className={showContent ? '' : style.hide} />
+            </div>
 
             {/* 버튼 목록 */}
             <section className={style.interaction}>
