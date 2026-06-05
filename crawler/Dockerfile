@@ -1,25 +1,22 @@
 FROM node:23-slim
 
-WORKDIR /domi
+WORKDIR /app
 EXPOSE 3000
 
-ARG SSH_PASSWORD
-ENV SSH_PASSWORD=${SSH_PASSWORD}
+# 설정 기본값
+ENV API_PORT=3000
+ENV IMAGE_PATH=images/
+ENV IMAGE_EXPIRE=300
 
-COPY . .
-
+# IMAGE_PATH env 변경 시 의미 없어짐 (코드에서 생성하도록 해야할듯)
 RUN mkdir ./images
 
+# 의존성 설치
+COPY ./package*.json .
+RUN npm i
 
-# SSH 설치 ㄱㄱ
-RUN apt-get update && apt-get install -y openssh-server
+# 소스코드 복사
+COPY . .
 
-# ssh 설정
-RUN mkdir /var/run/sshd
-RUN echo "root:${SSH_PASSWORD}" | chpasswd
-RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
-RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
-
-RUN chmod -R 777 ./start.sh
-
-CMD [ "sh", "./start.sh" ]
+# 시작 ㄱㄱ
+CMD [ "npm", "run", "start" ]
