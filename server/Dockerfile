@@ -1,31 +1,17 @@
-FROM openjdk:21-slim
+FROM eclipse-temurin:21-jdk-alpine
 
-VOLUME [ "/domi/attachment" ]
-WORKDIR /domi
-
-ARG SSH_PASSWORD
-ENV SSH_PASSWORD=${SSH_PASSWORD}
-
+WORKDIR /app
 EXPOSE 8080
 
-COPY build/libs ./core
-COPY start.sh .
-COPY live.application.properties .
+# live.application.properties 파일 필요
+ENV SPRING_CONFIG_NAME=live
 
-# SSH 설치 ㄱㄱ
-RUN apt-get update && apt-get install -y openssh-server
 
-# ssh 설정
-RUN mkdir /var/run/sshd
-RUN echo "root:${SSH_PASSWORD}" | chpasswd
-RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
-RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
+COPY build/libs/ggmAssetBackend-0.0.1-SNAPSHOT.jar .
 
-RUN chmod -R 777 ./start.sh
+# 이미지들 넣을 폴더 만듬 (볼륨 마운트 시 직접 생성 필요함)
+# RUN mkdir ./attachment
+# RUN mkdir ./attachment/thumbnail
+# RUN mkdir ./attachment/asset
 
-# 이미지들 넣을 폴더 만듬
-RUN mkdir ./attachment
-RUN mkdir ./attachment/thumbnail
-RUN mkdir ./attachment/asset
-
-CMD [ "./start.sh" ]
+CMD [ "java", "-jar", "ggmAssetBackend-0.0.1-SNAPSHOT.jar" ]
