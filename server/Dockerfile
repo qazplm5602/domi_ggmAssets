@@ -3,7 +3,7 @@ FROM eclipse-temurin:21-jdk-alpine
 WORKDIR /app
 EXPOSE 8080
 
-# live.application.properties 파일 필요
+# live.properties 파일 필요
 ENV SPRING_CONFIG_NAME=live
 
 
