@@ -4,6 +4,7 @@ import com.domi.ggmassetbackend.data.enums.FileCategory;
 import com.domi.ggmassetbackend.exceptions.DomiException;
 import com.domi.ggmassetbackend.exceptions.FileException;
 import com.domi.ggmassetbackend.utils.MiscUtils;
+import io.sentry.Sentry;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -83,7 +84,10 @@ public class FileService {
     public void deleteFileForce(FileCategory category, String fileName) {
         try {
             deleteFile(category, fileName);
-        } catch (RuntimeException ignored) {
+        } catch (RuntimeException e) {
+            // 이미 없는 파일은 무시
+            if (!(e instanceof FileException fileException && fileException.getStatus() == HttpStatus.NOT_FOUND))
+                Sentry.captureException(e);
         }
     }
 
