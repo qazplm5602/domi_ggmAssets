@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "sentry:sourcemaps": "set -a && . ./env/.env && set +a && sentry-cli sourcemaps inject ./dist && sentry-cli sourcemaps upload ./dist --release \"$VITE_SENTRY_RELEASE\" && find dist -name '*.map' -delete"
+    "sentry:sourcemaps": "set -a && { [ ! -f ./env/.env ] || . ./env/.env; } && set +a && sentry-cli sourcemaps inject ./dist && sentry-cli sourcemaps upload ./dist --release \"$VITE_SENTRY_RELEASE\" && find dist -name '*.map' -delete"
   },
   "dependencies": {
     "@sentry/react": "^11.0.0",
