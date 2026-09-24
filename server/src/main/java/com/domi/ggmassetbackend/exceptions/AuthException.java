@@ -24,4 +24,8 @@ public class AuthException extends DomiException {
     public AuthException(Type type) {
         super("AUTH"+type.code, type.message, type.status);
     }
+
+    public AuthException(Type type, Throwable cause) {
+        super("AUTH"+type.code, type.message, type.status, cause);
+    }
 }

@@ -58,7 +58,7 @@ public class FileService {
         try {
             return new FileOutputStream(getFilePath(category, fileName));
         } catch (FileNotFoundException e) {
-            throw new FileException(FileException.Type.NOT_FOUND_FILE);
+            throw new FileException(FileException.Type.NOT_FOUND_FILE, e);
         }
     }
 

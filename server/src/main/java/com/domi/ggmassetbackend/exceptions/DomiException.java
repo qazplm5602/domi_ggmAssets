@@ -10,7 +10,11 @@ public class DomiException extends RuntimeException {
   final HttpStatus status;
 
   public DomiException(String _code, String _message, HttpStatus _status) {
-    super();
+    this(_code, _message, _status, null);
+  }
+
+  public DomiException(String _code, String _message, HttpStatus _status, Throwable _cause) {
+    super(_cause);
 
     code = _code;
     message = _message;

@@ -62,7 +62,7 @@ public class AuthService {
             responseVO = RequestAPI.post(ggmVerifyUrl, body);
         } catch (IOException | URISyntaxException e) {
             // 호출 실패
-            throw new AuthException(AuthException.Type.GGM_API_REQ_FAILED);
+            throw new AuthException(AuthException.Type.GGM_API_REQ_FAILED, e);
         }
 
         // 만료된 토큰
