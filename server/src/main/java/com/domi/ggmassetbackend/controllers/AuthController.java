@@ -2,6 +2,7 @@ package com.domi.ggmassetbackend.controllers;
 
 import com.domi.ggmassetbackend.exceptions.AuthException;
 import com.domi.ggmassetbackend.services.AuthService;
+import io.sentry.Sentry;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -34,6 +35,9 @@ public class AuthController {
         try {
             authService.authenticateWithGgmToken(response, token);
         } catch (AuthException e) { // 오류 시 쿼리스트링으로 사유 리다이렉트
+            if (e.getStatus().is5xxServerError())
+                Sentry.captureException(e);
+
             String errorMessage = e.getCode() + ": " + e.getMessage();
             response.sendRedirect(String.format("/login?error=%s", URLEncoder.encode(errorMessage, StandardCharsets.UTF_8)));
         }
