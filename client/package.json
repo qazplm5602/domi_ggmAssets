@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "sentry:sourcemaps": "export SENTRY_DOTENV_PATH=env/.env && sentry-cli sourcemaps inject ./dist && sentry-cli sourcemaps upload ./dist && find dist -name '*.map' -delete"
   },
   "dependencies": {
     "@sentry/react": "^11.0.0",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
+    "@sentry/cli": "^3.8.0",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.3.4",

@@ -6,6 +6,9 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   envDir: './env',
+  build: {
+    sourcemap: 'hidden',
+  },
   server: {
     proxy: {
       "/api": {
