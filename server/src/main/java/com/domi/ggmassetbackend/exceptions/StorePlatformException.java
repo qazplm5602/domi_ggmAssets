@@ -22,4 +22,8 @@ public class StorePlatformException extends DomiException {
     public StorePlatformException(Type type) {
         super("STORE_PLATFORM"+type.code, type.message, type.status);
     }
+
+    public StorePlatformException(Type type, Throwable cause) {
+        super("STORE_PLATFORM"+type.code, type.message, type.status, cause);
+    }
 }

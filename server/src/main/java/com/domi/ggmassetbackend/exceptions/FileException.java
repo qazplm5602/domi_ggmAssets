@@ -22,4 +22,8 @@ public class FileException extends DomiException {
     public FileException(Type type) {
         super("FILE"+type.code, type.message, type.status);
     }
+
+    public FileException(Type type, Throwable cause) {
+        super("FILE"+type.code, type.message, type.status, cause);
+    }
 }

@@ -11,7 +11,6 @@ import com.domi.ggmassetbackend.data.enums.ThumbnailType;
 import com.domi.ggmassetbackend.data.vo.CompatibilityVO;
 import com.domi.ggmassetbackend.data.vo.ThumbnailVO;
 import com.domi.ggmassetbackend.exceptions.AssetException;
-import com.domi.ggmassetbackend.exceptions.DomiException;
 import com.domi.ggmassetbackend.repositories.AssetRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -336,9 +335,7 @@ public class AssetService {
             }
 
             // 이제 사용 안하는건 삭제 할꺼잉
-            try {
-                needRemoveFiles.forEach(v -> fileService.deleteFile(FileCategory.Thumbnail, v));
-            } catch (DomiException ignored) {}
+            needRemoveFiles.forEach(v -> fileService.deleteFileForce(FileCategory.Thumbnail, v));
         }
 
         Long fileSize = form.getFileSize();

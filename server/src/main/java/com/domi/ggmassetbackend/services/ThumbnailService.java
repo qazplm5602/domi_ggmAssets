@@ -5,6 +5,7 @@ import com.domi.ggmassetbackend.data.enums.FileCategory;
 import com.domi.ggmassetbackend.data.enums.ThumbnailType;
 import com.domi.ggmassetbackend.exceptions.ThumbnailException;
 import com.domi.ggmassetbackend.repositories.ThumbnailRepository;
+import io.sentry.Sentry;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,9 +21,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Semaphore;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 @RequiredArgsConstructor
@@ -32,44 +36,31 @@ public class ThumbnailService {
     private final FileService fileService;
     private final ThumbnailRepository thumbnailRepository;
 
+    // 실패하거나 시간 초과된 썸네일은 sentry 보고 후 제외
     public List<Thumbnail> imageSave(List<Thumbnail> thumbnails) throws InterruptedException {
-        Semaphore semaphore = new Semaphore(MAX_PROCESS_COUNT);
         ExecutorService executor = Executors.newFixedThreadPool(MAX_PROCESS_COUNT);
 
+        List<Callable<Thumbnail>> tasks = thumbnails.stream()
+                .<Callable<Thumbnail>>map(thumbnail -> () -> imageDownloadApply(thumbnail))
+                .toList();
+
+        List<Future<Thumbnail>> futures;
+        try {
+            futures = executor.invokeAll(tasks, 1, TimeUnit.MINUTES); // 시간 초과된 작업은 취소됨
+        } finally {
+            executor.shutdownNow();
+        }
+
         List<Thumbnail> result = new ArrayList<>();
-        for (int i = 0; i < thumbnails.size(); i++) {
-            result.add(null); // 갯수 만큼 자리좀...
+        for (Future<Thumbnail> future : futures) {
+            try {
+                result.add(future.get());
+            } catch (ExecutionException e) {
+                Sentry.captureException(e.getCause());
+            } catch (CancellationException e) {
+                Sentry.captureException(new ThumbnailException(ThumbnailException.Type.DOWNLOAD_TIMEOUT, e));
+            }
         }
-
-        for (int i = 0; i < thumbnails.size(); i++) {
-            final int index = i;
-
-            executor.submit(() -> {
-                try {
-                    semaphore.acquire();
-//                    System.out.println("Executing task " + index + " by thread " + Thread.currentThread().getName());
-
-                    Thumbnail loadImage = imageDownloadApply(thumbnails.get(index));
-
-//                    System.out.println("Task " + index + " completed by thread " + Thread.currentThread().getName());
-
-                    result.set(index, loadImage);
-//                    result.add(loadImage);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (URISyntaxException e) {
-                    throw new RuntimeException(e);
-                } finally {
-                    // 작업이 끝나면 세마포어를 반환하여 다른 작업을 실행할 수 있도록 함
-                    semaphore.release();
-                }
-            });
-        }
-
-        executor.shutdown();
-        executor.awaitTermination(1, TimeUnit.MINUTES);
 
         return result;
     }
