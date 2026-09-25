@@ -53,6 +53,12 @@ jobs:
           VITE_OAUTH_GGM_REDIRECT_URL: ${{ vars.VITE_OAUTH_GGM_REDIRECT_URL }}
           VITE_SENTRY_DSN: ${{ vars.VITE_SENTRY_DSN }}
           VITE_SENTRY_RELEASE: ggm-assets-frontend@${{ steps.version.outputs.version }}
+
+      # 소스맵 sentry 업로드
+      - name: Upload sourcemaps
+        run: npm run sentry:sourcemaps
+        env:
+          VITE_SENTRY_RELEASE: ggm-assets-frontend@${{ steps.version.outputs.version }}
           SENTRY_URL: ${{ vars.SENTRY_URL }}
           SENTRY_ORG: ${{ vars.SENTRY_ORG }}
           SENTRY_PROJECT: ggm-assets-frontend
