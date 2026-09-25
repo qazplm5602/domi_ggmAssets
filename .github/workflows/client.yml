@@ -1,0 +1,104 @@
+name: Client Deploy
+
+on:
+  push:
+    tags:
+      - 'client-v*'
+  workflow_dispatch:
+
+concurrency:
+  group: client-deploy
+  cancel-in-progress: false
+
+env:
+  RELEASE_PATH: ${{ secrets.CLIENT_RELEASE_PATH }}
+  CURRENT_PATH: ${{ secrets.CLIENT_CURRENT_PATH }}
+  KEEP_RELEASES: 5
+
+jobs:
+  deploy:
+    # 태그 외 브랜치는 제외함
+    if: startsWith(github.ref, 'refs/tags/client-v')
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: client
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # client-v0.0.1 → 0.0.1 변환
+      - name: Version
+        id: version
+        run: |
+          VERSION="${GITHUB_REF_NAME#client-v}"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "release=dist_$(TZ=Asia/Seoul date +%Y%m%d%H%M%S)_$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: client/package-lock.json
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+        env:
+          VITE_OAUTH_GGM_URL: ${{ vars.VITE_OAUTH_GGM_URL }}
+          VITE_OAUTH_GGM_REDIRECT_URL: ${{ vars.VITE_OAUTH_GGM_REDIRECT_URL }}
+          VITE_SENTRY_DSN: ${{ vars.VITE_SENTRY_DSN }}
+          VITE_SENTRY_RELEASE: ggm-assets-frontend@${{ steps.version.outputs.version }}
+
+      # 소스맵 sentry 업로드
+      - name: Upload sourcemaps
+        run: npm run sentry:sourcemaps
+        env:
+          VITE_SENTRY_RELEASE: ggm-assets-frontend@${{ steps.version.outputs.version }}
+          SENTRY_URL: ${{ vars.SENTRY_URL }}
+          SENTRY_ORG: ${{ vars.SENTRY_ORG }}
+          SENTRY_PROJECT: ggm-assets-frontend
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_deploy
+          chmod 600 ~/.ssh/id_deploy
+          ssh-keyscan -p "${{ secrets.SSH_PORT || 22 }}" -H "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
+          cat >> ~/.ssh/config <<EOF
+          Host deploy
+            HostName ${{ secrets.SSH_HOST }}
+            Port ${{ secrets.SSH_PORT || 22 }}
+            User ${{ secrets.SSH_USER }}
+            IdentityFile ~/.ssh/id_deploy
+          EOF
+
+      - name: Upload dist
+        env:
+          RELEASE: ${{ steps.version.outputs.release }}
+        run: |
+          ssh deploy "mkdir -p '$RELEASE_PATH/$RELEASE'"
+          scp -r dist/. "deploy:$RELEASE_PATH/$RELEASE/"
+
+      - name: Switch symlink
+        env:
+          RELEASE: ${{ steps.version.outputs.release }}
+        run: |
+          ssh deploy bash -s <<EOF
+          set -euo pipefail
+          ln -sfn "$RELEASE_PATH/$RELEASE" "$CURRENT_PATH.tmp"
+          mv -Tf "$CURRENT_PATH.tmp" "$CURRENT_PATH"
+          EOF
+
+      - name: Clean old releases
+        run: |
+          ssh deploy bash -s <<EOF
+          set -euo pipefail
+          cd "$RELEASE_PATH"
+          ls -1d dist_*/ | sort -r | tail -n +$((KEEP_RELEASES + 1)) | xargs -r rm -rf
+          EOF

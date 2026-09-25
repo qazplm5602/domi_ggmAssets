@@ -46,9 +46,9 @@ public class StorePlatformService {
         try {
             response = RequestAPI.post(serverURL, body);
         } catch (IOException e) {
-            throw new StorePlatformException(StorePlatformException.Type.API_IO_ERROR);
+            throw new StorePlatformException(StorePlatformException.Type.API_IO_ERROR, e);
         } catch (URISyntaxException e) {
-            throw new StorePlatformException(StorePlatformException.Type.API_URI_ERROR);
+            throw new StorePlatformException(StorePlatformException.Type.API_URI_ERROR, e);
         }
 
 //        if (response == null)

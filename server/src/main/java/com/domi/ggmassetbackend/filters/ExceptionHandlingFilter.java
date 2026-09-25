@@ -1,6 +1,7 @@
 package com.domi.ggmassetbackend.filters;
 
 import com.domi.ggmassetbackend.exceptions.DomiException;
+import io.sentry.Sentry;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,6 +19,9 @@ public class ExceptionHandlingFilter extends OncePerRequestFilter {
         try {
             filterChain.doFilter(request, response);
         } catch (DomiException e) {
+            if (e.getStatus().is5xxServerError())
+                Sentry.captureException(e);
+
             errorResponse(e, response);
         }
     }

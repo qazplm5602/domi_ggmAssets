@@ -1,10 +1,13 @@
-FROM eclipse-temurin:21-jdk-alpine
+FROM eclipse-temurin:21-jre-alpine
 
 WORKDIR /app
 EXPOSE 8080
 
 # live.properties 파일 필요
 ENV SPRING_CONFIG_NAME=live
+
+ARG VERSION=unknown
+ENV SENTRY_RELEASE=ggm-asset-backend@$VERSION
 
 
 COPY build/libs/ggmAssetBackend-0.0.1-SNAPSHOT.jar .
